@@ -15,6 +15,10 @@ class CartPt:
         self.__x = x
         self.__y = y
 
+    def __str__(self):
+        string = "(" + str(self.x) + "," + str(self.y) + ")"
+        return string
+
     @property
     def x(self):
         return self.__x
@@ -68,24 +72,19 @@ class Board:
     def numOfCols(self):
         return self.__SIZE_Y
 
-    def cartPtOutOfRange(self,cart_pt):
+    def cartPtOutOfRange(self, cart_pt):
         max_x = self.numOfRows() - 1
         max_y = self.numOfCols() - 1
-        x_out_of_range = (not (0 <= cart_pt.x <= max_x))
-        y_out_of_range = (not (0 <= cart_pt.y <= max_y))
+        x_out_of_range = not (0 <= cart_pt.x <= max_x)
+        y_out_of_range = not (0 <= cart_pt.y <= max_y)
         return x_out_of_range or y_out_of_range
 
     def throwIfOutOfRange(self, cart_pt):
-        """throw IndexError in case that indices in cart_pt point to coordinate outside of board limits
-
-        Args:
-            cart_pt (CartPt): Cartesian Coordinate in question
-
-        Raises:
-            IndexError: _description_
-        """
+        """throw IndexError in case that indices in cart_pt point to coordinate outside of board limits"""
         if self.cartPtOutOfRange(cart_pt):
-            raise IndexError("CartPt yields Indices that are inappropriate in this context!")
+            raise IndexError(
+                "CartPt yields Indices that are inappropriate in this context!"
+            )
 
     @property
     def state(self):
