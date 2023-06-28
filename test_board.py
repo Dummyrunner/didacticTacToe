@@ -32,13 +32,6 @@ def setup1_desired_state():
     ]
 
 
-def test_consistency_set_get(default_board3x3):
-    board = default_board3x3
-    setup1_perform_board_assignments(board)
-    desired_state = setup1_desired_state()
-    assert board.state == desired_state
-
-
 def test_board_init(default_board3x3, empty_states_default_board3x3):
     assert default_board3x3.state == empty_states_default_board3x3
 
@@ -57,6 +50,13 @@ def test_board_get_value_setup1(default_board3x3):
     assert default_board3x3.valueFromCartesian(CartPt(0, 1)) == Party.WHITE
 
 
+def test_consistency_set_get(default_board3x3):
+    board = default_board3x3
+    setup1_perform_board_assignments(board)
+    desired_state = setup1_desired_state()
+    assert board.state == desired_state
+
+
 def test_maximal_index_at_rectangular(default_board_3x4):
     board = default_board_3x4
     ROWS = default_board_3x4.numOfRows()
@@ -64,20 +64,45 @@ def test_maximal_index_at_rectangular(default_board_3x4):
     board.setValueAtCartesian(CartPt(ROWS - 1, COLS - 1), Party.BLACK)
     assert board.valueFromCartesian(CartPt(ROWS - 1, COLS - 1)) == Party.BLACK
 
+
 def test_index_exception_row(default_board_3x4):
-    """IndexError should be thrown if row index is higher than ROWS - 1"""
-    ROWS = default_board_3x4.numOfRows()
-    COLS = default_board_3x4.numOfCols()
+    """IndexError should be thrown if row index is number of rows or higher"""
     board = default_board_3x4
+    too_high_row_idx = board.numOfRows()
     with pytest.raises(IndexError):
-        board.valueFromCartesian(CartPt(3, 0))
+        board.valueFromCartesian(CartPt(too_high_row_idx, 0))
+    with pytest.raises(IndexError):
+        board.valueFromCartesian(CartPt(-1, 0))
 
 
-def test_index_exception_col(default_board_3x4):
-    """IndexError should be thrown if col index is higher than COLS - 1"""
+def test_getter_index_exception_col(default_board_3x4):
+    """IndexError should be thrown if col index is number of cols or higher"""
     board = default_board_3x4
+    too_high_col_idx = board.numOfCols()
     with pytest.raises(IndexError):
-        board.valueFromCartesian(CartPt(0, 4))
+        board.valueFromCartesian(CartPt(0, too_high_col_idx))
+    with pytest.raises(IndexError):
+        board.valueFromCartesian(CartPt(0, -1))
+
+
+def test_setter_index_exception_col(default_board_3x4):
+    """IndexError should be thrown if col index is number of cols or higher"""
+    board = default_board_3x4
+    too_high_col_idx = board.numOfCols()
+    with pytest.raises(IndexError):
+        board.setValueAtCartesian(CartPt(too_high_col_idx, 0), Party.NEUTRAL)
+    with pytest.raises(IndexError):
+        board.setValueAtCartesian(CartPt(0, -1), Party.NEUTRAL)
+
+
+def test_setter_index_exception_row(default_board_3x4):
+    """IndexError should be thrown if col index is number of cols or higher"""
+    board = default_board_3x4
+    too_high_row_idx = board.numOfRows()
+    with pytest.raises(IndexError):
+        board.setValueAtCartesian(CartPt(too_high_row_idx, 0), Party.NEUTRAL)
+    with pytest.raises(IndexError):
+        board.setValueAtCartesian(CartPt(-1, 0), Party.NEUTRAL)
 
 
 def test_board_to_string_setup1(default_board3x3):
