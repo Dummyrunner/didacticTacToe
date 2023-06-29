@@ -87,3 +87,15 @@ class MoveTicTacToe:
             party_str = "white"
         string = "(move: " + str(self.cartpt_to_fill) + " " + party_str + " )"
         return string
+
+    def __hash__(self):
+        return hash((self.__cartpt_to_fill, self.__party))
+
+    def __eq__(self, other):
+        if not isinstance(other, MoveTicTacToe):
+            #         don't attempt to compare against unrelated types
+            return NotImplemented
+        return (
+            self.__cartpt_to_fill == other.__cartpt_to_fill
+            and self.party == other.party
+        )
