@@ -27,6 +27,12 @@ class CartPt:
     def y(self):
         return self.__y
 
+    def __eq__(self, other):
+        if not isinstance(other, CartPt):
+            # don't attempt to compare against unrelated types
+            return NotImplemented
+        return self.x == other.x and self.y == other.y
+
 
 class Board:
     """Board Rectangular gameboard.
