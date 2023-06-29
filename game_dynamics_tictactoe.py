@@ -66,8 +66,16 @@ class MoveTicTacToe:
             board (Board): Gameboard to perform the move on"""
 
     def __init__(self, cartpt_to_fill, party):
-        self.cartpt_to_fill = cartpt_to_fill
-        self.party = party
+        self.__cartpt_to_fill = cartpt_to_fill
+        self.__party = party
+
+    @property
+    def cartpt_to_fill(self):
+        return self.__cartpt_to_fill
+
+    @property
+    def party(self):
+        return self.__party
 
     def __str__(self):
         party_str = ""
