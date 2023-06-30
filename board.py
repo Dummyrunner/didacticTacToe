@@ -99,6 +99,43 @@ class Board:
     def state(self):
         return self.__state
 
+    @staticmethod
+    def fromString(
+        string,
+        state_markers_dct={Party.NEUTRAL: "_", Party.WHITE: "X", Party.BLACK: "O"},
+    ):
+        markers_state_dct = {v: k for k, v in state_markers_dct.items()}
+        list_of_lines = string.split("\n")
+        list_of_lengths = [len(line) for line in list_of_lines]
+        lines_same_length = all(l == list_of_lengths[0] for l in list_of_lengths)
+        list_of_charlists = [list(str) for str in list_of_lines]
+        if not lines_same_length:
+            raise ValueError(
+                "Board with assignment from string fixture: \
+                        lines in input string are not equally long!"
+            )
+        list_of_party_lists = []
+
+        for line in list_of_charlists:
+            list_of_party_lists.append([markers_state_dct[char] for char in line])
+        return Board.fromAssignmentLists(list_of_party_lists, state_markers_dct)
+
+    @staticmethod
+    def fromAssignmentLists(
+        list_of_party_lists,
+        state_markers_dct={Party.NEUTRAL: "_", Party.WHITE: "X", Party.BLACK: "O"},
+    ):
+        print(list_of_party_lists)
+        num_of_rows = len(list_of_party_lists)
+        num_of_cols = len(list_of_party_lists[0])
+        board = Board(num_of_rows, num_of_cols, state_markers_dct)
+        for irow in range(0, num_of_rows):
+            for icol in range(0, num_of_cols):
+                current_pt = CartPt(irow, icol)
+                current_val = list_of_party_lists[irow][icol]
+                board.setValueAtCartesian(current_pt, current_val)
+        return board
+
     def __str__(self):
         res = ""
         for irow in range(0, self.numOfRows()):

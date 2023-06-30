@@ -110,3 +110,28 @@ def test_board_to_string_setup1(default_board3x3):
     outcome_string = str(default_board3x3)
     desired_string = "OX_\n_X_\n___"
     assert desired_string == outcome_string
+
+
+def test_string_to_board(default_board3x3):
+    string = "XXO\n___\nOO_"
+    board = Board.fromString(string)
+
+    expected_board = default_board3x3
+    expected_board.setValueAtCartesian(CartPt(0, 0), Party.WHITE)
+    expected_board.setValueAtCartesian(CartPt(0, 1), Party.WHITE)
+    expected_board.setValueAtCartesian(CartPt(0, 2), Party.BLACK)
+
+    expected_board.setValueAtCartesian(CartPt(1, 0), Party.NEUTRAL)
+    expected_board.setValueAtCartesian(CartPt(1, 1), Party.NEUTRAL)
+    expected_board.setValueAtCartesian(CartPt(1, 2), Party.NEUTRAL)
+
+    expected_board.setValueAtCartesian(CartPt(2, 0), Party.BLACK)
+    expected_board.setValueAtCartesian(CartPt(2, 1), Party.BLACK)
+    expected_board.setValueAtCartesian(CartPt(2, 2), Party.NEUTRAL)
+
+    for irow in range(0, 3):
+        for icol in range(0, 3):
+            assert (
+                board.valueFromCartesian(CartPt(irow, icol)).value
+                == expected_board.valueFromCartesian(CartPt(irow, icol)).value
+            )
