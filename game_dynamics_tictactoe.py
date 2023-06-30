@@ -34,6 +34,10 @@ class GameDynamicsTicTacToe:
         pt = move.cartpt_to_fill
         self.board.setValueAtCartesian(pt, party)
 
+    def n_of_party_cohesive_in_row(party):
+        # TODO
+        pass
+
     def hasWonGame(party):
         # TODO
         pass
@@ -54,6 +58,7 @@ class HumanPlayerTicTacToe:
             ctr += 1
 
     def chooseMove(self):
+        # TODO
         pass
 
 
