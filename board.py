@@ -59,36 +59,36 @@ class Board:
         # in __state, states are stored row after row
         self.__state = [Party.NEUTRAL for i in range(0, num_of_squares)]
 
-    def setValueAtCartesian(self, cart_pt, new_val):
+    def setValueAtCartesian(self, cart_pt: CartPt, new_val: Party) -> None:
         self.throwIfOutOfRange(cart_pt)
         row = cart_pt.x
         col = cart_pt.y
         self.__state[self.numOfRows() * row + col] = new_val
 
-    def valueFromCartesian(self, cart_pt):
+    def valueFromCartesian(self, cart_pt: CartPt) -> Party:
         self.throwIfOutOfRange(cart_pt)
         row = cart_pt.x
         col = cart_pt.y
         return self.__state[self.numOfRows() * row + col]
 
-    def setStateFromLinearList(self, input_list):
+    def setStateFromLinearList(self, input_list: list) -> None:
         """define __state with input row after row"""
         self.__state = input_list
 
-    def numOfRows(self):
+    def numOfRows(self) -> int:
         return self.__SIZE_X
 
-    def numOfCols(self):
+    def numOfCols(self) -> int:
         return self.__SIZE_Y
 
-    def cartPtOutOfRange(self, cart_pt):
+    def cartPtOutOfRange(self, cart_pt: CartPt) -> bool:
         max_x = self.numOfRows() - 1
         max_y = self.numOfCols() - 1
         x_out_of_range = not (0 <= cart_pt.x <= max_x)
         y_out_of_range = not (0 <= cart_pt.y <= max_y)
         return x_out_of_range or y_out_of_range
 
-    def throwIfOutOfRange(self, cart_pt):
+    def throwIfOutOfRange(self, cart_pt: CartPt) -> IndexError:
         """throw IndexError in case that indices in cart_pt point to coordinate outside of board limits"""
         if self.cartPtOutOfRange(cart_pt):
             raise IndexError(
@@ -119,7 +119,7 @@ class Board:
 
     @staticmethod
     def fromString(
-        string,
+        string: str,
         state_markers_dct={Party.NEUTRAL: "_", Party.WHITE: "X", Party.BLACK: "O"},
     ):
         markers_state_dct = {v: k for k, v in state_markers_dct.items()}
@@ -143,7 +143,6 @@ class Board:
         list_of_party_lists,
         state_markers_dct={Party.NEUTRAL: "_", Party.WHITE: "X", Party.BLACK: "O"},
     ):
-        print(list_of_party_lists)
         num_of_rows = len(list_of_party_lists)
         num_of_cols = len(list_of_party_lists[0])
         board = Board(num_of_rows, num_of_cols, state_markers_dct)
