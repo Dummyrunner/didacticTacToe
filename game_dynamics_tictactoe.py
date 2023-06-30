@@ -9,7 +9,7 @@ class GameDynamicsTicTacToe:
         self.admissible_moves_set = set()
         self.updateAdmissibleMoves()
 
-    def updateAdmissibleMoves(self):
+    def updateAdmissibleMoves(self) -> None:
         board = self.board
         num_of_rows = board.numOfRows()
         num_of_cols = board.numOfCols()
@@ -29,14 +29,32 @@ class GameDynamicsTicTacToe:
         # TODO
         pass
 
-    def doMoveOnBoard(self, player, move):
+    def doMoveOnBoard(self, player, move) -> None:
         party = player.party
         pt = move.cartpt_to_fill
         self.board.setValueAtCartesian(pt, party)
 
-    def n_of_party_cohesive_in_row(party):
-        # TODO
-        pass
+    @staticmethod
+    def cohesiveSeqInPartyList(party_list: list, party: Party) -> int:
+        len_max_seq = 0
+        current_seq_len = 0
+        for x in party_list:
+            if x.value == party.value:
+                current_seq_len += 1
+            else:
+                len_max_seq = max(len_max_seq, current_seq_len)
+                current_seq_len = 0
+        len_max_seq = max(len_max_seq, current_seq_len)
+        current_seq_len = 0
+        return len_max_seq
+
+    def cohesiveSeqInRowOfParty(self, row_idx: int, party: Party) -> int:
+        rowvals_as_list = self.board.rowValsAsList(row_idx)
+        return GameDynamicsTicTacToe.cohesiveSeqInPartyList(rowvals_as_list, party)
+
+    def cohesiveSeqInColOfParty(self, col_idx: int, party: Party) -> int:
+        colvals_as_list = self.board.colValsAsList(col_idx)
+        return GameDynamicsTicTacToe.cohesiveSeqInPartyList(colvals_as_list, party)
 
     def hasWonGame(party):
         # TODO
@@ -44,7 +62,7 @@ class GameDynamicsTicTacToe:
 
 
 class HumanPlayerTicTacToe:
-    def __init__(self, party, name=""):
+    def __init__(self, party: Party, name=""):
         if name == "":
             self.name = self.generate_name
         else:
