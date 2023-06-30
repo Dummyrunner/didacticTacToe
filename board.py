@@ -95,6 +95,24 @@ class Board:
                 "CartPt yields Indices that are inappropriate in this context!"
             )
 
+    def rowValsAsList(self, row_idx: int) -> list:
+        if not (0 <= row_idx < self.numOfRows()):
+            raise IndexError("row index out of range")
+        res = []
+        for icol in range(0, self.numOfCols()):
+            current_pt = CartPt(row_idx, icol)
+            res.append(self.valueFromCartesian(current_pt))
+        return res
+
+    def colValsAsList(self, col_idx: int) -> list:
+        if not (0 <= col_idx < self.numOfCols()):
+            raise IndexError("column index out of range")
+        res = []
+        for irow in range(0, self.numOfRows()):
+            current_pt = CartPt(irow, col_idx)
+            res.append(self.valueFromCartesian(current_pt))
+        return res
+
     @property
     def state(self):
         return self.__state
