@@ -1,5 +1,7 @@
 import pytest
-from board import Board, CartPt, Party
+from board import Board
+from Party import Party
+from cartpt import CartPt
 
 
 @pytest.fixture

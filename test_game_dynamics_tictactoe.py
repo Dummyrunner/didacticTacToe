@@ -1,11 +1,13 @@
 import pytest
 from enum import Enum
-from board import Board, CartPt, Party
-from game_dynamics_tictactoe import (
-    GameDynamicsTicTacToe,
-    HumanPlayerTicTacToe,
-    MoveTicTacToe,
-)
+from board import Board
+from cartpt import CartPt
+from Party import Party
+from move_tictactoe import MoveTicTacToe
+
+from human_player_tictactoe import HumanPlayerTicTacToe
+
+from game_dynamics_tictactoe import GameDynamicsTicTacToe
 
 
 @pytest.fixture
