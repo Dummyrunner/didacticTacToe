@@ -114,6 +114,54 @@ class Board:
             res.append(self.valueFromCartesian(current_pt))
         return res
 
+    def maindiagsValsAsList(self, diag_index: int) -> list:
+        """return values of diagonal in main direction (top left to bottom right) as list.
+        diag_index describes if main diagonal or which side diagonal.
+
+        Args:
+            diag_index (int): 0: main diagonal.
+                        diag_index > 0: side diagnoal starting at top row
+                        diag_index < 0: side diagonal starting at most left column
+
+        Raises:
+            IndexError: diag_index out of range
+
+        Returns:
+            list: values of main diagonal or if diag_index != 0 side diagonal in same direction
+        """
+        if not (-self.numOfRows() < diag_index < self.numOfCols()):
+            raise IndexError(
+                "diag index "
+                + str(diag_index)
+                + " out of range from "
+                + str(self.numOfRows())
+                + " to "
+                + str(self.numOfCols())
+            )
+        diag_index_positive = diag_index > 0
+        top_left_pt_of_diag = (
+            CartPt(0, diag_index) if diag_index_positive else CartPt(-diag_index, 0)
+        )
+        print("top left of diag:")
+        print(top_left_pt_of_diag)
+        index_incr = 0
+        res = []
+        while not self.cartPtOutOfRange(
+            CartPt(
+                top_left_pt_of_diag.x + index_incr, top_left_pt_of_diag.y + index_incr
+            )
+        ):
+            res.append(
+                self.valueFromCartesian(
+                    CartPt(
+                        top_left_pt_of_diag.x + index_incr,
+                        top_left_pt_of_diag.y + index_incr,
+                    )
+                )
+            )
+            index_incr += 1
+        return res
+
     @property
     def state(self):
         return self.__state
