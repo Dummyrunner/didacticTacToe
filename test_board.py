@@ -250,7 +250,25 @@ def test_maindiags_vals_as_list(default_board3x4):
     assert board.maindiagsValsAsList(3) == [Party.NEUTRAL]
     assert board.maindiagsValsAsList(-1) == [Party.BLACK, Party.BLACK]
     assert board.maindiagsValsAsList(-2) == [Party.NEUTRAL]
+    with pytest.raises(IndexError):
+        board.maindiagsValsAsList(-3)
+    with pytest.raises(IndexError):
+        board.maindiagsValsAsList(4)
 
+
+def test_antidiags_vals_as_list(default_board3x4):
+    line0 = "_OX_\n"
+    line1 = "_O_O\n"
+    line2 = "OXO_"
+    state_string = line0 + line1 + line2
+    board = Board.fromString(state_string)
+
+    assert board.antidiagsValsAsList(0) == [Party.NEUTRAL, Party.NEUTRAL, Party.WHITE]
+    assert board.antidiagsValsAsList(1) == [Party.BLACK, Party.BLACK]
+    assert board.antidiagsValsAsList(2) == [Party.NEUTRAL]
+    assert board.antidiagsValsAsList(-1) == [Party.WHITE, Party.BLACK, Party.BLACK]
+    assert board.antidiagsValsAsList(-2) == [Party.BLACK, Party.NEUTRAL]
+    assert board.antidiagsValsAsList(-3) == [Party.NEUTRAL]
     with pytest.raises(IndexError):
         board.maindiagsValsAsList(-3)
     with pytest.raises(IndexError):
