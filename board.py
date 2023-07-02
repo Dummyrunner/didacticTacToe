@@ -100,9 +100,9 @@ class Board:
                 "diag index "
                 + str(diag_index)
                 + " out of range from "
-                + str(self.numOfRows())
+                + str(self.numOfRows() - 1)
                 + " to "
-                + str(self.numOfCols())
+                + str(self.numOfCols() - 1)
             )
         diag_index_positive = diag_index > 0
         top_left_pt_of_diag = (
@@ -110,20 +110,55 @@ class Board:
         )
         index_incr = 0
         res = []
-        while not self.cartPtOutOfRange(
-            CartPt(
+        point_to_add = top_left_pt_of_diag
+        while not self.cartPtOutOfRange(point_to_add):
+            res.append(self.valueFromCartesian(point_to_add))
+            index_incr += 1
+            point_to_add = CartPt(
                 top_left_pt_of_diag.x + index_incr, top_left_pt_of_diag.y + index_incr
             )
-        ):
-            res.append(
-                self.valueFromCartesian(
-                    CartPt(
-                        top_left_pt_of_diag.x + index_incr,
-                        top_left_pt_of_diag.y + index_incr,
-                    )
-                )
+        return res
+
+    def antidiagsValsAsList(self, diag_index: int) -> list:
+        """return values of diagonal in anti direction (top right to bottom left) as list.
+        diag_index describes if anti diagonal or which side diagonal.
+
+        Args:
+            diag_index (int): 0: main diagonal.
+                        diag_index < 0: side diagonal starting at top row
+                        diag_index > 0: side diagonal starting at most right column
+
+        Raises:
+            IndexError: diag_index out of range
+
+        Returns:
+            list: values of main diagonal or if diag_index != 0 side diagonal in same direction
+        """
+        if not (-self.numOfCols() < diag_index < self.numOfRows()):
+            raise IndexError(
+                "diag index "
+                + str(diag_index)
+                + " out of range from "
+                + str(self.numOfRows() - 1)
+                + " to "
+                + str(self.numOfCols() - 1)
             )
+        max_col_index = self.numOfCols() - 1
+        diag_index_positive = diag_index > 0
+        top_right_pt_of_diag = (
+            CartPt(diag_index, max_col_index)
+            if diag_index_positive
+            else CartPt(0, max_col_index - (-diag_index))
+        )
+        index_incr = 0
+        point_to_add = top_right_pt_of_diag
+        res = []
+        while not self.cartPtOutOfRange(point_to_add):
+            res.append(self.valueFromCartesian(point_to_add))
             index_incr += 1
+            point_to_add = CartPt(
+                top_right_pt_of_diag.x + index_incr, top_right_pt_of_diag.y - index_incr
+            )
         return res
 
     @property
