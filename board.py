@@ -61,15 +61,14 @@ class Board:
 
     def setValueAtCartesian(self, cart_pt: CartPt, new_val: Party) -> None:
         self.throwIfOutOfRange(cart_pt)
-        row = cart_pt.x
-        col = cart_pt.y
-        self.__state[self.numOfRows() * row + col] = new_val
+        self.__state[self.cartToLinearIdx(cart_pt)] = new_val
 
     def valueFromCartesian(self, cart_pt: CartPt) -> Party:
         self.throwIfOutOfRange(cart_pt)
-        row = cart_pt.x
-        col = cart_pt.y
-        return self.__state[self.numOfRows() * row + col]
+        return self.__state[self.cartToLinearIdx(cart_pt)]
+
+    def cartToLinearIdx(self, cart_pt: CartPt) -> int:
+        return (self.numOfCols()) * cart_pt.x + cart_pt.y
 
     def setStateFromLinearList(self, input_list: list) -> None:
         """define __state with input row after row"""
