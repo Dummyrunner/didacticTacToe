@@ -91,7 +91,9 @@ class Board:
         """throw IndexError in case that indices in cart_pt point to coordinate outside of board limits"""
         if self.cartPtOutOfRange(cart_pt):
             raise IndexError(
-                "CartPt yields Indices that are inappropriate in this context!"
+                "CartPt yields Indices "
+                + str(cart_pt)
+                + " that are inappropriate in this context!"
             )
 
     def rowValsAsList(self, row_idx: int) -> list:
