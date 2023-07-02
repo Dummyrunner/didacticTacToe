@@ -233,3 +233,23 @@ def test_col_as_list_index_out_of_range(default_board3x4):
         board.colValsAsList(-1)
     with pytest.raises(IndexError):
         board.colValsAsList(board.numOfCols())
+
+
+def test_maindiags_vals_as_list(default_board3x4):
+    line0 = "_XO_\n"
+    line1 = "O_O_\n"
+    line2 = "_OXO"
+    state_string = line0 + line1 + line2
+    board = Board.fromString(state_string)
+
+    assert board.maindiagsValsAsList(0) == [Party.NEUTRAL, Party.NEUTRAL, Party.WHITE]
+    assert board.maindiagsValsAsList(1) == [Party.WHITE, Party.BLACK, Party.BLACK]
+    assert board.maindiagsValsAsList(2) == [Party.BLACK, Party.NEUTRAL]
+    assert board.maindiagsValsAsList(3) == [Party.NEUTRAL]
+    assert board.maindiagsValsAsList(-1) == [Party.BLACK, Party.BLACK]
+    assert board.maindiagsValsAsList(-2) == [Party.NEUTRAL]
+
+    with pytest.raises(IndexError):
+        board.maindiagsValsAsList(-3)
+    with pytest.raises(IndexError):
+        board.maindiagsValsAsList(4)
