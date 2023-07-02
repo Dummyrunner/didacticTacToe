@@ -142,8 +142,6 @@ class Board:
         top_left_pt_of_diag = (
             CartPt(0, diag_index) if diag_index_positive else CartPt(-diag_index, 0)
         )
-        print("top left of diag:")
-        print(top_left_pt_of_diag)
         index_incr = 0
         res = []
         while not self.cartPtOutOfRange(
