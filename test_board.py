@@ -137,6 +137,68 @@ def test_string_to_board(default_board3x3):
             )
 
 
+def test_set_from_cartesian2(default_board3x4):
+    board = default_board3x4
+    board.setValueAtCartesian(CartPt(0, 0), Party.NEUTRAL)
+    board.setValueAtCartesian(CartPt(0, 1), Party.WHITE)
+    board.setValueAtCartesian(CartPt(0, 2), Party.BLACK)
+    board.setValueAtCartesian(CartPt(0, 3), Party.NEUTRAL)
+
+    board.setValueAtCartesian(CartPt(1, 0), Party.BLACK)
+    board.setValueAtCartesian(CartPt(1, 1), Party.NEUTRAL)
+    board.setValueAtCartesian(CartPt(1, 2), Party.BLACK)
+    board.setValueAtCartesian(CartPt(1, 3), Party.NEUTRAL)
+
+    board.setValueAtCartesian(CartPt(2, 0), Party.WHITE)
+    board.setValueAtCartesian(CartPt(2, 1), Party.BLACK)
+    board.setValueAtCartesian(CartPt(2, 2), Party.WHITE)
+    board.setValueAtCartesian(CartPt(2, 3), Party.BLACK)
+    expected_state = [
+        Party.NEUTRAL,
+        Party.WHITE,
+        Party.BLACK,
+        Party.NEUTRAL,
+        Party.BLACK,
+        Party.NEUTRAL,
+        Party.BLACK,
+        Party.NEUTRAL,
+        Party.WHITE,
+        Party.BLACK,
+        Party.WHITE,
+        Party.BLACK,
+    ]
+    assert board.state == expected_state
+
+
+def test_string_to_board2(default_board3x4):
+    expected_board = default_board3x4
+    line0 = "_XO_\n"
+    line1 = "O_O_\n"
+    line2 = "XOXO"
+    state_string = line0 + line1 + line2
+    actual_board = Board.fromString(state_string)
+    expected_board.setValueAtCartesian(CartPt(0, 0), Party.NEUTRAL)
+    expected_board.setValueAtCartesian(CartPt(0, 1), Party.WHITE)
+    expected_board.setValueAtCartesian(CartPt(0, 2), Party.BLACK)
+    expected_board.setValueAtCartesian(CartPt(0, 3), Party.NEUTRAL)
+
+    expected_board.setValueAtCartesian(CartPt(1, 0), Party.BLACK)
+    expected_board.setValueAtCartesian(CartPt(1, 1), Party.NEUTRAL)
+    expected_board.setValueAtCartesian(CartPt(1, 2), Party.BLACK)
+    expected_board.setValueAtCartesian(CartPt(1, 3), Party.NEUTRAL)
+
+    expected_board.setValueAtCartesian(CartPt(2, 0), Party.WHITE)
+    expected_board.setValueAtCartesian(CartPt(2, 1), Party.BLACK)
+    expected_board.setValueAtCartesian(CartPt(2, 2), Party.WHITE)
+    expected_board.setValueAtCartesian(CartPt(2, 3), Party.BLACK)
+    for irow in range(0, 3):
+        for icol in range(0, 4):
+            assert (
+                actual_board.valueFromCartesian(CartPt(irow, icol)).value
+                == expected_board.valueFromCartesian(CartPt(irow, icol)).value
+            )
+
+
 def test_row_as_list(default_board3x4):
     board = default_board3x4
     board.setValueAtCartesian(CartPt(1, 0), Party.WHITE)
