@@ -80,7 +80,7 @@ class Board:
             res.append(self.valueFromCartesian(current_pt))
         return res
 
-    def maindiagsValsAsList(self, diag_index: int) -> list:
+    def maindiagValsAsList(self, diag_index: int) -> list:
         """return values of diagonal in main direction (top left to bottom right) as list.
         diag_index describes if main diagonal or which side diagonal.
 
@@ -100,7 +100,7 @@ class Board:
                 "diag index "
                 + str(diag_index)
                 + " out of range from "
-                + str(self.numOfRows() - 1)
+                + str(-self.numOfRows() + 1)
                 + " to "
                 + str(self.numOfCols() - 1)
             )
@@ -119,7 +119,7 @@ class Board:
             )
         return res
 
-    def antidiagsValsAsList(self, diag_index: int) -> list:
+    def antidiagValsAsList(self, diag_index: int) -> list:
         """return values of diagonal in anti direction (top right to bottom left) as list.
         diag_index describes if anti diagonal or which side diagonal.
 
