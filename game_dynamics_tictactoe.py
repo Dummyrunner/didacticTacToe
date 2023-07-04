@@ -9,14 +9,14 @@ class GameDynamicsTicTacToe:
     def __init__(self, board, rowsize_to_win):
         self.ROWSIZE_TO_WIN = rowsize_to_win
         self.board = board
-        self.admissible_moves_set = set()
+        self.__admissible_moves_set = set()
         self.updateAdmissibleMoves()
 
     def updateAdmissibleMoves(self) -> None:
         board = self.board
         num_of_rows = board.numOfRows()
         num_of_cols = board.numOfCols()
-        self.admissible_moves_set = set()
+        self.__admissible_moves_set = set()
         for irow in range(0, num_of_rows):
             for icol in range(0, num_of_cols):
                 current_point = CartPt(irow, icol)
@@ -25,8 +25,12 @@ class GameDynamicsTicTacToe:
                     # placeholder here
                     move_to_add_black = MoveTicTacToe(current_point, Party.BLACK)
                     move_to_add_white = MoveTicTacToe(current_point, Party.WHITE)
-                    self.admissible_moves_set.add(move_to_add_white)
-                    self.admissible_moves_set.add(move_to_add_black)
+                    self.__admissible_moves_set.add(move_to_add_white)
+                    self.__admissible_moves_set.add(move_to_add_black)
+
+    def admissibleMoves(self):
+        self.updateAdmissibleMoves()
+        return self.__admissible_moves_set
 
     def requestMoveFromPlayer(player):
         # TODO
