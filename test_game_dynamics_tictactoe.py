@@ -11,13 +11,6 @@ import itertools
 from human_player_tictactoe import HumanPlayerTicTacToe
 
 
-@pytest.fixture
-def default_dynamics_tictactoe():
-    board = Board(3, 3)
-    rowsize_to_win = 3
-    return GameDynamicsTicTacToe(board, rowsize_to_win)
-
-
 def test_doMoveOnBoard(default_dynamics_tictactoe):
     dynamics = default_dynamics_tictactoe
     board = dynamics.board
