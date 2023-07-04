@@ -1,15 +1,17 @@
 from Party import Party
 from move_tictactoe import MoveTicTacToe
 from cartpt import CartPt
+from board import Board
 
 
 class HumanPlayerTicTacToe:
-    def __init__(self, party: Party, name=""):
+    def __init__(self, party: Party, board: Board, name=""):
         if name == "":
             self.name = self.generate_name
         else:
             self.name = name
         self.party = party
+        self.board = board
 
     def generate_name():
         ctr = 1
