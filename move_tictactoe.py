@@ -1,4 +1,5 @@
 from cartpt import CartPt
+from Party import Party
 
 
 class MoveTicTacToe:
