@@ -7,7 +7,7 @@ from move_tictactoe import MoveTicTacToe
 
 from axis import Axis
 from game_dynamics_tictactoe import GameDynamicsTicTacToe
-
+import itertools
 from human_player_tictactoe import HumanPlayerTicTacToe
 
 
@@ -193,3 +193,34 @@ def test_has_party_won_game():
 
     assert dynamics2.hasPartyWon(Party.BLACK) == False
     assert dynamics2.hasPartyWon(Party.WHITE) == True
+
+
+def test_admissible_moves_emptyboard(default_board3x4):
+    board = default_board3x4
+    dynamics = GameDynamicsTicTacToe(board, 3)
+    row_idx_range = range(0, dynamics.board.numOfRows())
+    col_idx_range = range(0, dynamics.board.numOfCols())
+    cartesian_index_set = list(itertools.product(row_idx_range, col_idx_range))
+    free_cartpt = [CartPt(*pt) for pt in cartesian_index_set]
+    expected_admissible_moves = set()
+    expected_admissible_moves_raw = [
+        [MoveTicTacToe(pt, Party.BLACK), MoveTicTacToe(pt, Party.WHITE)]
+        for pt in free_cartpt
+    ]
+    for mv_pair in expected_admissible_moves_raw:
+        expected_admissible_moves.add(mv_pair[0])
+        expected_admissible_moves.add(mv_pair[1])
+    actual_admissible_moves = dynamics.admissibleMoves()
+
+    assert len(actual_admissible_moves) == len(expected_admissible_moves)
+    assert actual_admissible_moves == expected_admissible_moves
+
+
+def test_admissible_moves_fullboard():
+    dynamics = GameDynamicsTicTacToe(Board(1, 2), 2)
+    board = dynamics.board
+    board.setStateFromLinearList(2 * [Party.BLACK])
+    expected_admissible_moves = set()
+    actual_admissible_moves = dynamics.admissibleMoves()
+    assert len(actual_admissible_moves) == len(expected_admissible_moves)
+    assert actual_admissible_moves == expected_admissible_moves
