@@ -224,3 +224,18 @@ def test_admissible_moves_fullboard():
     actual_admissible_moves = dynamics.admissibleMoves()
     assert len(actual_admissible_moves) == len(expected_admissible_moves)
     assert actual_admissible_moves == expected_admissible_moves
+
+
+def test_admissible_moves_partially_occupied_miinimal():
+    dynamics = GameDynamicsTicTacToe(Board(1, 2), 2)
+    board = dynamics.board
+    board.setValueAtCartesian(CartPt(0, 0), Party.BLACK)
+    expected_admissible_moves = set(
+        [
+            MoveTicTacToe(CartPt(0, 1), Party.BLACK),
+            MoveTicTacToe(CartPt(0, 1), Party.WHITE),
+        ]
+    )
+    actual_admissible_moves = dynamics.admissibleMoves()
+    assert len(actual_admissible_moves) == len(expected_admissible_moves)
+    assert actual_admissible_moves == expected_admissible_moves
