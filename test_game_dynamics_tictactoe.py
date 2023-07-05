@@ -16,8 +16,8 @@ def test_doMoveOnBoard(default_dynamics_tictactoe):
     board = dynamics.board
     center_square = CartPt(1, 1)
     corner_square = CartPt(2, 2)
-    player_black = HumanPlayerTicTacToe(Party.BLACK, board)
-    player_white = HumanPlayerTicTacToe(Party.WHITE, board)
+    player_black = HumanPlayerTicTacToe(Party.BLACK)
+    player_white = HumanPlayerTicTacToe(Party.WHITE)
     move_black_in_center = MoveTicTacToe(center_square, Party.BLACK)
     move_white_on_corner = MoveTicTacToe(corner_square, Party.WHITE)
 

@@ -5,13 +5,13 @@ from board import Board
 
 
 class HumanPlayerTicTacToe:
-    def __init__(self, party: Party, board: Board, name=""):
+    def __init__(self, party: Party, name=""):
         if name == "":
             self.name = self.generate_name
         else:
             self.name = name
         self.party = party
-        self.board = board
+        self.board = None
 
     def generate_name():
         ctr = 1
