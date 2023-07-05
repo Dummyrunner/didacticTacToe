@@ -3,6 +3,7 @@ from cartpt import CartPt
 from move_tictactoe import MoveTicTacToe
 from enum import Enum
 from axis import Axis
+from board import Board
 
 
 class GameDynamicsTicTacToe:

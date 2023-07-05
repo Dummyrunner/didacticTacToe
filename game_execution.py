@@ -50,10 +50,23 @@ class GameExecution:
             move = curr_pl.chooseMove()
             dynamics.doMoveOnBoard(curr_pl, move)
             print(board)
+            self.setWhosTurn(self.otherParty(curr_pl.party))
             print("---------------------")
-            if dynamics.partyWon(curr_pl.party):
+            if dynamics.hasPartyWon(curr_pl.party):
                 self.status = GameStatus.FINISHED
                 print("PLAYER " + curr_pl.name + " HAS WON!!")
+
+    def otherParty(self, party):
+        res = Party.NEUTRAL
+        if party == Party.WHITE:
+            return Party.BLACK
+        elif party == Party.BLACK:
+            return Party.WHITE
+        else:
+            raise ValueError(
+                "other Party argument has to be Party.BLACK or Party.WHITE, but is  "
+                + str(party)
+            )
 
 
 class GameStatus(Enum):

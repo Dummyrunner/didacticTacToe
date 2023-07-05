@@ -36,7 +36,8 @@ class HumanPlayerTicTacToe:
     def parseKeyboardInputToMove(self, ip: str):
         coords = [int(x) for x in ip.split(",")]
         x, y = coords
-        return CartPt(x, y)
+        pt = CartPt(x, y)
+        return MoveTicTacToe(pt, self.party)
 
     def updateBoard(self, new_board):
         self.board = new_board
