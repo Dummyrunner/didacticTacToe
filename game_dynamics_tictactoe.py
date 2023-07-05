@@ -37,6 +37,7 @@ class GameDynamicsTicTacToe:
         pass
 
     def doMoveOnBoard(self, player, move) -> None:
+        # TODO catch non admissible move
         party = player.party
         pt = move.cartpt_to_fill
         self.board.setValueAtCartesian(pt, party)
