@@ -29,7 +29,7 @@ class HumanPlayerTicTacToe:
 
     def getKeyBoardInput(self) -> str:
         ip = input(
-            "move: X,Y, where X is the line from 0 to NumOfLines-1, Y column from 0 to NumOfColumns-1"
+            "move: X,Y, where X is the line from 0 to NumOfLines-1, Y column from 0 to NumOfColumns-1:\n"
         )
         return ip
 

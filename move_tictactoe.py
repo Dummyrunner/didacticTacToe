@@ -38,7 +38,7 @@ class MoveTicTacToe:
 
     def __eq__(self, other):
         if not isinstance(other, MoveTicTacToe):
-            #         don't attempt to compare against unrelated types
+            # don't attempt to compare against unrelated types
             return NotImplemented
         return (
             self.__cartpt_to_fill == other.__cartpt_to_fill

@@ -33,6 +33,10 @@ class GameDynamicsTicTacToe:
         self.updateAdmissibleMoves()
         return self.__admissible_moves_set
 
+    def addmissibleMovesForParty(self, party):
+        all_admissible_moves = self.admissibleMoves()
+        return [x for x in all_admissible_moves if x.party == party]
+
     def requestMoveFromPlayer(player):
         # TODO
         pass

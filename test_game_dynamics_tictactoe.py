@@ -106,6 +106,18 @@ def test_admissible_moves_emptyboard(default_board3x4):
 
     assert len(actual_admissible_moves) == len(expected_admissible_moves)
     assert actual_admissible_moves == expected_admissible_moves
+    actual_admissible_moves_black = dynamics.addmissibleMovesForParty(Party.BLACK)
+    expected_admissible_moves_black = [
+        MoveTicTacToe(pt, Party.BLACK) for pt in free_cartpt
+    ]
+    assert len(actual_admissible_moves_black) == len(expected_admissible_moves_black)
+    assert all(
+        [
+            list(actual_admissible_moves_black)[i]
+            == list(expected_admissible_moves_black)[i]
+            for i in range(0, len(expected_admissible_moves))
+        ]
+    )
 
 
 def test_admissible_moves_fullboard():
