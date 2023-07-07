@@ -5,7 +5,12 @@ from human_player_tictactoe import HumanPlayerTicTacToe
 
 
 class GameExecution:
-    def __init__(self, dynamics: GameDynamicsTicTacToe, player_white, player_black):
+    def __init__(
+        self,
+        dynamics: GameDynamicsTicTacToe,
+        player_white: HumanPlayerTicTacToe,
+        player_black: HumanPlayerTicTacToe,
+    ):
         self.__dynamics = dynamics
         self.__whos_turn = Party.WHITE
         self.winner = Party.NEUTRAL
@@ -16,6 +21,14 @@ class GameExecution:
             Party.BLACK: self.player_black,
             Party.WHITE: self.player_white,
         }
+
+    def playerAssignmentCorrect(self) -> bool:
+        if (
+            self.player_white.party != Party.WHITE
+            or self.player_black.party != Party.BLACK
+        ):
+            return False
+        return True
 
     def dynamics(self):
         return self.__dynamics
@@ -29,6 +42,27 @@ class GameExecution:
         if party.name not in Party.__members__ or not isinstance(party, Party):
             raise AttributeError("Not a valid party:" + str(party))
         self.__whos_turn = party
+
+    def playerFromParty(self, party: Party) -> HumanPlayerTicTacToe:
+        if party == Party.WHITE:
+            return self.player_white
+        if party == Party.BLACK:
+            return self.player_black
+
+    def changeTurnToNext(self) -> None:
+        current = self.whosTurn()
+        next = self.opponentParty(current)
+        self.setWhosTurn(next)
+
+    def opponentParty(self, party: Party) -> Party:
+        if party == Party.NEUTRAL:
+            raise AttributeError("Here not a valid party option:" + str(party))
+        res = None
+        if party == Party.BLACK:
+            res = Party.WHITE
+        if party == Party.WHITE:
+            res = Party.BLACK
+        return res
 
     def playerList(self):
         return [self.player_white, self.player_black]
