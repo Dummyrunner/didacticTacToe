@@ -16,7 +16,7 @@ class Board:
         self,
         size_x=3,
         size_y=3,
-        markers_dict={Party.NEUTRAL: "_", Party.BLACK: "X", Party.WHITE: "O"},
+        markers_dict={Party.NEUTRAL: "_", Party.BLACK: "O", Party.WHITE: "X"},
     ):
         self.__SIZE_X = size_x
         self.__SIZE_Y = size_y
