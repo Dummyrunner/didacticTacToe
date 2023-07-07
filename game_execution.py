@@ -78,6 +78,19 @@ class GameExecution:
             raise ValueError("Try to get current player, but there is none!")
         return self.party2player_dct[self.__whos_turn]
 
+    def requestMoveFromPlayer(self, player):
+        actual_tries = 0
+        # TODO move max tries to settable location
+        max_tries = 5
+        party = player.party
+        move = None
+        admissible_moves = self.dynamics.addmissibleMovesForParty()
+        # while move not admissible and max num of tries not exceeded
+        while move not in admissible_moves and actual_tries <= max_tries:
+            move = player.chooseMove()
+            actual_tries += 1
+        # TODO throw if max tries exceeded, return if move admissible
+
     def executeMove(self, player: HumanPlayerTicTacToe, move: MoveTicTacToe) -> None:
         self.dynamics.doMoveOnBoard(player, move)
 
