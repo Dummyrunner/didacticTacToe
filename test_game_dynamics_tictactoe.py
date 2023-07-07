@@ -170,3 +170,33 @@ def test_admissible_moves_partially_occupied_black():
     actual_admissible_moves = dynamics.addmissibleMovesForParty(Party.BLACK)
     assert len(actual_admissible_moves) == len(expected_admissible_moves)
     assert set(actual_admissible_moves) == set(expected_admissible_moves)
+
+
+def test_is_draw_positive():
+    line0 = "XOX\n"
+    line1 = "OXO\n"
+    line2 = "OXO"
+    state_string = line0 + line1 + line2
+    board = Board.fromString(state_string)
+    dynamics = GameDynamicsTicTacToe(board, 3)
+    assert dynamics.isDraw() == True
+
+
+def test_is_draw_negative_someone_won():
+    line0 = "XOX\n"
+    line1 = "OXO\n"
+    line2 = "OOX"
+    state_string = line0 + line1 + line2
+    board = Board.fromString(state_string)
+    dynamics = GameDynamicsTicTacToe(board, 3)
+    assert dynamics.isDraw() == False
+
+
+def test_is_draw_negative_moves_left():
+    line0 = "XOX\n"
+    line1 = "O_O\n"
+    line2 = "OXO"
+    state_string = line0 + line1 + line2
+    board = Board.fromString(state_string)
+    dynamics = GameDynamicsTicTacToe(board, 3)
+    assert dynamics.isDraw() == False

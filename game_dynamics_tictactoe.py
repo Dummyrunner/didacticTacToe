@@ -1,9 +1,7 @@
 from Party import Party
 from cartpt import CartPt
 from move_tictactoe import MoveTicTacToe
-from enum import Enum
 from axis import Axis
-from board import Board
 
 
 class GameDynamicsTicTacToe:
@@ -150,7 +148,6 @@ class GameDynamicsTicTacToe:
         return any([self.hasPartyWonAtAnyAxis(axe, party) for axe in relevant_axes])
 
     def isDraw(self):
-        # TODO Test!
         self.updateAdmissibleMoves()
         someone_won = self.hasPartyWon(Party.BLACK) or self.hasPartyWon(Party.WHITE)
-        return not someone_won and self.admissibleMoves == set()
+        return not someone_won and len(self.admissibleMoves()) == 0
