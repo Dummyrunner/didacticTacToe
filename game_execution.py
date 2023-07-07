@@ -2,6 +2,8 @@ from game_dynamics_tictactoe import GameDynamicsTicTacToe
 from Party import Party
 from enum import Enum
 from human_player_tictactoe import HumanPlayerTicTacToe
+from move_tictactoe import MoveTicTacToe
+from board import Board
 
 
 class GameExecution:
@@ -11,15 +13,18 @@ class GameExecution:
         player_white: HumanPlayerTicTacToe,
         player_black: HumanPlayerTicTacToe,
     ):
+        self.status = GameStatus.PREPARE
         self.__dynamics = dynamics
         self.__whos_turn = Party.WHITE
         self.winner = Party.NEUTRAL
-        self.status = GameStatus.PREPARE
         self.player_white = player_white
         self.player_black = player_black
-        self.party2player = {
+        self.party2player_dct = {
             Party.BLACK: self.player_black,
             Party.WHITE: self.player_white,
+        }
+        self.player2party_dct = {
+            self.party2player_dct[key]: key for key in self.party2player_dct.keys()
         }
 
     def playerAssignmentCorrect(self) -> bool:
@@ -30,6 +35,7 @@ class GameExecution:
             return False
         return True
 
+    @property
     def dynamics(self):
         return self.__dynamics
 
@@ -70,28 +76,42 @@ class GameExecution:
     def currentPlayer(self):
         if self.__whos_turn == Party.NEUTRAL:
             raise ValueError("Try to get current player, but there is none!")
-        return self.party2player[self.__whos_turn]
+        return self.party2player_dct[self.__whos_turn]
+
+    def executeMove(self, player: HumanPlayerTicTacToe, move: MoveTicTacToe) -> None:
+        self.dynamics.doMoveOnBoard(player, move)
+
+    def publishBoardToPlayer(self, player: HumanPlayerTicTacToe) -> None:
+        player.updateBoard(self.dynamics.board)
 
     def executeGame(self):
         self.status = GameStatus.RUNNING
         while self.status == GameStatus.RUNNING:
-            dynamics = self.dynamics()
+            dynamics = self.dynamics
             board = dynamics.board
             print(board)
             print("---------------------")
             curr_pl = self.currentPlayer()
-            curr_pl.updateBoard(self.dynamics().board)
+            self.publishBoardToPlayer(curr_pl)
             move = curr_pl.chooseMove()
-            dynamics.doMoveOnBoard(curr_pl, move)
+            self.executeMove(curr_pl, move)
             print(board)
-            self.setWhosTurn(self.otherParty(curr_pl.party))
+            self.changeTurnToNext()
             print("---------------------")
             dynamics.updateAdmissibleMoves()
             if dynamics.hasPartyWon(curr_pl.party):
                 self.status = GameStatus.FINISHED
-                print("PLAYER " + curr_pl.name + " HAS WON!!")  #
-            elif dynamics.admissibleMoves() == set():
+                print(
+                    "PLAYER "
+                    + curr_pl.name
+                    + " ("
+                    + curr_pl.party.name
+                    + ") "
+                    + " HAS WON!!"
+                )  #
+            elif dynamics.isDraw():
                 print("DRAW!!\n")  #
+                self.status = GameStatus.FINISHED
 
     def otherParty(self, party):
         res = Party.NEUTRAL
