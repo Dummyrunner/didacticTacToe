@@ -148,3 +148,9 @@ class GameDynamicsTicTacToe:
     def hasPartyWon(self, party: Party) -> bool:
         relevant_axes = [Axis.ROW, Axis.COL, Axis.MAINDIAG, Axis.ANTIDIAG]
         return any([self.hasPartyWonAtAnyAxis(axe, party) for axe in relevant_axes])
+
+    def isDraw(self):
+        # TODO Test!
+        self.updateAdmissibleMoves()
+        someone_won = self.hasPartyWon(Party.BLACK) or self.hasPartyWon(Party.WHITE)
+        return not someone_won and self.admissibleMoves == set()
