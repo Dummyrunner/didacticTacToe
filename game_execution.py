@@ -86,9 +86,12 @@ class GameExecution:
             print(board)
             self.setWhosTurn(self.otherParty(curr_pl.party))
             print("---------------------")
+            dynamics.updateAdmissibleMoves()
             if dynamics.hasPartyWon(curr_pl.party):
                 self.status = GameStatus.FINISHED
-                print("PLAYER " + curr_pl.name + " HAS WON!!")
+                print("PLAYER " + curr_pl.name + " HAS WON!!")  #
+            elif dynamics.admissibleMoves() == set():
+                print("DRAW!!\n")  #
 
     def otherParty(self, party):
         res = Party.NEUTRAL
