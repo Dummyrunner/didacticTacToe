@@ -78,18 +78,34 @@ class GameExecution:
             raise ValueError("Try to get current player, but there is none!")
         return self.party2player_dct[self.__whos_turn]
 
-    def requestMoveFromPlayer(self, player):
-        actual_tries = 0
-        # TODO move max tries to settable location
-        max_tries = 5
+    def _inputTopologyValid(ip_string: str, split_char=",") -> bool:
+        """True, if input string ip_string contanins two integer values separated by one comma"""
+        how_many_commas = ip_string.count(split_char)
+        if how_many_commas != 1:
+            return False
+        x, y = ip_string.split(split_char)
+        return x.isdigit() and y.isdigit()
+
+    def requestMoveFromPlayer(
+        self, player: HumanPlayerTicTacToe, max_tries=2
+    ) -> MoveTicTacToe:
         party = player.party
-        move = None
-        admissible_moves = self.dynamics.addmissibleMovesForParty()
-        # while move not admissible and max num of tries not exceeded
-        while move not in admissible_moves and actual_tries <= max_tries:
+        dynamics = self.dynamics
+        for num_of_tries in range(0, max_tries):
             move = player.chooseMove()
-            actual_tries += 1
-        # TODO throw if max tries exceeded, return if move admissible
+            if move in dynamics.addmissibleMovesForParty(party):
+                return move
+            num_of_tries += 1
+            print(
+                "Non-admissible move (" + str(num_of_tries) + "/" + str(max_tries) + ")"
+            )
+        raise ValueError(
+            "Too many non-admissible moves from player "
+            + player.name
+            + " playing for party "
+            + player.party.name
+            + " entered."
+        )
 
     def executeMove(self, player: HumanPlayerTicTacToe, move: MoveTicTacToe) -> None:
         self.dynamics.doMoveOnBoard(player, move)
@@ -106,7 +122,7 @@ class GameExecution:
             print("---------------------")
             curr_pl = self.currentPlayer()
             self.publishBoardToPlayer(curr_pl)
-            move = curr_pl.chooseMove()
+            move = self.requestMoveFromPlayer(curr_pl)
             self.executeMove(curr_pl, move)
             print(board)
             self.changeTurnToNext()

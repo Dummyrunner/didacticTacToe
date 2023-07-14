@@ -35,10 +35,6 @@ class GameDynamicsTicTacToe:
         all_admissible_moves = self.admissibleMoves()
         return [x for x in all_admissible_moves if x.party == party]
 
-    def requestMoveFromPlayer(player):
-        # TODO
-        pass
-
     def doMoveOnBoard(self, player, move) -> None:
         # TODO catch non admissible move
         party = player.party
