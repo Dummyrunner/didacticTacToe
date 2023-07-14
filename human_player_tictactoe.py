@@ -27,6 +27,15 @@ class HumanPlayerTicTacToe:
         ip_string = self.getKeyBoardInput()
         return self.parseKeyboardInputToMove(ip_string)
 
+    def _inputTopologyValid(self, ip_string: str, split_char=",") -> bool:
+        """True, if input string ip_string contanins two integer values
+        separated by one split character, by default a comma"""
+        how_many_commas = ip_string.count(split_char)
+        if how_many_commas != 1:
+            return False
+        x, y = ip_string.split(split_char)
+        return x.isdigit() and y.isdigit()
+
     def getKeyBoardInput(self) -> str:
         ip = input(
             "move: X,Y, where X is the line from 0 to NumOfLines-1, Y column from 0 to NumOfColumns-1:\n"
