@@ -19,6 +19,10 @@ class GameExecution:
         self.winner = Party.NEUTRAL
         self.player_white = player_white
         self.player_black = player_black
+        if self.player_white.name == "" and self.player_black.name == "":
+            namegen = self.generateName()
+            self.player_white.name = next(namegen)
+            self.player_black.name = next(namegen)
         self.party2player_dct = {
             Party.BLACK: self.player_black,
             Party.WHITE: self.player_white,
@@ -30,6 +34,12 @@ class GameExecution:
             self.player_white: GameStatus.WHITE_WINS,
             self.player_black: GameStatus.BLACK_WINS,
         }
+
+    def generateName(self):
+        ctr = 1
+        while True:
+            yield "Harald" + str(ctr)
+            ctr += 1
 
     def playerAssignmentCorrect(self) -> bool:
         if (

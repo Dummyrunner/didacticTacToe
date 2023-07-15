@@ -6,10 +6,7 @@ from board import Board
 
 class BasePlayerTicTacToe:
     def __init__(self, party: Party, name=""):
-        if name == "":
-            self.name = next(self.generate_name())
-        else:
-            self.name = name
+        self.name = name
         self.party = party
         self.board = None
 
