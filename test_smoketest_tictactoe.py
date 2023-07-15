@@ -2,11 +2,8 @@ from game_execution import (
     GameExecution,
     GameStatus,
 )
-from player_tictactoe import HumanPlayerTicTacToe
 from board import Board
 from game_dynamics_tictactoe import GameDynamicsTicTacToe
-from move_tictactoe import MoveTicTacToe
-from cartpt import CartPt
 from Party import Party
 from conftest import ScriptedPlayer
 
@@ -16,7 +13,6 @@ moves_white_white_wins = [
     "2,0",
     "1,0",
 ]
-
 moves_black_white_wins = [
     "0,1",
     "2,2",
@@ -25,18 +21,40 @@ moves_black_white_wins = [
 
 
 def test_smoketest_white_wins():
-    pwhite = ScriptedPlayer(Party.WHITE, moves_white_white_wins)
-    pblack = ScriptedPlayer(Party.BLACK, moves_black_white_wins)
-    actual_status = smoketest_from_players(pwhite, pblack)
+    actual_status = smoketest_from_players(
+        moves_white_white_wins, moves_black_white_wins
+    )
     expected_status = GameStatus.WHITE_WINS
     assert actual_status == expected_status
 
 
-def smoketest_from_players(player_white, player_black):
+moves_white_black_wins = ["0,0", "0,2", "2,2"]
+moves_black_black_wins = ["1,1", "0,1", "2,1"]
+
+
+def test_smoketest_black_wins():
+    actual_status = smoketest_from_players(
+        moves_white_black_wins, moves_black_black_wins
+    )
+    expected_status = GameStatus.BLACK_WINS
+    assert actual_status == expected_status
+
+
+moves_white_draw = ["0,0", "1,0", "2,1", "0,2", "1,2"]
+moves_black_draw = ["0,1", "2,0", "1,1", "2,2"]
+
+
+def test_smoketest_draw():
+    actual_status = smoketest_from_players(moves_white_draw, moves_black_draw)
+    expected_status = GameStatus.DRAW
+    assert actual_status == expected_status
+
+
+def smoketest_from_players(moves_white, moves_black):
+    player_white = ScriptedPlayer(Party.WHITE, moves_white)
+    player_black = ScriptedPlayer(Party.BLACK, moves_black)
     board = Board(3, 3)
     rowsize_to_win = 3
     dyn = GameDynamicsTicTacToe(board, rowsize_to_win)
     ge = GameExecution(dyn, player_white, player_black)
-    ge.executeGame()
-    actual_status = ge.status
-    return actual_status
+    return ge.executeGame()
