@@ -5,7 +5,7 @@ from game_execution import (
 )
 from Party import Party
 from board import Board
-from human_player_tictactoe import HumanPlayerTicTacToe
+from player_tictactoe import HumanPlayerTicTacToe
 from game_dynamics_tictactoe import GameDynamicsTicTacToe
 
 

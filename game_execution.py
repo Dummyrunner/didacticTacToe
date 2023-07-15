@@ -1,7 +1,7 @@
 from game_dynamics_tictactoe import GameDynamicsTicTacToe
 from Party import Party
 from enum import Enum
-from human_player_tictactoe import HumanPlayerTicTacToe
+from player_tictactoe import HumanPlayerTicTacToe
 from move_tictactoe import MoveTicTacToe
 from board import Board
 

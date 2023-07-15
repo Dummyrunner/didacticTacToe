@@ -8,7 +8,7 @@ from move_tictactoe import MoveTicTacToe
 from axis import Axis
 from game_dynamics_tictactoe import GameDynamicsTicTacToe
 import itertools
-from human_player_tictactoe import HumanPlayerTicTacToe
+from player_tictactoe import HumanPlayerTicTacToe
 
 
 def test_doMoveOnBoard(default_dynamics_tictactoe):

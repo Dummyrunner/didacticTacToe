@@ -1,7 +1,7 @@
 from game_execution import GameExecution, GameStatus
 from Party import Party
 import pytest
-from human_player_tictactoe import HumanPlayerTicTacToe
+from player_tictactoe import HumanPlayerTicTacToe
 
 
 def test_game_execution_init(default_dynamics_tictactoe):

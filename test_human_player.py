@@ -1,4 +1,4 @@
-from human_player_tictactoe import HumanPlayerTicTacToe
+from player_tictactoe import HumanPlayerTicTacToe
 from Party import Party
 from cartpt import CartPt
 from board import Board

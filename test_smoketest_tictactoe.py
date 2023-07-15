@@ -2,7 +2,7 @@ from game_execution import (
     GameExecution,
     createDefaultTicTacToeGameExecutionHumanPlayers,
 )
-from human_player_tictactoe import HumanPlayerTicTacToe
+from player_tictactoe import HumanPlayerTicTacToe
 from board import Board
 from game_dynamics_tictactoe import GameDynamicsTicTacToe
 from move_tictactoe import MoveTicTacToe
