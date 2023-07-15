@@ -119,8 +119,8 @@ class GameExecution:
 
     def executeGame(self):
         self.status = GameStatus.RUNNING
+        self.status = self.evaluateGameState()
         while self.status == GameStatus.RUNNING:
-            self.status = self.evaluateGameState()
             dynamics = self.dynamics
             board = dynamics.board
             print(board)
@@ -144,6 +144,8 @@ class GameExecution:
             print("BLACK WINS!")
         if self.status == GameStatus.WHITE_WINS:
             print("WHITE WINS!")
+        if self.status == GameStatus.FAILURE:
+            print("FAILURE!")
         print("--------------------------")
 
     def evaluateGameState(self) -> Enum:
