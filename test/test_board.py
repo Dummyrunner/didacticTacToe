@@ -273,3 +273,35 @@ def test_antidiags_vals_as_list(default_board3x4):
         board.maindiagValsAsList(-3)
     with pytest.raises(IndexError):
         board.maindiagValsAsList(4)
+
+
+def test_get_line_by_index(default_board3x4):
+    board = default_board3x4
+    board.setValueAtCartesian(CartPt(0, 1), Party.BLACK)
+    board.setValueAtCartesian(CartPt(1, 2), Party.WHITE)
+    assert board._getRowAssignmentsAsList(0) == [
+        Party.NEUTRAL,
+        Party.BLACK,
+        Party.NEUTRAL,
+        Party.NEUTRAL,
+    ]
+    assert board._getRowAssignmentsAsList(1) == [
+        Party.NEUTRAL,
+        Party.NEUTRAL,
+        Party.WHITE,
+        Party.NEUTRAL,
+    ]
+    assert board._getRowAssignmentsAsList(2) == [
+        Party.NEUTRAL,
+        Party.NEUTRAL,
+        Party.NEUTRAL,
+        Party.NEUTRAL,
+    ]
+
+
+def test_get_line_by_index_fail(default_board3x4):
+    board = default_board3x4
+    with pytest.raises(IndexError):
+        board._getRowAssignmentsAsList(-1)
+    with pytest.raises(IndexError):
+        board._getRowAssignmentsAsList(3)

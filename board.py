@@ -201,6 +201,22 @@ class Board:
                 board.setValueAtCartesian(current_pt, current_val)
         return board
 
+    def _getRowAssignmentsAsList(self, line_idx: int)-> list:
+        if line_idx < 0 or line_idx > self.numOfRows() - 1:
+            raise IndexError(
+                "Line Index "
+                + str(line_idx)
+                + " is out of range. (num of rows = "
+                + str(self.numOfRows())
+                + ")"
+            )
+        return [
+            self.valueFromCartesian(CartPt(line_idx, col_idx))
+            for col_idx in range(0, self.numOfCols())
+        ]
+
+    def _rowToString
+
     def __str__(self):
         res = ""
         for irow in range(0, self.numOfRows()):
@@ -211,4 +227,5 @@ class Board:
                 res += char_to_add
             if irow < self.numOfCols() - 1:
                 res += "\n"
+
         return res
