@@ -117,7 +117,7 @@ class GameExecution:
     def publishBoardToPlayer(self, player: HumanPlayerTicTacToe) -> None:
         player.updateBoard(self.dynamics.board)
 
-    def executeGame(self):
+    def executeGame(self) -> Enum:
         self.status = GameStatus.RUNNING
         self.status = self.evaluateGameState()
         while self.status == GameStatus.RUNNING:
@@ -135,16 +135,17 @@ class GameExecution:
             dynamics.updateAdmissibleMoves()
             self.status = self.evaluateGameState()
         self.displayResult()
+        return self.status
 
     def displayResult(self):
         print("GAME FINISHED:------------")
         if self.status == GameStatus.DRAW:
             print("DRAW!")
-        if self.status == GameStatus.BLACK_WINS:
+        elif self.status == GameStatus.BLACK_WINS:
             print("BLACK WINS!")
-        if self.status == GameStatus.WHITE_WINS:
+        elif self.status == GameStatus.WHITE_WINS:
             print("WHITE WINS!")
-        if self.status == GameStatus.FAILURE:
+        elif self.status == GameStatus.FAILURE:
             print("FAILURE!")
         print("--------------------------")
 
