@@ -2,6 +2,18 @@ import pytest
 from board import Board
 from Party import Party
 from game_dynamics_tictactoe import GameDynamicsTicTacToe
+from player_tictactoe import HumanPlayerTicTacToe
+
+
+class ScriptedPlayer(HumanPlayerTicTacToe):
+    def __init__(self, party: Party, inputlist: list, name="ScriptedPlayer"):
+        super().__init__(party, name)
+        self.__inputlist = iter(inputlist)
+
+    def getKeyBoardInput(self) -> str:
+        move_ip = next(self.__inputlist)
+        print("set move from movelist: " + move_ip)
+        return move_ip
 
 
 @pytest.fixture
