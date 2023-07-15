@@ -109,7 +109,6 @@ class GameDynamicsTicTacToe:
             )
 
     def hasPartyWonAtAnyAxis(self, axis: Axis, party: Party) -> bool:
-        #     # TODO
         board = self.board
         range_of_row_indices = range(0, board.numOfRows())
         range_of_col_indices = range(0, board.numOfCols())
