@@ -46,12 +46,18 @@ class HumanPlayerTicTacToe(BasePlayerTicTacToe):
                 + ")"
             )
         raise ValueError(
-            "Repeatedly bad topology: Max num " + str(max_tries) + "exceeded"
+            "Repeatedly bad topology: Max num " + str(max_tries) + " exceeded"
         )
 
     def getKeyBoardInput(self) -> str:
+        max_row_idx = self.board.numOfRows() - 1
+        max_col_idx = self.board.numOfCols() - 1
         ip = input(
-            "move: X,Y, where X is the line from 0 to NumOfLines-1, Y column from 0 to NumOfColumns-1:\n"
+            "move: X,Y, where X is the line from 0 to "
+            + str(max_row_idx)
+            + ", Y column from 0 to "
+            + str(max_col_idx)
+            + ":\n"
         )
         return ip
 
