@@ -142,6 +142,18 @@ class GameExecution:
                 print("DRAW!!\n")  #
                 self.status = GameStatus.FINISHED
 
+    def evaluateGameState(self) -> Enum:
+        dynamics = self.dynamics
+        player_white = self.player_white
+        player_black = self.player_black
+        if dynamics.isDraw():
+            return GameStatus.DRAW
+        if dynamics.hasPartyWon(self.player2party_dct[player_white]):
+            return self.winning_player2status_dct(player_white)
+        if dynamics.hasPartyWon(self.player2party_dct[player_black]):
+            return self.winning_player2status_dct(player_black)
+        return GameStatus.RUNNING
+
     def otherParty(self, party):
         res = Party.NEUTRAL
         if party == Party.WHITE:
