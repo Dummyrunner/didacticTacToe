@@ -2,6 +2,8 @@ from game_execution import GameExecution, GameStatus
 from Party import Party
 import pytest
 from player_tictactoe import HumanPlayerTicTacToe
+from board import Board
+from game_dynamics_tictactoe import GameDynamicsTicTacToe
 
 
 def test_game_execution_init(default_dynamics_tictactoe):
@@ -71,11 +73,53 @@ def test_player_from_party(default_dynamics_tictactoe):
     assert ge.playerFromParty(Party.BLACK) is ge.player_black
 
 
-# TODO: concept for key input or testplayer per generator?
-# def test_smoke_test(default_dynamics_tictactoe):
-#     dynamics = default_dynamics_tictactoe
-#     ge = GameExecution(
-#         dynamics, HumanPlayerTicTacToe(Party.WHITE), HumanPlayerTicTacToe(Party.BLACK)
-#     )
-#     ge.executeGame()
-#     assert 1 == 0
+# TODO remove, test new eval fucntion instead
+def test_game_execution_white_wins():
+    line0 = "_XO\n"
+    line1 = "O__\n"
+    line2 = "XXX"
+    state_string = line0 + line1 + line2
+    board = Board.fromString(state_string)
+
+    pwhite = HumanPlayerTicTacToe(Party.WHITE)
+    pblack = HumanPlayerTicTacToe(Party.BLACK)
+    rowsize_to_win = 3
+    dyn = GameDynamicsTicTacToe(board, rowsize_to_win)
+    ge = GameExecution(dyn, pwhite, pblack)
+    expected_outcome = GameStatus.WHITE_WINS
+    actual_outcome = ge.evaluateGameState()
+    assert expected_outcome == actual_outcome
+
+
+def test_game_execution_black_wins():
+    line0 = "_OX\n"
+    line1 = "X__\n"
+    line2 = "OOO"
+    state_string = line0 + line1 + line2
+    board = Board.fromString(state_string)
+
+    pwhite = HumanPlayerTicTacToe(Party.WHITE)
+    pblack = HumanPlayerTicTacToe(Party.BLACK)
+    rowsize_to_win = 3
+    dyn = GameDynamicsTicTacToe(board, rowsize_to_win)
+    ge = GameExecution(dyn, pwhite, pblack)
+    expected_outcome = GameStatus.BLACK_WINS
+    actual_outcome = ge.evaluateGameState()
+    assert expected_outcome == actual_outcome
+
+
+def test_game_execution_draw():
+    line0 = "XOX\n"
+    line1 = "XXO\n"
+    line2 = "OXO"
+    state_string = line0 + line1 + line2
+    board = Board.fromString(state_string)
+
+    pwhite = HumanPlayerTicTacToe(Party.WHITE)
+    pblack = HumanPlayerTicTacToe(Party.BLACK)
+    rowsize_to_win = 3
+    dyn = GameDynamicsTicTacToe(board, rowsize_to_win)
+    ge = GameExecution(dyn, pwhite, pblack)
+    expected_outcome = GameStatus.DRAW
+    actual_outcome = ge.evaluateGameState()
+    assert expected_outcome == actual_outcome
