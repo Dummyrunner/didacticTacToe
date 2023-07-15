@@ -201,21 +201,46 @@ class Board:
                 board.setValueAtCartesian(current_pt, current_val)
         return board
 
-    def _getRowAssignmentsAsList(self, line_idx: int)-> list:
-        if line_idx < 0 or line_idx > self.numOfRows() - 1:
+    def _getRowAssignmentsAsList(self, row_idx: int) -> list:
+        if row_idx < 0 or row_idx > self.numOfRows() - 1:
             raise IndexError(
                 "Line Index "
-                + str(line_idx)
+                + str(row_idx)
                 + " is out of range. (num of rows = "
                 + str(self.numOfRows())
                 + ")"
             )
         return [
-            self.valueFromCartesian(CartPt(line_idx, col_idx))
+            self.valueFromCartesian(CartPt(row_idx, col_idx))
             for col_idx in range(0, self.numOfCols())
         ]
 
-    def _rowToString
+    def _rowToString(self, row_idx):
+        if row_idx < 0 or row_idx > self.numOfRows() - 1:
+            raise IndexError(
+                "Line Index "
+                + str(row_idx)
+                + " is out of range. (num of rows = "
+                + str(self.numOfRows())
+                + ")"
+            )
+        charlist = [
+            self.state_markers_dict[party]
+            for party in self._getRowAssignmentsAsList(row_idx)
+        ]
+        return "".join(charlist)
+
+    def _rowStringToFormatted(self, rowstring):
+        res = ""
+        if len(rowstring) <= 2:
+            return rowstring
+        first_char = rowstring[0]
+        last_char = rowstring[-1]
+        interior_string = rowstring[1:-1]
+        print(interior_string)
+        for i in range(len(interior_string) - 1, 0, -1):
+            interior_string = interior_string[:i] + "|" + interior_string[i:]
+        return first_char + "|" + interior_string + "|" + last_char
 
     def __str__(self):
         res = ""
@@ -227,5 +252,4 @@ class Board:
                 res += char_to_add
             if irow < self.numOfCols() - 1:
                 res += "\n"
-
         return res
