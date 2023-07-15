@@ -6,7 +6,15 @@ from player_tictactoe import HumanPlayerTicTacToe
 
 
 class ScriptedPlayer(HumanPlayerTicTacToe):
+    """Player to mock keyboard input choice of human player."""
+
     def __init__(self, party: Party, inputlist: list, name="ScriptedPlayer"):
+        """
+        Args:
+            party (Party): _description_
+            inputlist (list): list of inputs as "0,1", "2,1", ... etc
+            name (str, optional): _description_. Defaults to "ScriptedPlayer".
+        """
         super().__init__(party, name)
         self.__inputlist = iter(inputlist)
 
