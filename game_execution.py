@@ -155,6 +155,15 @@ class GameExecution:
             )
 
 
+def createDefaultTicTacToeGameExecutionHumanPlayers() -> GameExecution:
+    pwhite = HumanPlayerTicTacToe(Party.WHITE)
+    pblack = HumanPlayerTicTacToe(Party.BLACK)
+    board = Board(3, 3)
+    rowsize_to_win = 3
+    dyn = GameDynamicsTicTacToe(board, rowsize_to_win)
+    return GameExecution(dyn, pwhite, pblack)
+
+
 class GameStatus(Enum):
     PREPARE = 0
     RUNNING = 1
