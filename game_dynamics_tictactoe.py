@@ -36,10 +36,13 @@ class GameDynamicsTicTacToe:
         return [x for x in all_admissible_moves if x.party == party]
 
     def doMoveOnBoard(self, player, move) -> None:
-        # TODO catch non admissible move
+        self.updateAdmissibleMoves()
         party = player.party
         pt = move.cartpt_to_fill
-        self.board.setValueAtCartesian(pt, party)
+        if move in self.admissibleMoves():
+            self.board.setValueAtCartesian(pt, party)
+        else:
+            raise ValueError("Move " + str(move) + " not admissible")
 
     @staticmethod
     def maxLenCohesiveSeqInPartyList(party_list: list, party_of_interest: Party) -> int:
