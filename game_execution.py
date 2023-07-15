@@ -26,6 +26,10 @@ class GameExecution:
         self.player2party_dct = {
             self.party2player_dct[key]: key for key in self.party2player_dct.keys()
         }
+        self.winning_player2status_dct = {
+            self.player_white: GameStatus.WHITE_WINS,
+            self.player_black: GameStatus.BLACK_WINS,
+        }
 
     def playerAssignmentCorrect(self) -> bool:
         if (
@@ -116,6 +120,7 @@ class GameExecution:
     def executeGame(self):
         self.status = GameStatus.RUNNING
         while self.status == GameStatus.RUNNING:
+            self.status = self.evaluateGameState()
             dynamics = self.dynamics
             board = dynamics.board
             print(board)
@@ -128,19 +133,18 @@ class GameExecution:
             self.changeTurnToNext()
             print("---------------------")
             dynamics.updateAdmissibleMoves()
-            if dynamics.hasPartyWon(curr_pl.party):
-                self.status = GameStatus.FINISHED
-                print(
-                    "PLAYER "
-                    + curr_pl.name
-                    + " ("
-                    + curr_pl.party.name
-                    + ") "
-                    + " HAS WON!!"
-                )  #
-            elif dynamics.isDraw():
-                print("DRAW!!\n")  #
-                self.status = GameStatus.FINISHED
+            self.status = self.evaluateGameState()
+        self.displayResult()
+
+    def displayResult(self):
+        print("GAME FINISHED:------------")
+        if self.status == GameStatus.DRAW:
+            print("DRAW!")
+        if self.status == GameStatus.BLACK_WINS:
+            print("BLACK WINS!")
+        if self.status == GameStatus.WHITE_WINS:
+            print("WHITE WINS!")
+        print("--------------------------")
 
     def evaluateGameState(self) -> Enum:
         dynamics = self.dynamics
@@ -149,9 +153,9 @@ class GameExecution:
         if dynamics.isDraw():
             return GameStatus.DRAW
         if dynamics.hasPartyWon(self.player2party_dct[player_white]):
-            return self.winning_player2status_dct(player_white)
+            return self.winning_player2status_dct[player_white]
         if dynamics.hasPartyWon(self.player2party_dct[player_black]):
-            return self.winning_player2status_dct(player_black)
+            return self.winning_player2status_dct[player_black]
         return GameStatus.RUNNING
 
     def otherParty(self, party):
@@ -179,5 +183,7 @@ def createDefaultTicTacToeGameExecutionHumanPlayers() -> GameExecution:
 class GameStatus(Enum):
     PREPARE = 0
     RUNNING = 1
-    FINISHED = 2
-    FAILURE = 3
+    WHITE_WINS = 2
+    BLACK_WINS = 3
+    DRAW = 3
+    FAILURE = 4
