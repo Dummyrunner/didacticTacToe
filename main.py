@@ -1,12 +1,4 @@
-from game_execution import (
-    GameExecution,
-    GameStatus,
-    createDefaultTicTacToeGameExecutionHumanPlayers,
-)
-from Party import Party
-from board import Board
-from player_tictactoe import HumanPlayerTicTacToe
-from game_dynamics_tictactoe import GameDynamicsTicTacToe
+from game_execution import createDefaultTicTacToeGameExecutionHumanPlayers
 
 
 def main():
