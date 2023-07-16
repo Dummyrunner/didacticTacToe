@@ -4,6 +4,7 @@ from enum import Enum
 from player_tictactoe import HumanPlayerTicTacToe
 from move_tictactoe import MoveTicTacToe
 from board import Board
+import str_utils as su
 
 
 class GameExecution:
@@ -127,10 +128,19 @@ class GameExecution:
     def publishBoardToPlayer(self, player: HumanPlayerTicTacToe) -> None:
         player.updateBoard(self.dynamics.board)
 
+    def _introMessageString(self) -> str:
+        headline = "WELCOME TO didacTICTACTOE!"
+        welcome_msg = su.strInBox(headline, 40)
+        res = welcome_msg + "\n"
+        res += "Player for " + Party.WHITE.name + ": " + self.player_white.name + "\n"
+        res += "Player for " + Party.BLACK.name + ": " + self.player_black.name + "\n"
+        return res
+
     def executeGame(self) -> Enum:
         self.status = GameStatus.RUNNING
         self.status = self.evaluateGameState()
         while self.status == GameStatus.RUNNING:
+            print(self._introMessageString())
             dynamics = self.dynamics
             board = dynamics.board
             print(board)
@@ -148,16 +158,16 @@ class GameExecution:
         return self.status
 
     def displayResult(self):
-        print("GAME FINISHED:------------")
+        result_string = ""
         if self.status == GameStatus.DRAW:
-            print("DRAW!")
+            result_string = "DRAW!"
         elif self.status == GameStatus.BLACK_WINS:
-            print("BLACK WINS!")
+            result_string = "BLACK WINS!"
         elif self.status == GameStatus.WHITE_WINS:
-            print("WHITE WINS!")
+            result_string = "WHITE WINS!"
         elif self.status == GameStatus.FAILURE:
-            print("FAILURE!")
-        print("--------------------------")
+            result_string = "FAILURE!"
+        print(su.strInBox(result_string, 40))
 
     def evaluateGameState(self) -> Enum:
         dynamics = self.dynamics

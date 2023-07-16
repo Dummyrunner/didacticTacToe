@@ -2,7 +2,6 @@ from game_execution import createDefaultTicTacToeGameExecutionHumanPlayers
 
 
 def main():
-    print("START")
     ge = createDefaultTicTacToeGameExecutionHumanPlayers()
     ge.executeGame()
 
