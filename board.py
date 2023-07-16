@@ -243,7 +243,7 @@ class Board:
         return first_char + "|" + interior_string + "|" + last_char
 
     def __str__(self):
-        res = ""
+        res = "Board:\n"
         row_idx_range = range(0, self.numOfRows())
         col_idx_range = range(0, self.numOfCols())
         col_index_row = 2 * " " + "".join([str(idx) for idx in col_idx_range])
@@ -257,4 +257,20 @@ class Board:
                 res += char_to_add
             if irow < self.numOfCols() - 1:
                 res += "\n"
+        res += 2 * "\n"
+        res += (
+            "Marker for "
+            + Party.WHITE.name
+            + ": "
+            + self.state_markers_dict[Party.WHITE]
+            + ";\t"
+        )
+
+        res += (
+            "Marker for "
+            + Party.BLACK.name
+            + ": "
+            + self.state_markers_dict[Party.BLACK]
+        )
+
         return res

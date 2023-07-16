@@ -134,14 +134,14 @@ class GameExecution:
             dynamics = self.dynamics
             board = dynamics.board
             print(board)
-            print("---------------------")
+            print(25 * "-")
             curr_pl = self.currentPlayer()
             self.publishBoardToPlayer(curr_pl)
             move = self.requestMoveFromPlayer(curr_pl)
             self.executeMove(curr_pl, move)
-            print(board)
+            print(str(board) + "\n")
             self.changeTurnToNext()
-            print("---------------------")
+            print(25 * "-")
             dynamics.updateAdmissibleMoves()
             self.status = self.evaluateGameState()
         self.displayResult()

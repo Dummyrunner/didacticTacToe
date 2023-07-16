@@ -31,15 +31,14 @@ class BasePlayerTicTacToe:
 
 class HumanPlayerTicTacToe(BasePlayerTicTacToe):
     def chooseMove(self, max_tries=2) -> MoveTicTacToe:
-        print("party " + str(self.party))
-        print("name: " + self.name)
+        print("Your turn, " + str(self.party.name + "! ") + "(name: " + self.name + ")")
         for num_of_tries in range(0, max_tries):
             ip_string = self.getKeyBoardInput()
             if self._inputTopologyValid(ip_string):
                 return self.parseKeyboardInputToMove(ip_string)
             num_of_tries += 1
             print(
-                "Input has not topology to represent move. try again! Bad topology input ("
+                "Input has not the right topology to represent a move. try again! Bad topology input ("
                 + str(num_of_tries)
                 + "/"
                 + str(max_tries)
@@ -53,9 +52,9 @@ class HumanPlayerTicTacToe(BasePlayerTicTacToe):
         max_row_idx = self.board.numOfRows() - 1
         max_col_idx = self.board.numOfCols() - 1
         ip = input(
-            "move: X,Y, where X is the line from 0 to "
+            'move: Enter "X,Y" where X is the row index from 0 to '
             + str(max_row_idx)
-            + ", Y column from 0 to "
+            + ", Y column index from 0 to "
             + str(max_col_idx)
             + ":\n"
         )
