@@ -237,19 +237,26 @@ class Board:
         first_char = rowstring[0]
         last_char = rowstring[-1]
         interior_string = rowstring[1:-1]
-        print(interior_string)
         for i in range(len(interior_string) - 1, 0, -1):
             interior_string = interior_string[:i] + "|" + interior_string[i:]
         return first_char + "|" + interior_string + "|" + last_char
 
     def __str__(self):
         res = ""
-        for irow in range(0, self.numOfRows()):
-            for icol in range(0, self.numOfCols()):
-                char_to_add = self.state_markers_dict[
-                    self.valueFromCartesian(CartPt(irow, icol))
-                ]
-                res += char_to_add
-            if irow < self.numOfCols() - 1:
-                res += "\n"
+        res += self._rowStringToFormatted(self._rowToString(0)) + "\n"
+        for irow in range(self.numOfRows() - 2, 0, -1):
+            res += "-" * (self.numOfCols() * 2 - 1) + "\n"
+            res += self._rowStringToFormatted(self._rowToString(irow)) + "\n"
+        # for irow in range(0, self.numOfRows()):
+        #     for icol in range(0, self.numOfCols()):
+        #         char_to_add = self.state_markers_dict[
+        #             self.valueFromCartesian(CartPt(irow, icol))
+        #         ]
+        #         res += char_to_add
+        #     if irow < self.numOfCols() - 1:
+        #         res += "\n"
+        res += "-" * (self.numOfCols() * 2 - 1) + "\n"
+        res += (
+            self._rowStringToFormatted(self._rowToString(self.numOfRows() - 1)) + "\n"
+        )
         return res
