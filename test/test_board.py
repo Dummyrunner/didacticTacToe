@@ -275,7 +275,7 @@ def test_antidiags_vals_as_list(default_board3x4):
         board.maindiagValsAsList(4)
 
 
-def test_get_line_by_index(default_board3x4):
+def test_get_row_assignemts_as_list(default_board3x4):
     board = default_board3x4
     board.setValueAtCartesian(CartPt(0, 1), Party.BLACK)
     board.setValueAtCartesian(CartPt(1, 2), Party.WHITE)
@@ -299,9 +299,30 @@ def test_get_line_by_index(default_board3x4):
     ]
 
 
-def test_get_line_by_index_fail(default_board3x4):
+def test_get_row_assignemts_as_list_fail(default_board3x4):
     board = default_board3x4
     with pytest.raises(IndexError):
         board._getRowAssignmentsAsList(-1)
     with pytest.raises(IndexError):
         board._getRowAssignmentsAsList(3)
+
+
+def test_row_to_string(default_board3x4):
+    board = default_board3x4
+    board.setValueAtCartesian(CartPt(0, 1), Party.BLACK)
+    board.setValueAtCartesian(CartPt(1, 2), Party.WHITE)
+    assert board._rowToString(0) == "_O__"
+    assert board._rowToString(1) == "__X_"
+    with pytest.raises(IndexError):
+        board._rowToString(-1)
+    with pytest.raises(IndexError):
+        board._rowToString(3)
+
+
+# def test_row_string_to_formatted(default_board3x4):
+#     board = default_board3x4
+#     board.setValueAtCartesian(CartPt(0, 1), Party.BLACK)
+#     board.setValueAtCartesian(CartPt(1, 2), Party.WHITE)
+#     board.setValueAtCartesian(CartPt(2, 3), Party.BLACK)
+#     print(board)
+#     assert 0 == 1
