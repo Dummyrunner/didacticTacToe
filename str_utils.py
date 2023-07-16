@@ -1,4 +1,17 @@
 def strInBox(msg: str, boxlen: int, boxchar="#"):
+    """Print message msg in a box of a certain character. This box has lenghts boxlen.
+        if boxlen is to short to wrap the message, boxlen is automatically corrected upwards
+    Args:
+        msg (str): message to print
+        boxlen (int): length of the box
+        boxchar (str, optional): character to use as box marker. Defaults to "#".
+
+    Returns:
+        str: Example: msg="msg", boxlen = 7, boxchar="?"
+            -> "???????
+                ? msg ?
+                ???????"
+    """
     # message too long for given boxlen? -> extend boxlen
     least_possible_boxlen = len(msg) + 2
     if boxlen < least_possible_boxlen:
