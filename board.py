@@ -244,8 +244,13 @@ class Board:
 
     def __str__(self):
         res = ""
-        for irow in range(0, self.numOfRows()):
-            for icol in range(0, self.numOfCols()):
+        row_idx_range = range(0, self.numOfRows())
+        col_idx_range = range(0, self.numOfCols())
+        col_index_row = 2 * " " + "".join([str(idx) for idx in col_idx_range])
+        res += col_index_row + "\n"
+        for irow in row_idx_range:
+            res += str(irow) + "|"
+            for icol in col_idx_range:
                 char_to_add = self.state_markers_dict[
                     self.valueFromCartesian(CartPt(irow, icol))
                 ]
