@@ -13,3 +13,8 @@ Run all tests (see directory `test/`):
 ```bash
 pytest
 ```
+
+Watch two scripted players play games:
+```bash
+pytest test/test_smoketest_tictactoe.py -s
+```
