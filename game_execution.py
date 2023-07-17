@@ -149,11 +149,11 @@ class GameExecution:
             self.publishBoardToPlayer(curr_pl)
             move = self.requestMoveFromPlayer(curr_pl)
             self.executeMove(curr_pl, move)
-            print(str(board) + "\n")
             self.changeTurnToNext()
             print(25 * "-")
             dynamics.updateAdmissibleMoves()
             self.status = self.evaluateGameState()
+        print(board)
         self.displayResult()
         return self.status
 
