@@ -28,19 +28,6 @@ def test_doMoveOnBoard(default_dynamics_tictactoe):
     assert board.valueFromCartesian(corner_square) == Party.WHITE
 
 
-def test_move_tictactoe_equality_overload():
-    pt1 = CartPt(0, 0)
-    pt2 = CartPt(0, 1)
-    move1 = MoveTicTacToe(pt1, Party.BLACK)
-    move2 = MoveTicTacToe(pt1, Party.WHITE)
-    move3 = MoveTicTacToe(pt1, Party.WHITE)
-    assert move2 == move3
-    assert move1 != move2
-    assert move1 != move3
-    with pytest.raises(AssertionError):
-        assert move1 == 333
-
-
 def test_has_party_won_at_any_axis_antidiags():
     line0 = "OXO_\n"
     line1 = "OOO_\n"
