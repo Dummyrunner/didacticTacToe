@@ -139,8 +139,8 @@ class GameExecution:
     def executeGame(self) -> Enum:
         self.status = GameStatus.RUNNING
         self.status = self.evaluateGameState()
+        print(self._introMessageString())
         while self.status == GameStatus.RUNNING:
-            print(self._introMessageString())
             dynamics = self.dynamics
             board = dynamics.board
             print(board)
@@ -208,5 +208,5 @@ class GameStatus(Enum):
     RUNNING = 1
     WHITE_WINS = 2
     BLACK_WINS = 3
-    DRAW = 3
-    FAILURE = 4
+    DRAW = 4
+    FAILURE = 5
