@@ -18,3 +18,9 @@ Watch two scripted players play games:
 ```bash
 pytest test/test_smoketest_tictactoe.py -s
 ```
+
+Analyse test coverage:
+```bash
+coverage html --omit="*/test*" -d tests/coverage
+```
+writes report to tests/coverage/index.html

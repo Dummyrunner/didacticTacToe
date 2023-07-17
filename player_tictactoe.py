@@ -54,7 +54,7 @@ class HumanPlayerTicTacToe(BasePlayerTicTacToe):
         )
         return ip
 
-    def parseKeyboardInputToMove(self, ip: str):
+    def parseKeyboardInputToMove(self, ip: str) -> MoveTicTacToe:
         coords = [int(x) for x in ip.split(",")]
         x, y = coords
         pt = CartPt(x, y)
