@@ -10,12 +10,6 @@ class BasePlayerTicTacToe:
         self.party = party
         self.board = None
 
-    def generate_name(self):
-        ctr = 1
-        while True:
-            yield "Harald" + str(ctr)
-            ctr += 1
-
     def _inputTopologyValid(self, ip_string: str, split_char=",") -> bool:
         """True, if input string ip_string contanins two integer values
         separated by one split character, by default a comma"""
