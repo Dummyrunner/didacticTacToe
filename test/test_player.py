@@ -3,6 +3,8 @@ from Party import Party
 from cartpt import CartPt
 from board import Board
 from move_tictactoe import MoveTicTacToe
+from io import StringIO
+from pytest import MonkeyPatch
 
 
 def test_player_input_topology_valid_bad_input():
@@ -41,3 +43,11 @@ def test_human_player_tictactoe_parse_keyboard_input_to_move():
     assert hp.parseKeyboardInputToMove("2,3") == MoveTicTacToe(
         CartPt(2, 3), Party.WHITE
     )
+
+
+def test_humanplayer_get_keyboard_input(monkeypatch, default_board3x3):
+    hp = HumanPlayerTicTacToe(Party.WHITE, "keyboardtyper")
+    hp.board = default_board3x3
+    keyboard_input = StringIO("1,2\n")
+    monkeypatch.setattr("sys.stdin", keyboard_input)
+    assert hp.getKeyBoardInput() == "1,2"
