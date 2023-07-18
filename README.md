@@ -23,4 +23,4 @@ Analyse test coverage:
 ```bash
 coverage html --omit="*/test*" -d test/coverage
 ```
-writes report to tests/coverage/index.html
+writes report to `test/coverage/index.html`

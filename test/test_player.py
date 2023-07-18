@@ -4,7 +4,8 @@ from cartpt import CartPt
 from board import Board
 from move_tictactoe import MoveTicTacToe
 from io import StringIO
-from pytest import MonkeyPatch
+from pytest import MonkeyPatch, raises
+from types import MethodType
 
 
 def test_player_input_topology_valid_bad_input():
@@ -48,6 +49,32 @@ def test_human_player_tictactoe_parse_keyboard_input_to_move():
 def test_humanplayer_get_keyboard_input(monkeypatch, default_board3x3):
     hp = HumanPlayerTicTacToe(Party.WHITE, "keyboardtyper")
     hp.board = default_board3x3
-    keyboard_input = StringIO("1,2\n")
-    monkeypatch.setattr("sys.stdin", keyboard_input)
+    fake_keyboard_input = StringIO("1,2\n")
+    monkeypatch.setattr("sys.stdin", fake_keyboard_input)
     assert hp.getKeyBoardInput() == "1,2"
+
+
+def test_humanplayer_choose_move_wronginput_til_exception(
+    monkeypatch, default_board3x3
+):
+    def inputTopologyValid_FALSE(self, ip_string):
+        return False
+
+    hp = HumanPlayerTicTacToe(Party.WHITE, "movechooser1")
+    hp.board = default_board3x3
+    fake_keyboard_input_both_nonvalid = StringIO("1,2,3\n1,2,3\n")
+    # fake_keyboard_input_first_nonvalid = StringIO("1,2\n1,2")
+    monkeypatch.setattr("sys.stdin", fake_keyboard_input_both_nonvalid)
+    hp._inputTopologyValid = MethodType(inputTopologyValid_FALSE, hp)
+    with raises(ValueError):
+        hp.chooseMove(2)
+
+
+def test_humanplayer_choose_move_fallback_once(monkeypatch, default_board3x3):
+    hp = HumanPlayerTicTacToe(Party.WHITE, "movechooser2")
+    hp.board = default_board3x3
+    fake_keyboard_input_first_nonvalid = StringIO("1,2,3\n1,2\n")
+    monkeypatch.setattr("sys.stdin", fake_keyboard_input_first_nonvalid)
+    # hp._inputTopologyValid = MethodType(inputTopologyValid_TRUE, hp)
+    expected_move = MoveTicTacToe(CartPt(1, 2), Party.WHITE)
+    assert hp.chooseMove(2) == expected_move
