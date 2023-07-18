@@ -60,7 +60,7 @@ class GameExecution:
     def setWhosTurn(self, party: Party) -> None:
         if party == Party.NEUTRAL:
             raise AttributeError("Here not a valid party option:" + str(party))
-        if party.name not in Party.__members__ or not isinstance(party, Party):
+        if not isinstance(party, Party):
             raise AttributeError("Not a valid party:" + str(party))
         self.__whos_turn = party
 

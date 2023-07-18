@@ -54,6 +54,22 @@ def test_game_execution_check_player_assignment_incorrect_black(
     assert ge.playerAssignmentCorrect() == False
 
 
+def test_game_execution_opponent_party(default_dynamics_tictactoe):
+    pwhite = HumanPlayerTicTacToe(Party.WHITE)
+    pblack = HumanPlayerTicTacToe(Party.BLACK)
+    ge = GameExecution(default_dynamics_tictactoe, pwhite, pblack)
+    with pytest.raises(AttributeError):
+        ge.opponentParty(Party.NEUTRAL)
+
+
+def test_game_execution_player_list(default_dynamics_tictactoe):
+    pwhite = HumanPlayerTicTacToe(Party.WHITE)
+    pblack = HumanPlayerTicTacToe(Party.BLACK)
+    ge = GameExecution(default_dynamics_tictactoe, pwhite, pblack)
+    expected_player_list = [pwhite, pblack]
+    assert ge.playerList() == expected_player_list
+
+
 def test_change_turn_to_next(default_dynamics_tictactoe):
     pwhite = HumanPlayerTicTacToe(Party.WHITE)
     pblack = HumanPlayerTicTacToe(Party.BLACK)
@@ -89,6 +105,11 @@ def test_game_execution_white_wins():
     expected_outcome = GameStatus.WHITE_WINS
     actual_outcome = ge.evaluateGameState()
     assert expected_outcome == actual_outcome
+
+
+# TODO test _inputTopologyValid
+def test_input_topology_valid():
+    pass
 
 
 def test_game_execution_black_wins():
