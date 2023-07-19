@@ -93,7 +93,7 @@ class GameExecution:
             raise ValueError("Try to get current player, but there is none!")
         return self.party2player_dct[self.__whos_turn]
 
-    def _inputTopologyValid(ip_string: str, split_char=",") -> bool:
+    def _inputTopologyValid(self, ip_string: str, split_char=",") -> bool:
         """True, if input string ip_string contanins two integer values separated by one comma"""
         how_many_commas = ip_string.count(split_char)
         if how_many_commas != 1:
