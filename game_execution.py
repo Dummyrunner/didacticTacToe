@@ -198,6 +198,8 @@ class GameExecution:
 def createDefaultTicTacToeGameExecutionHumanPlayers() -> GameExecution:
     pwhite = HumanPlayerTicTacToe(Party.WHITE)
     pblack = HumanPlayerTicTacToe(Party.BLACK)
+    pwhite.setNameFromKeyboard()
+    pblack.setNameFromKeyboard()
     board = Board(3, 3)
     rowsize_to_win = 3
     dyn = GameDynamicsTicTacToe(board, rowsize_to_win)
@@ -207,6 +209,8 @@ def createDefaultTicTacToeGameExecutionHumanPlayers() -> GameExecution:
 def createFiveWinsGameExecutionHumanPlayers() -> GameExecution:
     pwhite = HumanPlayerTicTacToe(Party.WHITE)
     pblack = HumanPlayerTicTacToe(Party.BLACK)
+    pwhite.setNameFromKeyboard()
+    pblack.setNameFromKeyboard()
     board = Board(9, 9)
     rowsize_to_win = 5
     dyn = GameDynamicsTicTacToe(board, rowsize_to_win)
