@@ -78,3 +78,40 @@ def test_humanplayer_choose_move_fallback_once(monkeypatch, default_board3x3):
     # hp._inputTopologyValid = MethodType(inputTopologyValid_TRUE, hp)
     expected_move = MoveTicTacToe(CartPt(1, 2), Party.WHITE)
     assert hp.chooseMove(2) == expected_move
+
+
+def test_player_get_name_from_keyboard(monkeypatch):
+    fake_keyboard_input_first_name = StringIO("Hans Peter\n")
+    hp = HumanPlayerTicTacToe(Party.WHITE)
+    monkeypatch.setattr("sys.stdin", fake_keyboard_input_first_name)
+    assert hp._getNameFromKeyboard() == "Hans Peter"
+
+
+def test_player_get_name_from_keyboard(monkeypatch):
+    fake_keyboard_input_first_name = StringIO("\n")
+    hp = HumanPlayerTicTacToe(Party.WHITE)
+    monkeypatch.setattr("sys.stdin", fake_keyboard_input_first_name)
+    assert hp._getNameFromKeyboard() == "DefaultHumanPlayer"
+
+
+def test_player_get_name_from_keyboard_fail(monkeypatch):
+    fake_keyboard_input_first_name = StringIO("1Hans Peter\n")
+    hp = HumanPlayerTicTacToe(Party.WHITE)
+    monkeypatch.setattr("sys.stdin", fake_keyboard_input_first_name)
+    with raises(ValueError):
+        assert hp._getNameFromKeyboard() == "Hans Peter"
+
+
+def test_player_set_name():
+    hp = HumanPlayerTicTacToe(Party.WHITE)
+    hp.name = "oldnamenobodycares"
+    hp.setName("Cookie")
+    assert hp.name == "Cookie"
+
+
+def test_player_set_name_via_keyboard(monkeypatch):
+    fake_keyboard_input_first_name = StringIO("Knoedl\n")
+    hp = HumanPlayerTicTacToe(Party.WHITE)
+    monkeypatch.setattr("sys.stdin", fake_keyboard_input_first_name)
+    hp.setNameFromKeyboard()
+    assert hp.name == "Knoedl"

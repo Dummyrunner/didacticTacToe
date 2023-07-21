@@ -22,6 +22,25 @@ class BasePlayerTicTacToe:
     def updateBoard(self, new_board):
         self.board = new_board
 
+    def _getNameFromKeyboard(self) -> str:
+        ip = input(
+            "For Party "
+            + self.party.name
+            + ", enter player name (leave empty for standard name)"
+        )
+        name = str(ip)
+        if name == "":
+            return "DefaultHumanPlayer"
+        if "0" <= name[0] <= "9":
+            raise ValueError("Name has to begin with alphabetical character!")
+        return name
+
+    def setName(self, namestring) -> None:
+        self.name = namestring
+
+    def setNameFromKeyboard(self) -> None:
+        self.name = self._getNameFromKeyboard()
+
 
 class HumanPlayerTicTacToe(BasePlayerTicTacToe):
     def chooseMove(self, max_tries=2) -> MoveTicTacToe:
