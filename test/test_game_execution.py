@@ -155,6 +155,17 @@ def test_game_execution_eval_draw():
     assert expected_outcome == actual_outcome
 
 
+def test_game_execution_execute_move(default_dynamics_tictactoe):
+    dynamics = default_dynamics_tictactoe
+    board = dynamics.board
+    pwhite = HumanPlayerTicTacToe(Party.WHITE)
+    pblack = HumanPlayerTicTacToe(Party.BLACK)
+    ge = GameExecution(dynamics, pwhite, pblack)
+    point_for_testmove = CartPt(0, 0)
+    ge.executeMove(ge.player_white, MoveTicTacToe(point_for_testmove, Party.WHITE))
+    assert board.valueFromCartesian(point_for_testmove) == Party.WHITE
+
+
 def test_request_move_from_player_fallback(default_dynamics_tictactoe):
     def fake_choose_move(self):
         return MoveTicTacToe(CartPt(0, 1), Party.WHITE)
