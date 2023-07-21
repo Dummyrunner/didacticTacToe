@@ -26,7 +26,7 @@ class BasePlayerTicTacToe:
         ip = input(
             "For Party "
             + self.party.name
-            + ", enter player name (leave empty for standard name)"
+            + ", enter player name (leave empty for standard name):\n"
         )
         name = str(ip)
         if name == "":
@@ -46,7 +46,7 @@ class HumanPlayerTicTacToe(BasePlayerTicTacToe):
     def chooseMove(self, max_tries=2) -> MoveTicTacToe:
         print("Your turn, " + str(self.party.name + "! ") + "(name: " + self.name + ")")
         for num_of_tries in range(0, max_tries):
-            ip_string = self.getKeyBoardInput()
+            ip_string = self.getMoveKeyBoardInput()
             if self._inputTopologyValid(ip_string):
                 return self.parseKeyboardInputToMove(ip_string)
             num_of_tries += 1
@@ -61,7 +61,7 @@ class HumanPlayerTicTacToe(BasePlayerTicTacToe):
             "Repeatedly bad topology: Max num " + str(max_tries) + " exceeded"
         )
 
-    def getKeyBoardInput(self) -> str:
+    def getMoveKeyBoardInput(self) -> str:
         max_row_idx = self.board.numOfRows() - 1
         max_col_idx = self.board.numOfCols() - 1
         ip = input(

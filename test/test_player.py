@@ -51,7 +51,7 @@ def test_humanplayer_get_keyboard_input(monkeypatch, default_board3x3):
     hp.board = default_board3x3
     fake_keyboard_input = StringIO("1,2\n")
     monkeypatch.setattr("sys.stdin", fake_keyboard_input)
-    assert hp.getKeyBoardInput() == "1,2"
+    assert hp.getMoveKeyBoardInput() == "1,2"
 
 
 def test_humanplayer_choose_move_wronginput_til_exception(
