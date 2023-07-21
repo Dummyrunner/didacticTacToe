@@ -173,29 +173,50 @@ def test_request_move_from_player_fallback(default_dynamics_tictactoe):
         )
 
 
-def test_request_move_from_player_fallback(default_dynamics_tictactoe):
+def test_request_move_from_player_first_attempt_bad(default_dynamics_tictactoe):
+    """Test Request move from player method. mock choose move result.
+    first, chooseMove yields non-admissible move to test fallback.
+    second, chooseMove yields legit move which should be the return
+    value of request move from player
+    """
+
     def fake_choose_move_gen():
         while True:
             yield MoveTicTacToe(CartPt(0, 1), Party.WHITE)
             yield MoveTicTacToe(CartPt(0, 0), Party.WHITE)
 
     def fake_choose_move(self):
-        next(fake_choose_move_gen())
+        return next(self.testgen)
 
-    # # print(str(next(fake_choose_move_gen())))
-    # # print(str(next(fake_choose_move_gen())))
-    # dynamics = default_dynamics_tictactoe
-    # pwhite = HumanPlayerTicTacToe(Party.WHITE)
-    # pblack = HumanPlayerTicTacToe(Party.BLACK)
-    # ge = GameExecution(dynamics, pwhite, pblack)
-    # ge.setWhosTurn(ge.player2party_dct[ge.player_white])
-    # ge.player_white.chooseMove = MethodType(fake_choose_move, ge.player_white)
-    # board = dynamics.board
-    # board.setValueAtCartesian(CartPt(0, 1), Party.BLACK)
-    # print(str(ge.player_white.chooseMove()))
-    # print(str(ge.player_white.chooseMove()))
-    # print(str(ge.player_white.chooseMove()))
-    # print(str(fake_choose_move(2)))
-    # assert MoveTicTacToe(CartPt(0, 1), Party.WHITE) == ge.requestMoveFromPlayer(
-    #     ge.player_white, 2
-    # )
+    dynamics = default_dynamics_tictactoe
+    board = dynamics.board
+    pwhite = HumanPlayerTicTacToe(Party.WHITE)
+    pblack = HumanPlayerTicTacToe(Party.BLACK)
+    ge = GameExecution(dynamics, pwhite, pblack)
+    ge.setWhosTurn(ge.player2party_dct[ge.player_white])
+
+    ge.player_white.testgen = fake_choose_move_gen()
+    ge.player_white.chooseMove = MethodType(fake_choose_move, ge.player_white)
+
+    # occupy square CartPt(0,1)
+    board.setValueAtCartesian(CartPt(0, 1), Party.BLACK)
+    expected_move = MoveTicTacToe(CartPt(0, 0), Party.WHITE)
+    obtained_move = ge.requestMoveFromPlayer(ge.player_white, 2)
+    print(obtained_move)
+    assert expected_move == obtained_move
+
+
+def test_request_move_from_player(default_dynamics_tictactoe):
+    def fake_choose_move(self):
+        return MoveTicTacToe(CartPt(0, 1), Party.WHITE)
+
+    dynamics = default_dynamics_tictactoe
+    pwhite = HumanPlayerTicTacToe(Party.WHITE)
+    pblack = HumanPlayerTicTacToe(Party.BLACK)
+    ge = GameExecution(dynamics, pwhite, pblack)
+    ge.setWhosTurn(ge.player2party_dct[ge.player_white])
+    ge.player_white.chooseMove = MethodType(fake_choose_move, ge.player_white)
+
+    assert MoveTicTacToe(CartPt(0, 1), Party.WHITE) == ge.requestMoveFromPlayer(
+        ge.player_white, 2
+    )
