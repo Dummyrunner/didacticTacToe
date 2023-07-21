@@ -18,7 +18,7 @@ class ScriptedPlayer(HumanPlayerTicTacToe):
         super().__init__(party, name)
         self.__inputlist = iter(inputlist)
 
-    def getKeyBoardInput(self) -> str:
+    def getMoveKeyBoardInput(self) -> str:
         move_ip = next(self.__inputlist)
         print("set move from movelist: " + move_ip)
         return move_ip
