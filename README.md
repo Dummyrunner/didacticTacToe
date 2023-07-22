@@ -21,6 +21,7 @@ pytest test/test_smoketest_tictactoe.py -s
 
 Analyse test coverage:
 ```bash
+rm -rf test/coverage
 coverage html --omit="*/test*" -d test/coverage
 ```
 writes report to `test/coverage/index.html`

@@ -1,4 +1,4 @@
-from game_execution import GameExecution, GameStatus
+from game_execution import *
 from Party import Party
 import pytest
 from player_tictactoe import HumanPlayerTicTacToe
@@ -7,6 +7,7 @@ from game_dynamics_tictactoe import GameDynamicsTicTacToe
 from cartpt import CartPt
 from types import MethodType
 from move_tictactoe import MoveTicTacToe
+from io import StringIO
 
 
 def test_game_execution_init(default_dynamics_tictactoe):
@@ -241,3 +242,34 @@ def test_request_move_from_player(default_dynamics_tictactoe):
     assert MoveTicTacToe(CartPt(0, 1), Party.WHITE) == ge.requestMoveFromPlayer(
         ge.player_white, 2
     )
+
+
+def test_game_execution_other_party(default_dynamics_tictactoe):
+    dynamics = default_dynamics_tictactoe
+    pwhite = HumanPlayerTicTacToe(Party.WHITE)
+    pblack = HumanPlayerTicTacToe(Party.BLACK)
+    ge = GameExecution(dynamics, pwhite, pblack)
+    assert ge.otherParty(Party.WHITE) == Party.BLACK
+    assert ge.otherParty(Party.BLACK) == Party.WHITE
+    with pytest.raises(ValueError):
+        ge.otherParty(Party.NEUTRAL)
+    with pytest.raises(ValueError):
+        ge.otherParty(1895)
+
+
+def test_game_execution_factory_default_noerror(monkeypatch):
+    fake_kb_input_names = StringIO("\n\n")
+    monkeypatch.setattr("sys.stdin", fake_kb_input_names)
+    try:
+        createDefaultTicTacToeGameExecutionHumanPlayers()
+    except RuntimeError:
+        pytest.fail("Factory Method leads to exception")
+
+
+def test_game_execution_factory_fivewins_noerror(monkeypatch):
+    fake_kb_input_names = StringIO("\n\n")
+    monkeypatch.setattr("sys.stdin", fake_kb_input_names)
+    try:
+        createFiveWinsGameExecutionHumanPlayers()
+    except RuntimeError:
+        pytest.fail("Factory Method leads to exception")
