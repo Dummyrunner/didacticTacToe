@@ -137,6 +137,12 @@ def test_string_to_board(default_board3x3):
             )
 
 
+def test_string_to_board_invalid():
+    string_varying_linelength = "XXO\n__\nOO_"
+    with pytest.raises(ValueError):
+        Board.fromString(string_varying_linelength)
+
+
 def test_set_from_cartesian2(default_board3x4):
     board = default_board3x4
     board.setValueAtCartesian(CartPt(0, 0), Party.NEUTRAL)
@@ -268,9 +274,7 @@ def test_antidiags_vals_as_list(default_board3x4):
     assert board.antidiagValsAsList(-2) == [Party.BLACK, Party.NEUTRAL]
     assert board.antidiagValsAsList(-3) == [Party.NEUTRAL]
     with pytest.raises(IndexError):
-        board.maindiagValsAsList(-3)
-    with pytest.raises(IndexError):
-        board.maindiagValsAsList(4)
+        board.antidiagValsAsList(-4)
 
 
 def test_get_row_assignemts_as_list(default_board3x4):
@@ -317,10 +321,16 @@ def test_row_to_string(default_board3x4):
         board._rowToString(3)
 
 
-# def test_row_string_to_formatted(default_board3x4):
-#     board = default_board3x4
-#     board.setValueAtCartesian(CartPt(0, 1), Party.BLACK)
-#     board.setValueAtCartesian(CartPt(1, 2), Party.WHITE)
-#     board.setValueAtCartesian(CartPt(2, 3), Party.BLACK)
-#     print(board)
-#     assert 0 == 1
+def test_row_string_to_formatted():
+    """check for number of occurence of each character:
+    should be same in formatted and non-formatted line"""
+    testline = "X__OXX"
+    formatted = Board._rowStringToFormatted(testline)
+    for char in testline:
+        assert formatted.count(char) == testline.count(char)
+
+
+def test_row_string_to_formatted_short():
+    testline = "XO"
+    formatted = Board._rowStringToFormatted(testline)
+    assert testline == formatted
