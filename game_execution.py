@@ -89,8 +89,6 @@ class GameExecution:
         return [self.player_white, self.player_black]
 
     def currentPlayer(self):
-        if self.__whos_turn == Party.NEUTRAL:
-            raise ValueError("Try to get current player, but there is none!")
         return self.party2player_dct[self.__whos_turn]
 
     def _inputTopologyValid(self, ip_string: str, split_char=",") -> bool:

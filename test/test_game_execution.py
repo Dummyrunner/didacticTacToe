@@ -92,6 +92,16 @@ def test_player_from_party(default_dynamics_tictactoe):
     assert ge.playerFromParty(Party.BLACK) is ge.player_black
 
 
+def test_game_execution_current_player(default_dynamics_tictactoe):
+    pwhite = HumanPlayerTicTacToe(Party.WHITE)
+    pblack = HumanPlayerTicTacToe(Party.BLACK)
+    ge = GameExecution(default_dynamics_tictactoe, pwhite, pblack)
+    ge.setWhosTurn(Party.WHITE)
+    assert ge.currentPlayer() is ge.player_white
+    ge.setWhosTurn(Party.BLACK)
+    assert ge.currentPlayer() is ge.player_black
+
+
 def test_game_execution_white_wins():
     line0 = "_XO\n"
     line1 = "O__\n"
