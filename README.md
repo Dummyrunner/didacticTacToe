@@ -28,8 +28,8 @@ writes report to `test/coverage/index.html`
 
 or via pytest-cov plugin
 ```bash
-
-ytest --cov --cov-report=html:test/coverage_report_cov
+rm -rf test/coverage_report_cov
+pytest --cov --cov-report=html:test/coverage_report_cov
 ```
 writes report to `test/coverage_report_cov/index.html`, but includes imported libraries and test files themselves
 
