@@ -230,7 +230,8 @@ class Board:
         ]
         return "".join(charlist)
 
-    def _rowStringToFormatted(self, rowstring):
+    @staticmethod
+    def _rowStringToFormatted(rowstring):
         res = ""
         if len(rowstring) <= 2:
             return rowstring
