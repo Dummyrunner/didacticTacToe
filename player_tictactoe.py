@@ -1,7 +1,6 @@
 from Party import Party
 from move_tictactoe import MoveTicTacToe
 from cartpt import CartPt
-from board import Board
 
 
 class BasePlayerTicTacToe:

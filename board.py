@@ -1,4 +1,3 @@
-from enum import Enum
 from cartpt import CartPt
 from Party import Party
 

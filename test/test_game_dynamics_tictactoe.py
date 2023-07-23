@@ -1,5 +1,4 @@
 import pytest
-from enum import Enum
 from board import Board
 from cartpt import CartPt
 from Party import Party

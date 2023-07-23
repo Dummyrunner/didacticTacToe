@@ -1,10 +1,9 @@
 from player_tictactoe import HumanPlayerTicTacToe, BasePlayerTicTacToe
 from Party import Party
 from cartpt import CartPt
-from board import Board
 from move_tictactoe import MoveTicTacToe
 from io import StringIO
-from pytest import MonkeyPatch, raises
+from pytest import raises
 from types import MethodType
 
 
