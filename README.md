@@ -9,6 +9,12 @@ Run standard TicTacToe game on 3x3 tiles board:
 python run_standard_tictactoe.py
 ```
 
+Run TicTacToe game on 9x9 tiles board with a row of 5 to win the game:
+```bash
+python run_five_wins.py
+```
+
+## Tests
 Run all tests (see directory `test/`):
 ```bash
 pytest
@@ -29,7 +35,7 @@ writes report to `test/coverage/index.html`
 or via pytest-cov plugin
 ```bash
 rm -rf test/coverage_report_cov
-pytest --cov --cov-report=html:test/coverage_report_cov
+pytest --cov --cov-config=test/.coveragerc --cov-report=html:test/cov_report
 ```
-writes report to `test/coverage_report_cov/index.html`, but includes imported libraries and test files themselves
+writes report to `test/coverage_report_cov/index.html`
 

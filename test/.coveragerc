@@ -1,2 +1,13 @@
 [run]
-omit = *tests*
+branch = True
+omit =
+        *__init__*
+        */usr/local/lib*
+        *test*
+
+[html]
+branch = True
+omit =
+        *__init__*
+        */usr/local/lib*
+        *test*
