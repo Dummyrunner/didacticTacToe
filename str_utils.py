@@ -16,10 +16,22 @@ def strInBox(msg: str, boxlen: int, boxchar="#"):
     least_possible_boxlen = len(msg) + 2
     if boxlen < least_possible_boxlen:
         boxlen = least_possible_boxlen
+    # if boxlen is even and length of message odd or vice versa,
+    # one space gap has to be extended by one " "
+    asymmetric_spacing = ((boxlen + len(msg)) % 2) * " "
     fence = boxlen * boxchar
     num_chars_to_fill = boxlen - 2 - len(msg)
     num_chars_to_fill_oneside = int(num_chars_to_fill / 2)
     fillspace = num_chars_to_fill_oneside * " "
     res = fence + "\n"
-    res += boxchar + fillspace + msg + fillspace + boxchar + "\n" + fence
+    res += (
+        boxchar
+        + fillspace
+        + msg
+        + asymmetric_spacing
+        + fillspace
+        + boxchar
+        + "\n"
+        + fence
+    )
     return res
