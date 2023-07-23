@@ -59,6 +59,23 @@ def test_has_party_won_at_any_axis_antidiags():
 
     assert dynamics.hasPartyWonAtAnyAxis(Axis.ANTIDIAG, Party.BLACK) == True
     assert dynamics.hasPartyWonAtAnyAxis(Axis.ANTIDIAG, Party.WHITE) == False
+    with pytest.raises(AttributeError):
+        dynamics.hasPartyWonAtAnyAxis(Axis.BLUBBER, Party.WHITE)
+    with pytest.raises(AttributeError):
+        dynamics.hasPartyWonAtAnyAxis("KNOEDL", Party.WHITE)
+
+
+def test_has_party_won_at_any_axis_antidiags_byindex_fails():
+    line0 = "OXO_\n"
+    line1 = "OOO_\n"
+    line2 = "OOXO"
+    state_string = line0 + line1 + line2
+    board = Board.fromString(state_string)
+    rowsize_to_win = 3
+    dynamics = GameDynamicsTicTacToe(board, rowsize_to_win)
+
+    with pytest.raises(AttributeError):
+        dynamics.hasPartyWonAtAxisByIndex(0, Axis.BLUBBER, Party.WHITE)
 
 
 def test_has_party_won_game():
