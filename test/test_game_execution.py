@@ -244,6 +244,44 @@ def test_request_move_from_player(default_dynamics_tictactoe):
     )
 
 
+def test_game_execution_display_result(default_dynamics_tictactoe, capsys):
+    dynamics = default_dynamics_tictactoe
+    pwhite = HumanPlayerTicTacToe(Party.WHITE)
+    pblack = HumanPlayerTicTacToe(Party.BLACK)
+    ge = GameExecution(dynamics, pwhite, pblack)
+    status = GameStatus.FAILURE
+    ge.status = status
+    ge.displayResult()
+    captured = capsys.readouterr()
+    captured = captured.out.strip()
+    expected_substring = status.name
+    assert expected_substring.lower() in captured.lower()
+
+    status = GameStatus.WHITE_WINS
+    ge.status = status
+    ge.displayResult()
+    captured = capsys.readouterr()
+    captured = captured.out.strip()
+    expected_substring = "WHITE"
+    assert expected_substring.lower() in captured.lower() and "win" in captured.lower()
+
+    status = GameStatus.BLACK_WINS
+    ge.status = status
+    ge.displayResult()
+    captured = capsys.readouterr()
+    captured = captured.out.strip()
+    expected_substring = "BLACK"
+    assert expected_substring.lower() in captured.lower() and "win" in captured.lower()
+
+    status = GameStatus.DRAW
+    ge.status = status
+    ge.displayResult()
+    captured = capsys.readouterr()
+    captured = captured.out.strip()
+    expected_substring = status.name
+    assert expected_substring.lower() in captured.lower()
+
+
 def test_game_execution_other_party(default_dynamics_tictactoe):
     dynamics = default_dynamics_tictactoe
     pwhite = HumanPlayerTicTacToe(Party.WHITE)
