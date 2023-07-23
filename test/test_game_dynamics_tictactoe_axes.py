@@ -1,6 +1,6 @@
 from board import Board
 from Party import Party
-
+import pytest
 from axis import Axis
 from game_dynamics_tictactoe import GameDynamicsTicTacToe
 
@@ -39,6 +39,8 @@ def test_has_party_won_at_axis_rows():
     assert dynamics.hasPartyWonAtAxisByIndex(1, Axis.ROW, Party.WHITE) == False
     assert dynamics.hasPartyWonAtAxisByIndex(2, Axis.ROW, Party.BLACK) == False
     assert dynamics.hasPartyWonAtAxisByIndex(2, Axis.ROW, Party.WHITE) == False
+    with pytest.raises(AttributeError):
+        assert dynamics.hasPartyWonAtAxisByIndex(2, Axis.KNOEDL, Party.WHITE) == False
 
 
 def test_has_party_won_at_axis_cols():

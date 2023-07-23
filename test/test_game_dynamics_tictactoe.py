@@ -11,7 +11,7 @@ import itertools
 from player_tictactoe import HumanPlayerTicTacToe
 
 
-def test_doMoveOnBoard(default_dynamics_tictactoe):
+def test_do_move_on_board(default_dynamics_tictactoe):
     dynamics = default_dynamics_tictactoe
     board = dynamics.board
     center_square = CartPt(1, 1)
@@ -26,6 +26,17 @@ def test_doMoveOnBoard(default_dynamics_tictactoe):
 
     assert board.valueFromCartesian(center_square) == Party.BLACK
     assert board.valueFromCartesian(corner_square) == Party.WHITE
+
+
+def test_do_move_on_board_nonadmissible(default_dynamics_tictactoe):
+    hp = HumanPlayerTicTacToe(Party.WHITE)
+    dynamics = default_dynamics_tictactoe
+    center_square = CartPt(1, 1)
+    board = dynamics.board
+    board.setValueAtCartesian(center_square, Party.WHITE)
+    move = MoveTicTacToe(center_square, Party.BLACK)
+    with pytest.raises(ValueError):
+        dynamics.doMoveOnBoard(hp, move)
 
 
 def test_has_party_won_at_any_axis_antidiags():
