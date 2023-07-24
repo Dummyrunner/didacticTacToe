@@ -34,7 +34,7 @@ writes report to `test/coverage/index.html`
 
 or via pytest-cov plugin
 ```bash
-rm -rf test/coverage_report_cov
+rm -rf test/cov_report_
 pytest --cov --cov-config=test/.coveragerc --cov-report=html:test/cov_report
 ```
 writes report to `test/coverage_report_cov/index.html`
