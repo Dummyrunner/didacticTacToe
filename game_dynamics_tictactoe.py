@@ -2,6 +2,7 @@ from Party import Party
 from cartpt import CartPt
 from move_tictactoe import MoveTicTacToe
 from axis import Axis
+from board import BoardRectangular
 
 
 class GameDynamicsTicTacToe:
@@ -42,41 +43,23 @@ class GameDynamicsTicTacToe:
         else:
             raise ValueError("Move " + str(move) + " not admissible")
 
-    @staticmethod
-    def maxLenCohesiveSeqInPartyList(party_list: list, party_of_interest: Party) -> int:
-        len_max_seq = 0
-        current_seq_len = 0
-        for party in party_list:
-            if party.value == party_of_interest.value:
-                current_seq_len += 1
-            else:
-                len_max_seq = max(len_max_seq, current_seq_len)
-                current_seq_len = 0
-        len_max_seq = max(len_max_seq, current_seq_len)
-        current_seq_len = 0
-        return len_max_seq
-
     def maxLenCohesiveSeqInRowOfParty(self, row_idx: int, party: Party) -> int:
         rowvals_as_list = self.board.rowValsAsList(row_idx)
-        return GameDynamicsTicTacToe.maxLenCohesiveSeqInPartyList(
-            rowvals_as_list, party
-        )
+        return BoardRectangular.maxLenCohesiveSeqInPartyList(rowvals_as_list, party)
 
     def maxLenCohesiveSeqInColOfParty(self, col_idx: int, party: Party) -> int:
         colvals_as_list = self.board.colValsAsList(col_idx)
-        return GameDynamicsTicTacToe.maxLenCohesiveSeqInPartyList(
-            colvals_as_list, party
-        )
+        return BoardRectangular.maxLenCohesiveSeqInPartyList(colvals_as_list, party)
 
     def maxLenCohesiveSeqInMaindiagOfParty(self, diag_idx: int, party: Party) -> int:
         maindiagvals_as_list = self.board.maindiagValsAsList(diag_idx)
-        return GameDynamicsTicTacToe.maxLenCohesiveSeqInPartyList(
+        return BoardRectangular.maxLenCohesiveSeqInPartyList(
             maindiagvals_as_list, party
         )
 
     def maxLenCohesiveSeqInAntidiagOfParty(self, diag_idx: int, party: Party) -> int:
         antidiagvals_as_list = self.board.antidiagValsAsList(diag_idx)
-        return GameDynamicsTicTacToe.maxLenCohesiveSeqInPartyList(
+        return BoardRectangular.maxLenCohesiveSeqInPartyList(
             antidiagvals_as_list, party
         )
 

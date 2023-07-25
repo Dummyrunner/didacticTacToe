@@ -249,6 +249,20 @@ class BoardRectangular(BoardBase):
             interior_string = interior_string[:i] + "|" + interior_string[i:]
         return first_char + "|" + interior_string + "|" + last_char
 
+    @staticmethod
+    def maxLenCohesiveSeqInPartyList(party_list: list, party_of_interest: Party) -> int:
+        len_max_seq = 0
+        current_seq_len = 0
+        for party in party_list:
+            if party.value == party_of_interest.value:
+                current_seq_len += 1
+            else:
+                len_max_seq = max(len_max_seq, current_seq_len)
+                current_seq_len = 0
+        len_max_seq = max(len_max_seq, current_seq_len)
+        current_seq_len = 0
+        return len_max_seq
+
     def __str__(self):
         res = "Board:\n"
         row_idx_range = range(0, self.numOfRows())
