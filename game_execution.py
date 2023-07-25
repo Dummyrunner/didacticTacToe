@@ -104,7 +104,6 @@ class GameExecution:
     ) -> MoveTicTacToe:
         party = player.party
         dynamics = self.dynamics
-        dynamics.updateAdmissibleMoves()
         for num_of_tries in range(0, max_tries):
             move = player.chooseMove()
             if move in dynamics.addmissibleMovesForParty(party):
@@ -150,7 +149,6 @@ class GameExecution:
             self.executeMove(curr_pl, move)
             self.changeTurnToNext()
             print(25 * "-")
-            dynamics.updateAdmissibleMoves()
             self.status = self.evaluateGameState()
         print(board)
         self.displayResult()

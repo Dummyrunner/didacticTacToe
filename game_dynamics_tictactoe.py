@@ -9,7 +9,6 @@ class GameDynamicsTicTacToe:
         self.ROWSIZE_TO_WIN = rowsize_to_win
         self.board = board
         self.__admissible_moves_set = set()
-        self.updateAdmissibleMoves()
 
     def updateAdmissibleMoves(self) -> None:
         board = self.board
@@ -36,7 +35,6 @@ class GameDynamicsTicTacToe:
         return [x for x in all_admissible_moves if x.party == party]
 
     def doMoveOnBoard(self, player, move) -> None:
-        self.updateAdmissibleMoves()
         party = player.party
         pt = move.cartpt_to_fill
         if move in self.admissibleMoves():
@@ -146,6 +144,5 @@ class GameDynamicsTicTacToe:
         return any([self.hasPartyWonAtAnyAxis(axe, party) for axe in relevant_axes])
 
     def isDraw(self):
-        self.updateAdmissibleMoves()
         someone_won = self.hasPartyWon(Party.BLACK) or self.hasPartyWon(Party.WHITE)
         return not someone_won and len(self.admissibleMoves()) == 0
