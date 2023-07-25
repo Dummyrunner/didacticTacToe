@@ -1,4 +1,4 @@
-from board import Board
+from board import BoardRectangular
 from Party import Party
 from cartpt import CartPt
 import pytest
@@ -114,7 +114,7 @@ def test_board_to_string_does_not_fail(default_board3x3):
 
 def test_string_to_board(default_board3x3):
     string = "XXO\n___\nOO_"
-    board = Board.fromString(string)
+    board = BoardRectangular.fromString(string)
 
     expected_board = default_board3x3
     expected_board.setValueAtCartesian(CartPt(0, 0), Party.WHITE)
@@ -140,7 +140,7 @@ def test_string_to_board(default_board3x3):
 def test_string_to_board_invalid():
     string_varying_linelength = "XXO\n__\nOO_"
     with pytest.raises(ValueError):
-        Board.fromString(string_varying_linelength)
+        BoardRectangular.fromString(string_varying_linelength)
 
 
 def test_set_from_cartesian2(default_board3x4):
@@ -182,7 +182,7 @@ def test_string_to_board2(default_board3x4):
     line1 = "O_O_\n"
     line2 = "XOXO"
     state_string = line0 + line1 + line2
-    actual_board = Board.fromString(state_string)
+    actual_board = BoardRectangular.fromString(state_string)
     expected_board.setValueAtCartesian(CartPt(0, 0), Party.NEUTRAL)
     expected_board.setValueAtCartesian(CartPt(0, 1), Party.WHITE)
     expected_board.setValueAtCartesian(CartPt(0, 2), Party.BLACK)
@@ -246,7 +246,7 @@ def test_maindiags_vals_as_list(default_board3x4):
     line1 = "O_O_\n"
     line2 = "_OXO"
     state_string = line0 + line1 + line2
-    board = Board.fromString(state_string)
+    board = BoardRectangular.fromString(state_string)
 
     assert board.maindiagValsAsList(0) == [Party.NEUTRAL, Party.NEUTRAL, Party.WHITE]
     assert board.maindiagValsAsList(1) == [Party.WHITE, Party.BLACK, Party.BLACK]
@@ -265,7 +265,7 @@ def test_antidiags_vals_as_list(default_board3x4):
     line1 = "_O_O\n"
     line2 = "OXO_"
     state_string = line0 + line1 + line2
-    board = Board.fromString(state_string)
+    board = BoardRectangular.fromString(state_string)
 
     assert board.antidiagValsAsList(0) == [Party.NEUTRAL, Party.NEUTRAL, Party.WHITE]
     assert board.antidiagValsAsList(1) == [Party.BLACK, Party.BLACK]
@@ -325,12 +325,12 @@ def test_row_string_to_formatted():
     """check for number of occurence of each character:
     should be same in formatted and non-formatted line"""
     testline = "X__OXX"
-    formatted = Board._rowStringToFormatted(testline)
+    formatted = BoardRectangular._rowStringToFormatted(testline)
     for char in testline:
         assert formatted.count(char) == testline.count(char)
 
 
 def test_row_string_to_formatted_short():
     testline = "XO"
-    formatted = Board._rowStringToFormatted(testline)
+    formatted = BoardRectangular._rowStringToFormatted(testline)
     assert testline == formatted

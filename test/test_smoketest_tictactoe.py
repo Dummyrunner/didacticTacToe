@@ -2,7 +2,7 @@ from game_execution import (
     GameExecution,
     GameStatus,
 )
-from board import Board
+from board import BoardRectangular
 from game_dynamics_tictactoe import GameDynamicsTicTacToe
 from Party import Party
 from conftest import ScriptedPlayer
@@ -53,7 +53,7 @@ def test_smoketest_draw():
 def smoketest_from_players(moves_white, moves_black):
     player_white = ScriptedPlayer(Party.WHITE, moves_white)
     player_black = ScriptedPlayer(Party.BLACK, moves_black)
-    board = Board(3, 3)
+    board = BoardRectangular(3, 3)
     rowsize_to_win = 3
     dyn = GameDynamicsTicTacToe(board, rowsize_to_win)
     ge = GameExecution(dyn, player_white, player_black)

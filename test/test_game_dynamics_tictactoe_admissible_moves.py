@@ -1,4 +1,4 @@
-from board import Board
+from board import BoardRectangular
 from cartpt import CartPt
 from Party import Party
 from move_tictactoe import MoveTicTacToe
@@ -55,7 +55,7 @@ def test_admissible_moves_emptyboard_party(default_board3x4):
 
 
 def test_admissible_moves_fullboard():
-    dynamics = GameDynamicsTicTacToe(Board(1, 2), 2)
+    dynamics = GameDynamicsTicTacToe(BoardRectangular(1, 2), 2)
     board = dynamics.board
     board.setStateFromLinearList(2 * [Party.BLACK])
     expected_admissible_moves = set()
@@ -65,7 +65,7 @@ def test_admissible_moves_fullboard():
 
 
 def test_admissible_moves_partially_occupied_miinimal():
-    dynamics = GameDynamicsTicTacToe(Board(1, 2), 2)
+    dynamics = GameDynamicsTicTacToe(BoardRectangular(1, 2), 2)
     board = dynamics.board
     board.setValueAtCartesian(CartPt(0, 0), Party.BLACK)
     expected_admissible_moves = set(
@@ -80,7 +80,7 @@ def test_admissible_moves_partially_occupied_miinimal():
 
 
 def test_admissible_moves_partially_occupied_black():
-    dynamics = GameDynamicsTicTacToe(Board(1, 2), 2)
+    dynamics = GameDynamicsTicTacToe(BoardRectangular(1, 2), 2)
     board = dynamics.board
     board.setValueAtCartesian(CartPt(0, 0), Party.BLACK)
     expected_admissible_moves = [

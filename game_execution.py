@@ -3,7 +3,7 @@ from Party import Party
 from enum import Enum
 from player_tictactoe import HumanPlayerTicTacToe
 from move_tictactoe import MoveTicTacToe
-from board import Board
+from board import BoardRectangular
 import str_utils as su
 
 
@@ -198,7 +198,7 @@ def createDefaultTicTacToeGameExecutionHumanPlayers() -> GameExecution:
     pblack = HumanPlayerTicTacToe(Party.BLACK)
     pwhite.setNameFromKeyboard()
     pblack.setNameFromKeyboard()
-    board = Board(3, 3)
+    board = BoardRectangular(3, 3)
     rowsize_to_win = 3
     dyn = GameDynamicsTicTacToe(board, rowsize_to_win)
     return GameExecution(dyn, pwhite, pblack)
@@ -209,7 +209,7 @@ def createFiveWinsGameExecutionHumanPlayers() -> GameExecution:
     pblack = HumanPlayerTicTacToe(Party.BLACK)
     pwhite.setNameFromKeyboard()
     pblack.setNameFromKeyboard()
-    board = Board(9, 9)
+    board = BoardRectangular(9, 9)
     rowsize_to_win = 5
     dyn = GameDynamicsTicTacToe(board, rowsize_to_win)
     return GameExecution(dyn, pwhite, pblack)

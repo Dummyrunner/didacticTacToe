@@ -2,7 +2,7 @@ from game_execution import *
 from Party import Party
 import pytest
 from player_tictactoe import HumanPlayerTicTacToe
-from board import Board
+from board import BoardRectangular
 from game_dynamics_tictactoe import GameDynamicsTicTacToe
 from cartpt import CartPt
 from types import MethodType
@@ -108,7 +108,7 @@ def test_game_execution_white_wins():
     line1 = "O__\n"
     line2 = "XXX"
     state_string = line0 + line1 + line2
-    board = Board.fromString(state_string)
+    board = BoardRectangular.fromString(state_string)
 
     pwhite = HumanPlayerTicTacToe(Party.WHITE)
     pblack = HumanPlayerTicTacToe(Party.BLACK)
@@ -137,7 +137,7 @@ def test_game_execution_eval_black_wins():
     line1 = "X__\n"
     line2 = "OOO"
     state_string = line0 + line1 + line2
-    board = Board.fromString(state_string)
+    board = BoardRectangular.fromString(state_string)
 
     pwhite = HumanPlayerTicTacToe(Party.WHITE)
     pblack = HumanPlayerTicTacToe(Party.BLACK)
@@ -154,7 +154,7 @@ def test_game_execution_eval_draw():
     line1 = "XXO\n"
     line2 = "OXO"
     state_string = line0 + line1 + line2
-    board = Board.fromString(state_string)
+    board = BoardRectangular.fromString(state_string)
 
     pwhite = HumanPlayerTicTacToe(Party.WHITE)
     pblack = HumanPlayerTicTacToe(Party.BLACK)

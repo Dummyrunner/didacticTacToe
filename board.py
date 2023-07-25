@@ -2,7 +2,12 @@ from cartpt import CartPt
 from Party import Party
 
 
-class Board:
+class BoardBase:
+    def __init__(self, markers_dict):
+        self.state_markers_dict = markers_dict
+
+
+class BoardRectangular(BoardBase):
     """Board Rectangular gameboard.
 
     Parameters:
@@ -19,7 +24,7 @@ class Board:
     ):
         self.__SIZE_X = size_x
         self.__SIZE_Y = size_y
-        self.state_markers_dict = markers_dict
+        BoardBase.__init__(self, markers_dict)
         num_of_squares = size_x * size_y
         # in __state, states are stored row after row
         self.__state = [Party.NEUTRAL for i in range(0, num_of_squares)]
@@ -183,7 +188,9 @@ class Board:
 
         for line in list_of_charlists:
             list_of_party_lists.append([markers_state_dct[char] for char in line])
-        return Board.fromAssignmentLists(list_of_party_lists, state_markers_dct)
+        return BoardRectangular.fromAssignmentLists(
+            list_of_party_lists, state_markers_dct
+        )
 
     @staticmethod
     def fromAssignmentLists(
@@ -192,7 +199,7 @@ class Board:
     ):
         num_of_rows = len(list_of_party_lists)
         num_of_cols = len(list_of_party_lists[0])
-        board = Board(num_of_rows, num_of_cols, state_markers_dct)
+        board = BoardRectangular(num_of_rows, num_of_cols, state_markers_dct)
         for irow in range(0, num_of_rows):
             for icol in range(0, num_of_cols):
                 current_pt = CartPt(irow, icol)

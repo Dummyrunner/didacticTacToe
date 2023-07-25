@@ -1,5 +1,5 @@
 import pytest
-from board import Board
+from board import BoardRectangular
 from cartpt import CartPt
 from Party import Party
 from move_tictactoe import MoveTicTacToe
@@ -43,7 +43,7 @@ def test_has_party_won_at_any_axis_antidiags():
     line1 = "OOO_\n"
     line2 = "OOXO"
     state_string = line0 + line1 + line2
-    board = Board.fromString(state_string)
+    board = BoardRectangular.fromString(state_string)
     rowsize_to_win = 3
     dynamics = GameDynamicsTicTacToe(board, rowsize_to_win)
 
@@ -69,7 +69,7 @@ def test_has_party_won_at_any_axis_antidiags_byindex_fails():
     line1 = "OOO_\n"
     line2 = "OOXO"
     state_string = line0 + line1 + line2
-    board = Board.fromString(state_string)
+    board = BoardRectangular.fromString(state_string)
     rowsize_to_win = 3
     dynamics = GameDynamicsTicTacToe(board, rowsize_to_win)
 
@@ -82,7 +82,7 @@ def test_has_party_won_game():
     line1 = "OOO_\n"
     line2 = "OOXO"
     state_string = line0 + line1 + line2
-    board = Board.fromString(state_string)
+    board = BoardRectangular.fromString(state_string)
     rowsize_to_win = 3
     dynamics = GameDynamicsTicTacToe(board, rowsize_to_win)
 
@@ -93,7 +93,7 @@ def test_has_party_won_game():
     line1 = "X_OX\n"
     line2 = "_OXX"
     state_string = line0 + line1 + line2
-    board2 = Board.fromString(state_string)
+    board2 = BoardRectangular.fromString(state_string)
     rowsize_to_win = 3
     dynamics2 = GameDynamicsTicTacToe(board2, rowsize_to_win)
 
@@ -150,7 +150,7 @@ def test_admissible_moves_emptyboard_party(default_board3x4):
 
 
 def test_admissible_moves_fullboard():
-    dynamics = GameDynamicsTicTacToe(Board(1, 2), 2)
+    dynamics = GameDynamicsTicTacToe(BoardRectangular(1, 2), 2)
     board = dynamics.board
     board.setStateFromLinearList(2 * [Party.BLACK])
     expected_admissible_moves = set()
@@ -160,7 +160,7 @@ def test_admissible_moves_fullboard():
 
 
 def test_admissible_moves_partially_occupied_miinimal():
-    dynamics = GameDynamicsTicTacToe(Board(1, 2), 2)
+    dynamics = GameDynamicsTicTacToe(BoardRectangular(1, 2), 2)
     board = dynamics.board
     board.setValueAtCartesian(CartPt(0, 0), Party.BLACK)
     expected_admissible_moves = set(
@@ -175,7 +175,7 @@ def test_admissible_moves_partially_occupied_miinimal():
 
 
 def test_admissible_moves_partially_occupied_black():
-    dynamics = GameDynamicsTicTacToe(Board(1, 2), 2)
+    dynamics = GameDynamicsTicTacToe(BoardRectangular(1, 2), 2)
     board = dynamics.board
     board.setValueAtCartesian(CartPt(0, 0), Party.BLACK)
     expected_admissible_moves = [
@@ -191,7 +191,7 @@ def test_is_draw_positive():
     line1 = "OXO\n"
     line2 = "OXO"
     state_string = line0 + line1 + line2
-    board = Board.fromString(state_string)
+    board = BoardRectangular.fromString(state_string)
     dynamics = GameDynamicsTicTacToe(board, 3)
     assert dynamics.isDraw() == True
 
@@ -201,7 +201,7 @@ def test_is_draw_negative_someone_won():
     line1 = "OXO\n"
     line2 = "OOX"
     state_string = line0 + line1 + line2
-    board = Board.fromString(state_string)
+    board = BoardRectangular.fromString(state_string)
     dynamics = GameDynamicsTicTacToe(board, 3)
     assert dynamics.isDraw() == False
 
@@ -211,6 +211,6 @@ def test_is_draw_negative_moves_left():
     line1 = "O_O\n"
     line2 = "OXO"
     state_string = line0 + line1 + line2
-    board = Board.fromString(state_string)
+    board = BoardRectangular.fromString(state_string)
     dynamics = GameDynamicsTicTacToe(board, 3)
     assert dynamics.isDraw() == False

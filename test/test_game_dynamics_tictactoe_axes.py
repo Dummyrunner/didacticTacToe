@@ -1,4 +1,4 @@
-from board import Board
+from board import BoardRectangular
 from Party import Party
 import pytest
 from axis import Axis
@@ -7,7 +7,7 @@ from game_dynamics_tictactoe import GameDynamicsTicTacToe
 
 def test_n_of_party_cohesive_seq_in_row():
     state_string = "O_O\nOOO\n_OO"
-    board = Board.fromString(state_string)
+    board = BoardRectangular.fromString(state_string)
     dynamics = GameDynamicsTicTacToe(board, 111)
     assert dynamics.maxLenCohesiveSeqInRowOfParty(0, Party.BLACK) == 1
     assert dynamics.maxLenCohesiveSeqInRowOfParty(1, Party.BLACK) == 3
@@ -16,7 +16,7 @@ def test_n_of_party_cohesive_seq_in_row():
 
 def test_n_of_party_cohesive_seq_in_col():
     state_string = "OO_\n_OO\nOOO"
-    board = Board.fromString(state_string)
+    board = BoardRectangular.fromString(state_string)
     dynamics = GameDynamicsTicTacToe(board, 111)
     assert dynamics.maxLenCohesiveSeqInColOfParty(0, Party.BLACK) == 1
     assert dynamics.maxLenCohesiveSeqInColOfParty(1, Party.BLACK) == 3
@@ -28,7 +28,7 @@ def test_has_party_won_at_axis_rows():
     line1 = "OOO_\n"
     line2 = "OOXO"
     state_string = line0 + line1 + line2
-    board = Board.fromString(state_string)
+    board = BoardRectangular.fromString(state_string)
 
     rowsize_to_win = 3
     dynamics = GameDynamicsTicTacToe(board, rowsize_to_win)
@@ -48,7 +48,7 @@ def test_has_party_won_at_axis_cols():
     line1 = "OOO_\n"
     line2 = "OOXO"
     state_string = line0 + line1 + line2
-    board = Board.fromString(state_string)
+    board = BoardRectangular.fromString(state_string)
 
     rowsize_to_win = 3
     dynamics = GameDynamicsTicTacToe(board, rowsize_to_win)
@@ -67,7 +67,7 @@ def test_has_party_won_at_axis_maindiags():
     line1 = "XOX_\n"
     line2 = "OXOX"
     state_string = line0 + line1 + line2
-    board = Board.fromString(state_string)
+    board = BoardRectangular.fromString(state_string)
 
     rowsize_to_win = 3
     dynamics = GameDynamicsTicTacToe(board, rowsize_to_win)
@@ -90,7 +90,7 @@ def test_has_party_won_at_axis_antidiags():
     line1 = "XOX_\n"
     line2 = "OXOX"
     state_string = line0 + line1 + line2
-    board = Board.fromString(state_string)
+    board = BoardRectangular.fromString(state_string)
 
     rowsize_to_win = 3
     dynamics = GameDynamicsTicTacToe(board, rowsize_to_win)
