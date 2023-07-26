@@ -37,6 +37,9 @@ class GameDynamicsTicTacToe:
 
     def doMoveOnBoard(self, player, move) -> None:
         party = player.party
+        self._doMoveForParty(party, move)
+
+    def _doMoveForParty(self, party, move) -> None:
         pt = move.cartpt_to_fill
         if move in self.admissibleMoves():
             self.board.setValueAtCartesian(pt, party)
