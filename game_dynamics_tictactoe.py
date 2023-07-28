@@ -5,7 +5,18 @@ from axis import Axis
 from board import BoardRectangular
 
 
-class GameDynamicsTicTacToe:
+class GameDynamicsBase:
+    def __init__(self):
+        pass
+
+    def hasPartyWon(self, party: Party) -> bool:
+        pass
+
+    def isDraw(self) -> bool:
+        pass
+
+
+class GameDynamicsTicTacToe(GameDynamicsBase):
     def __init__(self, board, rowsize_to_win):
         self.ROWSIZE_TO_WIN = rowsize_to_win
         self.board = board
