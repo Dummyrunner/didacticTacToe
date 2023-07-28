@@ -47,21 +47,21 @@ def test_has_party_won_at_any_axis_antidiags():
     rowsize_to_win = 3
     dynamics = GameDynamicsTicTacToe(board, rowsize_to_win)
 
-    assert dynamics.hasPartyWonAtAnyAxis(Axis.ROW, Party.BLACK) == True
-    assert dynamics.hasPartyWonAtAnyAxis(Axis.ROW, Party.WHITE) == False
+    assert dynamics._hasPartyWonAtAnyAxis(Axis.ROW, Party.BLACK) == True
+    assert dynamics._hasPartyWonAtAnyAxis(Axis.ROW, Party.WHITE) == False
 
-    assert dynamics.hasPartyWonAtAnyAxis(Axis.COL, Party.BLACK) == True
-    assert dynamics.hasPartyWonAtAnyAxis(Axis.COL, Party.WHITE) == False
+    assert dynamics._hasPartyWonAtAnyAxis(Axis.COL, Party.BLACK) == True
+    assert dynamics._hasPartyWonAtAnyAxis(Axis.COL, Party.WHITE) == False
 
-    assert dynamics.hasPartyWonAtAnyAxis(Axis.MAINDIAG, Party.BLACK) == False
-    assert dynamics.hasPartyWonAtAnyAxis(Axis.MAINDIAG, Party.WHITE) == False
+    assert dynamics._hasPartyWonAtAnyAxis(Axis.MAINDIAG, Party.BLACK) == False
+    assert dynamics._hasPartyWonAtAnyAxis(Axis.MAINDIAG, Party.WHITE) == False
 
-    assert dynamics.hasPartyWonAtAnyAxis(Axis.ANTIDIAG, Party.BLACK) == True
-    assert dynamics.hasPartyWonAtAnyAxis(Axis.ANTIDIAG, Party.WHITE) == False
+    assert dynamics._hasPartyWonAtAnyAxis(Axis.ANTIDIAG, Party.BLACK) == True
+    assert dynamics._hasPartyWonAtAnyAxis(Axis.ANTIDIAG, Party.WHITE) == False
     with pytest.raises(AttributeError):
-        dynamics.hasPartyWonAtAnyAxis(Axis.BLUBBER, Party.WHITE)
+        dynamics._hasPartyWonAtAnyAxis(Axis.BLUBBER, Party.WHITE)
     with pytest.raises(AttributeError):
-        dynamics.hasPartyWonAtAnyAxis("KNOEDL", Party.WHITE)
+        dynamics._hasPartyWonAtAnyAxis("KNOEDL", Party.WHITE)
 
 
 def test_has_party_won_at_any_axis_antidiags_byindex_fails():
@@ -74,7 +74,7 @@ def test_has_party_won_at_any_axis_antidiags_byindex_fails():
     dynamics = GameDynamicsTicTacToe(board, rowsize_to_win)
 
     with pytest.raises(AttributeError):
-        dynamics.hasPartyWonAtAxisByIndex(0, Axis.BLUBBER, Party.WHITE)
+        dynamics._hasPartyWonAtAxisByIndex(0, Axis.BLUBBER, Party.WHITE)
 
 
 def test_has_party_won_game():

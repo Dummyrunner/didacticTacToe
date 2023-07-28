@@ -11,7 +11,7 @@ class GameDynamicsTicTacToe:
         self.board = board
         self.__admissible_moves_set = set()
 
-    def updateAdmissibleMoves(self) -> None:
+    def _updateAdmissibleMoves(self) -> None:
         board = self.board
         num_of_rows = board.numOfRows()
         num_of_cols = board.numOfCols()
@@ -28,7 +28,7 @@ class GameDynamicsTicTacToe:
                     self.__admissible_moves_set.add(move_to_add_black)
 
     def admissibleMoves(self):
-        self.updateAdmissibleMoves()
+        self._updateAdmissibleMoves()
         return self.__admissible_moves_set
 
     def addmissibleMovesForParty(self, party):
@@ -46,7 +46,9 @@ class GameDynamicsTicTacToe:
         else:
             raise ValueError("Move " + str(move) + " not admissible")
 
-    def hasPartyWonAtAxisByIndex(self, axis_idx: int, axis: Axis, party: Party) -> bool:
+    def _hasPartyWonAtAxisByIndex(
+        self, axis_idx: int, axis: Axis, party: Party
+    ) -> bool:
         board = self.board
         if axis == Axis.ROW:
             return (
@@ -73,7 +75,7 @@ class GameDynamicsTicTacToe:
                 "Non-plausible Axis! Expected: Axis.ROW, Axis.COL, Axis.MAINDIAG, Axis.ANTIDIAG"
             )
 
-    def hasPartyWonAtAnyAxis(self, axis: Axis, party: Party) -> bool:
+    def _hasPartyWonAtAnyAxis(self, axis: Axis, party: Party) -> bool:
         board = self.board
         range_of_row_indices = range(0, board.numOfRows())
         range_of_col_indices = range(0, board.numOfCols())
@@ -110,7 +112,7 @@ class GameDynamicsTicTacToe:
 
     def hasPartyWon(self, party: Party) -> bool:
         relevant_axes = [Axis.ROW, Axis.COL, Axis.MAINDIAG, Axis.ANTIDIAG]
-        return any([self.hasPartyWonAtAnyAxis(axe, party) for axe in relevant_axes])
+        return any([self._hasPartyWonAtAnyAxis(axe, party) for axe in relevant_axes])
 
     def isDraw(self):
         someone_won = self.hasPartyWon(Party.BLACK) or self.hasPartyWon(Party.WHITE)
