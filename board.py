@@ -236,6 +236,26 @@ class BoardRectangular(BoardBase):
         ]
         return "".join(charlist)
 
+    def maxLenCohesiveSeqInRowOfParty(self, row_idx: int, party: Party) -> int:
+        rowvals_as_list = self.rowValsAsList(row_idx)
+        return BoardRectangular.maxLenCohesiveSeqInPartyList(rowvals_as_list, party)
+
+    def maxLenCohesiveSeqInColOfParty(self, col_idx: int, party: Party) -> int:
+        colvals_as_list = self.colValsAsList(col_idx)
+        return BoardRectangular.maxLenCohesiveSeqInPartyList(colvals_as_list, party)
+
+    def maxLenCohesiveSeqInMaindiagOfParty(self, diag_idx: int, party: Party) -> int:
+        maindiagvals_as_list = self.maindiagValsAsList(diag_idx)
+        return BoardRectangular.maxLenCohesiveSeqInPartyList(
+            maindiagvals_as_list, party
+        )
+
+    def maxLenCohesiveSeqInAntidiagOfParty(self, diag_idx: int, party: Party) -> int:
+        antidiagvals_as_list = self.antidiagValsAsList(diag_idx)
+        return BoardRectangular.maxLenCohesiveSeqInPartyList(
+            antidiagvals_as_list, party
+        )
+
     @staticmethod
     def _rowStringToFormatted(rowstring):
         res = ""

@@ -46,45 +46,26 @@ class GameDynamicsTicTacToe:
         else:
             raise ValueError("Move " + str(move) + " not admissible")
 
-    def maxLenCohesiveSeqInRowOfParty(self, row_idx: int, party: Party) -> int:
-        rowvals_as_list = self.board.rowValsAsList(row_idx)
-        return BoardRectangular.maxLenCohesiveSeqInPartyList(rowvals_as_list, party)
-
-    def maxLenCohesiveSeqInColOfParty(self, col_idx: int, party: Party) -> int:
-        colvals_as_list = self.board.colValsAsList(col_idx)
-        return BoardRectangular.maxLenCohesiveSeqInPartyList(colvals_as_list, party)
-
-    def maxLenCohesiveSeqInMaindiagOfParty(self, diag_idx: int, party: Party) -> int:
-        maindiagvals_as_list = self.board.maindiagValsAsList(diag_idx)
-        return BoardRectangular.maxLenCohesiveSeqInPartyList(
-            maindiagvals_as_list, party
-        )
-
-    def maxLenCohesiveSeqInAntidiagOfParty(self, diag_idx: int, party: Party) -> int:
-        antidiagvals_as_list = self.board.antidiagValsAsList(diag_idx)
-        return BoardRectangular.maxLenCohesiveSeqInPartyList(
-            antidiagvals_as_list, party
-        )
-
     def hasPartyWonAtAxisByIndex(self, axis_idx: int, axis: Axis, party: Party) -> bool:
+        board = self.board
         if axis == Axis.ROW:
             return (
-                self.maxLenCohesiveSeqInRowOfParty(axis_idx, party)
+                board.maxLenCohesiveSeqInRowOfParty(axis_idx, party)
                 >= self.ROWSIZE_TO_WIN
             )
         elif axis == Axis.COL:
             return (
-                self.maxLenCohesiveSeqInColOfParty(axis_idx, party)
+                board.maxLenCohesiveSeqInColOfParty(axis_idx, party)
                 >= self.ROWSIZE_TO_WIN
             )
         elif axis == Axis.MAINDIAG:
             return (
-                self.maxLenCohesiveSeqInMaindiagOfParty(axis_idx, party)
+                board.maxLenCohesiveSeqInMaindiagOfParty(axis_idx, party)
                 >= self.ROWSIZE_TO_WIN
             )
         elif axis == Axis.ANTIDIAG:
             return (
-                self.maxLenCohesiveSeqInAntidiagOfParty(axis_idx, party)
+                board.maxLenCohesiveSeqInAntidiagOfParty(axis_idx, party)
                 >= self.ROWSIZE_TO_WIN
             )
         else:
@@ -100,23 +81,25 @@ class GameDynamicsTicTacToe:
         range_of_antidiag_indices = range(-board.numOfCols() + 1, board.numOfRows())
         if axis == Axis.ROW:
             enough_to_win = [
-                self.maxLenCohesiveSeqInRowOfParty(i, party) >= self.ROWSIZE_TO_WIN
+                board.maxLenCohesiveSeqInRowOfParty(i, party) >= self.ROWSIZE_TO_WIN
                 for i in range_of_row_indices
             ]
         elif axis == Axis.COL:
             enough_to_win = [
-                self.maxLenCohesiveSeqInColOfParty(i, party) >= self.ROWSIZE_TO_WIN
+                board.maxLenCohesiveSeqInColOfParty(i, party) >= self.ROWSIZE_TO_WIN
                 for i in range_of_col_indices
             ]
         elif axis == Axis.MAINDIAG:
             enough_to_win = [
-                self.maxLenCohesiveSeqInMaindiagOfParty(i, party) >= self.ROWSIZE_TO_WIN
+                board.maxLenCohesiveSeqInMaindiagOfParty(i, party)
+                >= self.ROWSIZE_TO_WIN
                 for i in range_of_maindiag_indices
             ]
 
         elif axis == Axis.ANTIDIAG:
             enough_to_win = [
-                self.maxLenCohesiveSeqInAntidiagOfParty(i, party) >= self.ROWSIZE_TO_WIN
+                board.maxLenCohesiveSeqInAntidiagOfParty(i, party)
+                >= self.ROWSIZE_TO_WIN
                 for i in range_of_antidiag_indices
             ]
         else:

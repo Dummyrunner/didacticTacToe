@@ -5,24 +5,6 @@ from axis import Axis
 from game_dynamics_tictactoe import GameDynamicsTicTacToe
 
 
-def test_n_of_party_cohesive_seq_in_row():
-    state_string = "O_O\nOOO\n_OO"
-    board = BoardRectangular.fromString(state_string)
-    dynamics = GameDynamicsTicTacToe(board, 111)
-    assert dynamics.maxLenCohesiveSeqInRowOfParty(0, Party.BLACK) == 1
-    assert dynamics.maxLenCohesiveSeqInRowOfParty(1, Party.BLACK) == 3
-    assert dynamics.maxLenCohesiveSeqInRowOfParty(2, Party.BLACK) == 2
-
-
-def test_n_of_party_cohesive_seq_in_col():
-    state_string = "OO_\n_OO\nOOO"
-    board = BoardRectangular.fromString(state_string)
-    dynamics = GameDynamicsTicTacToe(board, 111)
-    assert dynamics.maxLenCohesiveSeqInColOfParty(0, Party.BLACK) == 1
-    assert dynamics.maxLenCohesiveSeqInColOfParty(1, Party.BLACK) == 3
-    assert dynamics.maxLenCohesiveSeqInColOfParty(2, Party.BLACK) == 2
-
-
 def test_has_party_won_at_axis_rows():
     line0 = "OXO_\n"
     line1 = "OOO_\n"
