@@ -1,7 +1,16 @@
 from Party import Party
 
 
-class MoveTicTacToe:
+class MoveBase:
+    def __init__(self, party):
+        self._party = party
+
+    @property
+    def party(self):
+        return self._party
+
+
+class MoveTicTacToe(MoveBase):
     """structure representing one move in tic tac toe
 
     Parameters:
@@ -10,16 +19,12 @@ class MoveTicTacToe:
             board (Board): Gameboard to perform the move on"""
 
     def __init__(self, cartpt_to_fill, party):
+        MoveBase.__init__(self, party)
         self.__cartpt_to_fill = cartpt_to_fill
-        self.__party = party
 
     @property
     def cartpt_to_fill(self):
         return self.__cartpt_to_fill
-
-    @property
-    def party(self):
-        return self.__party
 
     def __str__(self):
         party_str = ""
@@ -33,7 +38,7 @@ class MoveTicTacToe:
         return string
 
     def __hash__(self):
-        return hash((self.__cartpt_to_fill, self.__party))
+        return hash((self.__cartpt_to_fill, self._party))
 
     def __eq__(self, other):
         if not isinstance(other, MoveTicTacToe):
