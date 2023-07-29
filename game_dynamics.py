@@ -1,6 +1,6 @@
 from Party import Party
 from cartpt import CartPt
-from move_tictactoe import MoveTicTacToe
+from move import MoveTicTacToe
 from axis import Axis
 from board import BoardRectangular
 

@@ -3,11 +3,12 @@ from Party import Party
 import pytest
 from player_tictactoe import HumanPlayerTicTacToe
 from board import BoardRectangular
-from game_dynamics_tictactoe import GameDynamicsTicTacToe
+from game_dynamics import GameDynamicsTicTacToe
 from cartpt import CartPt
 from types import MethodType
-from move_tictactoe import MoveTicTacToe
+from move import MoveTicTacToe
 from io import StringIO
+from game_status import GameStatus
 
 
 def test_game_execution_init(default_dynamics_tictactoe):

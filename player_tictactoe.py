@@ -1,9 +1,9 @@
 from Party import Party
-from move_tictactoe import MoveTicTacToe
+from move import MoveTicTacToe
 from cartpt import CartPt
 
 
-class BasePlayerTicTacToe:
+class BasePlayer:
     def __init__(self, party: Party, name=""):
         self.name = name
         self.party = party
@@ -41,7 +41,7 @@ class BasePlayerTicTacToe:
         self.name = self._getNameFromKeyboard()
 
 
-class HumanPlayerTicTacToe(BasePlayerTicTacToe):
+class HumanPlayerTicTacToe(BasePlayer):
     def chooseMove(self, max_tries=2) -> MoveTicTacToe:
         print("Your turn, " + str(self.party.name + "! ") + "(name: " + self.name + ")")
         for num_of_tries in range(0, max_tries):

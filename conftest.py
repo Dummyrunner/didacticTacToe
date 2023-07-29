@@ -1,7 +1,7 @@
 import pytest
 from board import BoardRectangular
 from Party import Party
-from game_dynamics_tictactoe import GameDynamicsTicTacToe
+from game_dynamics import GameDynamicsTicTacToe
 from player_tictactoe import HumanPlayerTicTacToe
 
 

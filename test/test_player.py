@@ -1,7 +1,7 @@
-from player_tictactoe import HumanPlayerTicTacToe, BasePlayerTicTacToe
+from player_tictactoe import HumanPlayerTicTacToe, BasePlayer
 from Party import Party
 from cartpt import CartPt
-from move_tictactoe import MoveTicTacToe
+from move import MoveTicTacToe
 from io import StringIO
 from pytest import raises
 from types import MethodType
@@ -10,7 +10,7 @@ from types import MethodType
 def test_player_input_topology_valid_bad_input():
     ip_string_senseless = "senselessInput"
     ip_string_too_many_comma = "1,2,3"
-    pl = BasePlayerTicTacToe(Party.BLACK)
+    pl = BasePlayer(Party.BLACK)
     assert pl._inputTopologyValid(ip_string_senseless) == False
     assert pl._inputTopologyValid(ip_string_too_many_comma) == False
 
@@ -18,13 +18,13 @@ def test_player_input_topology_valid_bad_input():
 def test_input_topology_valid_good_input():
     ip_string1 = "1,2"
     ip_string2 = "33,99"
-    pl = BasePlayerTicTacToe(Party.BLACK)
+    pl = BasePlayer(Party.BLACK)
     assert pl._inputTopologyValid(ip_string1) == True
     assert pl._inputTopologyValid(ip_string2) == True
 
 
 def test_init_base_player_tictactoe():
-    hp = BasePlayerTicTacToe(Party.BLACK, "Edgar Wasser")
+    hp = BasePlayer(Party.BLACK, "Edgar Wasser")
     assert hp.name == "Edgar Wasser"
     assert hp.party == Party.BLACK
 

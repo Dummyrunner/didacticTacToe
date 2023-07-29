@@ -1,8 +1,9 @@
-from game_dynamics_tictactoe import GameDynamicsTicTacToe
+from game_dynamics import GameDynamicsTicTacToe
 from Party import Party
+from game_status import GameStatus
 from enum import Enum
 from player_tictactoe import HumanPlayerTicTacToe
-from move_tictactoe import MoveTicTacToe
+from move import MoveTicTacToe
 from board import BoardRectangular
 import str_utils as su
 
@@ -211,12 +212,3 @@ def createFiveWinsGameExecutionHumanPlayers() -> GameExecution:
     rowsize_to_win = 5
     dyn = GameDynamicsTicTacToe(board, rowsize_to_win)
     return GameExecution(dyn, pwhite, pblack)
-
-
-class GameStatus(Enum):
-    PREPARE = 0
-    RUNNING = 1
-    WHITE_WINS = 2
-    BLACK_WINS = 3
-    DRAW = 4
-    FAILURE = 5

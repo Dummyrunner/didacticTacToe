@@ -1,8 +1,8 @@
 from board import BoardRectangular
 from cartpt import CartPt
 from Party import Party
-from move_tictactoe import MoveTicTacToe
-from game_dynamics_tictactoe import GameDynamicsTicTacToe
+from move import MoveTicTacToe
+from game_dynamics import GameDynamicsTicTacToe
 import itertools
 
 

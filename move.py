@@ -2,6 +2,8 @@ from Party import Party
 
 
 class MoveBase:
+    """Base class for a move of a board game, executed by a specific party"""
+
     def __init__(self, party):
         self._party = party
 
@@ -11,7 +13,7 @@ class MoveBase:
 
 
 class MoveTicTacToe(MoveBase):
-    """structure representing one move in tic tac toe
+    """Class representing one move in tic tac toe
 
     Parameters:
             cartpt_to_fill (CartPt): cartesian target coordinates

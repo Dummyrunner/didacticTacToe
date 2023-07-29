@@ -2,10 +2,10 @@ import pytest
 from board import BoardRectangular
 from cartpt import CartPt
 from Party import Party
-from move_tictactoe import MoveTicTacToe
+from move import MoveTicTacToe
 
 from axis import Axis
-from game_dynamics_tictactoe import GameDynamicsTicTacToe
+from game_dynamics import GameDynamicsTicTacToe
 import itertools
 from player_tictactoe import HumanPlayerTicTacToe
 

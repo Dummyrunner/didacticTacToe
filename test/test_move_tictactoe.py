@@ -1,4 +1,4 @@
-from move_tictactoe import MoveTicTacToe
+from move import MoveTicTacToe
 from cartpt import CartPt
 from Party import Party
 import pytest

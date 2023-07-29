@@ -2,7 +2,7 @@ from board import BoardRectangular
 from Party import Party
 import pytest
 from axis import Axis
-from game_dynamics_tictactoe import GameDynamicsTicTacToe
+from game_dynamics import GameDynamicsTicTacToe
 
 
 def test_has_party_won_at_axis_rows():

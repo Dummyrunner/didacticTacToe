@@ -1,9 +1,7 @@
-from game_execution import (
-    GameExecution,
-    GameStatus,
-)
+from game_execution import GameExecution
+from game_status import GameStatus
 from board import BoardRectangular
-from game_dynamics_tictactoe import GameDynamicsTicTacToe
+from game_dynamics import GameDynamicsTicTacToe
 from Party import Party
 from conftest import ScriptedPlayer
 
