@@ -92,14 +92,6 @@ class GameExecution:
     def currentPlayer(self):
         return self.party2player_dct[self.__whos_turn]
 
-    def _inputTopologyValid(self, ip_string: str, split_char=",") -> bool:
-        """True, if input string ip_string contanins two integer values separated by one comma"""
-        how_many_commas = ip_string.count(split_char)
-        if how_many_commas != 1:
-            return False
-        x, y = ip_string.split(split_char)
-        return x.isdigit() and y.isdigit()
-
     def requestMoveFromPlayer(
         self, player: HumanPlayerTicTacToe, max_tries=2
     ) -> MoveTicTacToe:

@@ -121,18 +121,6 @@ def test_game_execution_white_wins():
     assert expected_outcome == actual_outcome
 
 
-def test_input_topology_valid(default_dynamics_tictactoe):
-    pwhite = HumanPlayerTicTacToe(Party.WHITE)
-    pblack = HumanPlayerTicTacToe(Party.BLACK)
-    ge = GameExecution(default_dynamics_tictactoe, pwhite, pblack)
-    ip_correct = "2,9"
-    ip_too_many_commas = "1,2,3"
-    ip_non_digit = "1,x"
-    assert ge._inputTopologyValid(ip_correct) == True
-    assert ge._inputTopologyValid(ip_non_digit) == False
-    assert ge._inputTopologyValid(ip_too_many_commas) == False
-
-
 def test_game_execution_eval_black_wins():
     line0 = "_OX\n"
     line1 = "X__\n"
