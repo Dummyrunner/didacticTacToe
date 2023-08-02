@@ -1,4 +1,8 @@
-from player_tictactoe import HumanPlayerTicTacToe, BasePlayer
+from player_tictactoe import (
+    HumanPlayerTicTacToe,
+    BasePlayer,
+    HumanPlayerTicTacToeGravity,
+)
 from Party import Party
 from cartpt import CartPt
 from move import MoveTicTacToe
@@ -45,12 +49,20 @@ def test_human_player_tictactoe_parse_keyboard_input_to_move():
     )
 
 
-def test_humanplayer_get_keyboard_input(monkeypatch, default_board3x3):
+def test_humanplayertictactoe_get_keyboard_input(monkeypatch, default_board3x3):
     hp = HumanPlayerTicTacToe(Party.WHITE, "keyboardtyper")
     hp.board = default_board3x3
     fake_keyboard_input = StringIO("1,2\n")
     monkeypatch.setattr("sys.stdin", fake_keyboard_input)
     assert hp.getMoveKeyBoardInput() == "1,2"
+
+
+def test_humanplayertictactoegravity_get_keyboard_input(monkeypatch, default_board3x3):
+    hp = HumanPlayerTicTacToeGravity(Party.WHITE, "keyboardtyper")
+    hp.board = default_board3x3
+    fake_keyboard_input = StringIO("1")
+    monkeypatch.setattr("sys.stdin", fake_keyboard_input)
+    assert hp.getMoveKeyBoardInput() == "1"
 
 
 def test_humanplayer_choose_move_wronginput_til_exception(

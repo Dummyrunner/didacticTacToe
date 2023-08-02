@@ -11,6 +11,16 @@ class MoveBase:
     def party(self):
         return self._party
 
+    def _partyStr(self):
+        party_str = ""
+        if self.party == Party.NEUTRAL:
+            party_str = "neutral"
+        elif self.party == Party.BLACK:
+            party_str = "black"
+        else:
+            party_str = "white"
+        return party_str
+
 
 class MoveTicTacToe(MoveBase):
     """Class representing one move in tic tac toe
@@ -29,14 +39,7 @@ class MoveTicTacToe(MoveBase):
         return self.__cartpt_to_fill
 
     def __str__(self):
-        party_str = ""
-        if self.party == Party.NEUTRAL:
-            party_str = "neutral"
-        elif self.party == Party.BLACK:
-            party_str = "black"
-        else:
-            party_str = "white"
-        string = "(move: " + str(self.cartpt_to_fill) + " " + party_str + " )"
+        string = "(move: " + str(self.cartpt_to_fill) + " " + self._partyStr() + " )"
         return string
 
     def __hash__(self):
@@ -49,4 +52,32 @@ class MoveTicTacToe(MoveBase):
         return (
             self.__cartpt_to_fill == other.__cartpt_to_fill
             and self.party == other.party
+        )
+
+
+class MoveTicTacToeGravity(MoveBase):
+    """Class representing one move in tic tac toe with gravity
+
+    Parameters:
+            target column index: integer index
+            party (Party.*): Which party executes the move
+            board (Board): Gameboard to perform the move on"""
+
+    def __init__(self, target_column, party):
+        MoveBase.__init__(self, party)
+        self.__target_column = target_column
+
+    @property
+    def target_column(self):
+        return self.__target_column
+
+    def __hash__(self):
+        return hash((self.__target_column, self._party))
+
+    def __eq__(self, other):
+        if not isinstance(other, MoveTicTacToeGravity):
+            # don't attempt to compare against unrelated types
+            return NotImplemented
+        return (
+            self.__target_column == other.__target_column and self.party == other.party
         )

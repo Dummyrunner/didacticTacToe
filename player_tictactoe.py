@@ -1,5 +1,5 @@
 from Party import Party
-from move import MoveTicTacToe
+from move import MoveTicTacToe, MoveTicTacToeGravity
 from cartpt import CartPt
 
 
@@ -82,3 +82,21 @@ class HumanPlayerTicTacToe(HumanPlayer):  #
             return False
         x, y = ip_string.split(split_char)
         return x.isdigit() and y.isdigit()
+
+
+class HumanPlayerTicTacToeGravity(HumanPlayer):
+    def getMoveKeyBoardInput(self) -> str:
+        max_col_idx = self.board.numOfCols() - 1
+        msg = (
+            "move: Enter a Index of a non-full column between 0 and  "
+            + str(max_col_idx)
+            + ":\n"
+        )
+        return self._inputFromKeyboard(msg)
+
+    def parseKeyboardInputToMove(self, ip: str) -> MoveTicTacToeGravity:
+        return MoveTicTacToeGravity(int(ip), self.party)
+
+    def _inputTopologyValid(self, ip_string: str) -> bool:
+        """True, if input string ip_string is an integer"""
+        return ip_string.isdigit() and ip_string.isdigit()
