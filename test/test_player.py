@@ -10,7 +10,7 @@ from types import MethodType
 def test_player_input_topology_valid_bad_input():
     ip_string_senseless = "senselessInput"
     ip_string_too_many_comma = "1,2,3"
-    pl = BasePlayer(Party.BLACK)
+    pl = HumanPlayerTicTacToe(Party.BLACK)
     assert pl._inputTopologyValid(ip_string_senseless) == False
     assert pl._inputTopologyValid(ip_string_too_many_comma) == False
 
@@ -18,7 +18,7 @@ def test_player_input_topology_valid_bad_input():
 def test_input_topology_valid_good_input():
     ip_string1 = "1,2"
     ip_string2 = "33,99"
-    pl = BasePlayer(Party.BLACK)
+    pl = HumanPlayerTicTacToe(Party.BLACK)
     assert pl._inputTopologyValid(ip_string1) == True
     assert pl._inputTopologyValid(ip_string2) == True
 
@@ -62,7 +62,6 @@ def test_humanplayer_choose_move_wronginput_til_exception(
     hp = HumanPlayerTicTacToe(Party.WHITE, "movechooser1")
     hp.board = default_board3x3
     fake_keyboard_input_both_nonvalid = StringIO("1,2,3\n1,2,3\n")
-    # fake_keyboard_input_first_nonvalid = StringIO("1,2\n1,2")
     monkeypatch.setattr("sys.stdin", fake_keyboard_input_both_nonvalid)
     hp._inputTopologyValid = MethodType(inputTopologyValid_FALSE, hp)
     with raises(ValueError):
@@ -74,7 +73,6 @@ def test_humanplayer_choose_move_fallback_once(monkeypatch, default_board3x3):
     hp.board = default_board3x3
     fake_keyboard_input_first_nonvalid = StringIO("1,2,3\n1,2\n")
     monkeypatch.setattr("sys.stdin", fake_keyboard_input_first_nonvalid)
-    # hp._inputTopologyValid = MethodType(inputTopologyValid_TRUE, hp)
     expected_move = MoveTicTacToe(CartPt(1, 2), Party.WHITE)
     assert hp.chooseMove(2) == expected_move
 
@@ -83,14 +81,14 @@ def test_player_get_name_from_keyboard(monkeypatch):
     fake_keyboard_input_first_name = StringIO("Hans Peter\n")
     hp = HumanPlayerTicTacToe(Party.WHITE)
     monkeypatch.setattr("sys.stdin", fake_keyboard_input_first_name)
-    assert hp._getNameFromKeyboard() == "Hans Peter"
+    assert hp._setNameFromKeyboard() == "Hans Peter"
 
 
 def test_player_get_name_from_keyboard(monkeypatch):
     fake_keyboard_input_first_name = StringIO("\n")
     hp = HumanPlayerTicTacToe(Party.WHITE)
     monkeypatch.setattr("sys.stdin", fake_keyboard_input_first_name)
-    assert hp._getNameFromKeyboard() == "DefaultHumanPlayer"
+    assert hp._setNameFromKeyboard() == "DefaultHumanPlayer"
 
 
 def test_player_get_name_from_keyboard_fail(monkeypatch):
@@ -98,7 +96,7 @@ def test_player_get_name_from_keyboard_fail(monkeypatch):
     hp = HumanPlayerTicTacToe(Party.WHITE)
     monkeypatch.setattr("sys.stdin", fake_keyboard_input_first_name)
     with raises(ValueError):
-        assert hp._getNameFromKeyboard() == "Hans Peter"
+        assert hp._setNameFromKeyboard() == "Hans Peter"
 
 
 def test_player_set_name():

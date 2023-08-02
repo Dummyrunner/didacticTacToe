@@ -9,19 +9,10 @@ class BasePlayer:
         self.party = party
         self.board = None
 
-    def _inputTopologyValid(self, ip_string: str, split_char=",") -> bool:
-        """True, if input string ip_string contanins two integer values
-        separated by one split character, by default a comma"""
-        how_many_commas = ip_string.count(split_char)
-        if how_many_commas != 1:
-            return False
-        x, y = ip_string.split(split_char)
-        return x.isdigit() and y.isdigit()
-
     def updateBoard(self, new_board):
         self.board = new_board
 
-    def _getNameFromKeyboard(self) -> str:
+    def _setNameFromKeyboard(self) -> str:
         ip = input(
             "For Party "
             + self.party.name
@@ -38,10 +29,10 @@ class BasePlayer:
         self.name = namestring
 
     def setNameFromKeyboard(self) -> None:
-        self.name = self._getNameFromKeyboard()
+        self.name = self._setNameFromKeyboard()
 
 
-class HumanPlayerTicTacToe(BasePlayer):
+class HumanPlayer(BasePlayer):
     def chooseMove(self, max_tries=2) -> MoveTicTacToe:
         print("Your turn, " + str(self.party.name + "! ") + "(name: " + self.name + ")")
         for num_of_tries in range(0, max_tries):
@@ -60,20 +51,34 @@ class HumanPlayerTicTacToe(BasePlayer):
             "Repeatedly bad topology: Max num " + str(max_tries) + " exceeded"
         )
 
+    def _inputFromKeyboard(self, msg: str) -> str:
+        return input(msg)
+
+
+class HumanPlayerTicTacToe(HumanPlayer):  #
     def getMoveKeyBoardInput(self) -> str:
         max_row_idx = self.board.numOfRows() - 1
         max_col_idx = self.board.numOfCols() - 1
-        ip = input(
+        msg = (
             'move: Enter "X,Y" where X is the row index from 0 to '
             + str(max_row_idx)
             + ", Y column index from 0 to "
             + str(max_col_idx)
             + ":\n"
         )
-        return ip
+        return self._inputFromKeyboard(msg)
 
     def parseKeyboardInputToMove(self, ip: str) -> MoveTicTacToe:
         coords = [int(x) for x in ip.split(",")]
         x, y = coords
         pt = CartPt(x, y)
         return MoveTicTacToe(pt, self.party)
+
+    def _inputTopologyValid(self, ip_string: str, split_char=",") -> bool:
+        """True, if input string ip_string contanins two integer values
+        separated by one split character, by default a comma"""
+        how_many_commas = ip_string.count(split_char)
+        if how_many_commas != 1:
+            return False
+        x, y = ip_string.split(split_char)
+        return x.isdigit() and y.isdigit()
