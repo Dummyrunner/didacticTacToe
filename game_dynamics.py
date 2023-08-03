@@ -5,7 +5,24 @@ from axis import Axis
 
 
 class GameDynamicsBase:
-    pass
+    def __init__(self):
+        self.__admissible_moves_set = set()
+        self._updateAdmissibleMoves()
+
+    def doMoveOnBoard(self, player, move) -> None:
+        party = player.party
+        self._doMoveForParty(party, move)
+
+    def admissibleMoves(self):
+        self._updateAdmissibleMoves()
+        return self.__admissible_moves_set
+
+    def addmissibleMovesForParty(self, party):
+        all_admissible_moves = self.admissibleMoves()
+        return [x for x in all_admissible_moves if x.party == party]
+
+    def _updateAdmissibleMoves(self) -> None:
+        pass
 
 
 class WinByCohesiveRow:
@@ -86,10 +103,13 @@ class GameDynamicsTicTacToe(GameDynamicsBase, WinByCohesiveRow):
     def __init__(self, board, rowsize_to_win):
         self.ROWSIZE_TO_WIN = rowsize_to_win
         self.board = board
-        self.__admissible_moves_set = set()
+        GameDynamicsBase.__init__(self)
+        # self.__admissible_moves_set = set()
 
     def _updateAdmissibleMoves(self) -> None:
         board = self.board
+        print("YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY")
+        print(board)
         num_of_rows = board.numOfRows()
         num_of_cols = board.numOfCols()
         self.__admissible_moves_set = set()
@@ -111,17 +131,17 @@ class GameDynamicsTicTacToe(GameDynamicsBase, WinByCohesiveRow):
         else:
             raise ValueError("Move " + str(move) + " not admissible")
 
-    def doMoveOnBoard(self, player, move) -> None:
-        party = player.party
-        self._doMoveForParty(party, move)
+    # def doMoveOnBoard(self, player, move) -> None:
+    #     party = player.party
+    #     self._doMoveForParty(party, move)
 
-    def admissibleMoves(self):
-        self._updateAdmissibleMoves()
-        return self.__admissible_moves_set
+    # def admissibleMoves(self):
+    #     self._updateAdmissibleMoves()
+    #     return self.__admissible_moves_set
 
-    def addmissibleMovesForParty(self, party):
-        all_admissible_moves = self.admissibleMoves()
-        return [x for x in all_admissible_moves if x.party == party]
+    # def addmissibleMovesForParty(self, party):
+    #     all_admissible_moves = self.admissibleMoves()
+    #     return [x for x in all_admissible_moves if x.party == party]
 
 
 # class GameDynamicsTicTacToeGravity(GameDynamicsBase, WinByCohesiveRow):
