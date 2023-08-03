@@ -2,61 +2,13 @@ from Party import Party
 from cartpt import CartPt
 from move import MoveTicTacToe
 from axis import Axis
-from board import BoardRectangular
 
 
 class GameDynamicsBase:
-    def __init__(self):
-        pass
-
-    def hasPartyWon(self, party: Party) -> bool:
-        pass
-
-    def isDraw(self) -> bool:
-        pass
+    pass
 
 
-class GameDynamicsTicTacToe(GameDynamicsBase):
-    def __init__(self, board, rowsize_to_win):
-        self.ROWSIZE_TO_WIN = rowsize_to_win
-        self.board = board
-        self.__admissible_moves_set = set()
-
-    def _updateAdmissibleMoves(self) -> None:
-        board = self.board
-        num_of_rows = board.numOfRows()
-        num_of_cols = board.numOfCols()
-        self.__admissible_moves_set = set()
-        for irow in range(0, num_of_rows):
-            for icol in range(0, num_of_cols):
-                current_point = CartPt(irow, icol)
-                if board.valueFromCartesian(current_point) == Party.NEUTRAL:
-                    # admissible moves are for both parties the same. so neutral is to be considered a
-                    # placeholder here
-                    move_to_add_black = MoveTicTacToe(current_point, Party.BLACK)
-                    move_to_add_white = MoveTicTacToe(current_point, Party.WHITE)
-                    self.__admissible_moves_set.add(move_to_add_white)
-                    self.__admissible_moves_set.add(move_to_add_black)
-
-    def admissibleMoves(self):
-        self._updateAdmissibleMoves()
-        return self.__admissible_moves_set
-
-    def addmissibleMovesForParty(self, party):
-        all_admissible_moves = self.admissibleMoves()
-        return [x for x in all_admissible_moves if x.party == party]
-
-    def doMoveOnBoard(self, player, move) -> None:
-        party = player.party
-        self._doMoveForParty(party, move)
-
-    def _doMoveForParty(self, party, move) -> None:
-        pt = move.cartpt_to_fill
-        if move in self.admissibleMoves():
-            self.board.setValueAtCartesian(pt, party)
-        else:
-            raise ValueError("Move " + str(move) + " not admissible")
-
+class WinByCohesiveRow:
     def _hasPartyWonAtAxisByIndex(
         self, axis_idx: int, axis: Axis, party: Party
     ) -> bool:
@@ -128,3 +80,52 @@ class GameDynamicsTicTacToe(GameDynamicsBase):
     def isDraw(self):
         someone_won = self.hasPartyWon(Party.BLACK) or self.hasPartyWon(Party.WHITE)
         return not someone_won and len(self.admissibleMoves()) == 0
+
+
+class GameDynamicsTicTacToe(GameDynamicsBase, WinByCohesiveRow):
+    def __init__(self, board, rowsize_to_win):
+        self.ROWSIZE_TO_WIN = rowsize_to_win
+        self.board = board
+        self.__admissible_moves_set = set()
+
+    def _updateAdmissibleMoves(self) -> None:
+        board = self.board
+        num_of_rows = board.numOfRows()
+        num_of_cols = board.numOfCols()
+        self.__admissible_moves_set = set()
+        for irow in range(0, num_of_rows):
+            for icol in range(0, num_of_cols):
+                current_point = CartPt(irow, icol)
+                if board.valueFromCartesian(current_point) == Party.NEUTRAL:
+                    # admissible moves are for both parties the same. so neutral is to be considered a
+                    # placeholder here
+                    move_to_add_black = MoveTicTacToe(current_point, Party.BLACK)
+                    move_to_add_white = MoveTicTacToe(current_point, Party.WHITE)
+                    self.__admissible_moves_set.add(move_to_add_white)
+                    self.__admissible_moves_set.add(move_to_add_black)
+
+    def _doMoveForParty(self, party, move) -> None:
+        pt = move.cartpt_to_fill
+        if move in self.admissibleMoves():
+            self.board.setValueAtCartesian(pt, party)
+        else:
+            raise ValueError("Move " + str(move) + " not admissible")
+
+    def doMoveOnBoard(self, player, move) -> None:
+        party = player.party
+        self._doMoveForParty(party, move)
+
+    def admissibleMoves(self):
+        self._updateAdmissibleMoves()
+        return self.__admissible_moves_set
+
+    def addmissibleMovesForParty(self, party):
+        all_admissible_moves = self.admissibleMoves()
+        return [x for x in all_admissible_moves if x.party == party]
+
+
+# class GameDynamicsTicTacToeGravity(GameDynamicsBase, WinByCohesiveRow):
+#     def __init__(self, board, rowsize_to_win):
+#         self.ROWSIZE_TO_WIN = rowsize_to_win
+#         self.board = board
+#         self.__admissible_moves_set = set()
