@@ -37,5 +37,8 @@ or via pytest-cov plugin
 rm -rf test/cov_report_
 pytest --cov --cov-config=test/.coveragerc --cov-report=html:test/cov_report
 ```
-writes report to `test/coverage_report_cov/index.html`
+writes report to
+```bash
+firefox test/cov_report/index.html
+```
 
