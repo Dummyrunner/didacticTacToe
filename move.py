@@ -17,9 +17,17 @@ class MoveBase:
             party_str = "neutral"
         elif self.party == Party.BLACK:
             party_str = "black"
-        else:
+        elif self.party == Party.WHITE:
             party_str = "white"
+        else:
+            raise AttributeError("Non-valid Party value passed to move object!")
         return party_str
+
+    def __hash__(self):
+        raise NotImplementedError
+
+    def __eq__(self, other):
+        raise NotImplementedError
 
 
 class MoveTicTacToe(MoveBase):
