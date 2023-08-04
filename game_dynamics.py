@@ -2,6 +2,7 @@ from Party import Party
 from cartpt import CartPt
 from move import MoveTicTacToe
 from axis import Axis
+from board import BoardRectangular
 
 
 class GameDynamicsBase:
@@ -125,5 +126,30 @@ class GameDynamicsTicTacToe(GameDynamicsBase, WinByCohesiveRow):
         pt = move.cartpt_to_fill
         if move in self.admissibleMoves():
             self.board.setValueAtCartesian(pt, party)
+        else:
+            raise ValueError("Move " + str(move) + " not admissible")
+
+
+class GameDynamicsTicTacToeGravity(GameDynamicsBase, WinByCohesiveRow):
+    def __init__(self, board, rowsize_to_win):
+        self.ROWSIZE_TO_WIN = rowsize_to_win
+        self.board = board
+        GameDynamicsBase.__init__(self)
+
+    def _updateAdmissibleMoves(self) -> None:
+        board = self.board
+        num_of_cols = board.numOfCols()
+        self._admissible_moves_set = set()
+        for col in range(0, num_of_cols):
+            pass
+            #     if col notFull:
+            # add move for black and white
+            # TODO
+        raise NotImplementedError
+
+    def _doMoveForParty(self, party, move) -> None:
+        col = move.column
+        if move in self.admissibleMoves():
+            self.board.setValueAtCartesian(col, party)
         else:
             raise ValueError("Move " + str(move) + " not admissible")
