@@ -17,6 +17,19 @@ def test_move_base_init():
     assert move_neutral.party == Party.NEUTRAL
 
 
+class BadChildClass(MoveBase):
+    pass
+
+
+def test_move_base_not_implemented_method():
+    move1 = MoveBase(Party.BLACK)
+    move2 = MoveBase(Party.BLACK)
+    with pytest.raises(NotImplementedError):
+        move1 == move2
+    with pytest.raises(NotImplementedError):
+        move1.__hash__()
+
+
 def test_move_tictactoe_init():
     try:
         move = MoveTicTacToe(CartPt(1, 2), Party.WHITE)
