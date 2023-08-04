@@ -73,11 +73,19 @@ class MoveTicTacToeGravity(MoveBase):
 
     def __init__(self, target_column, party):
         MoveBase.__init__(self, party)
+        if type(target_column) != int:
+            raise AttributeError(
+                "Column must be int, but is " + str(type(target_column))
+            )
         self.__target_column = target_column
 
     @property
     def target_column(self):
         return self.__target_column
+
+    def __str__(self):
+        string = "(move: " + str(self.target_columnr) + " " + self._partyStr() + " )"
+        return string
 
     def __hash__(self):
         return hash((self.__target_column, self._party))

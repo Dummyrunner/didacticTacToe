@@ -1,7 +1,20 @@
-from move import MoveTicTacToe
+from move import MoveTicTacToe, MoveBase
 from cartpt import CartPt
 from Party import Party
 import pytest
+
+
+def test_move_base_init():
+    try:
+        move = MoveBase(Party.WHITE)
+    except:
+        pytest.fail("initializing of MoveBase leads to exception!")
+    move_black = MoveBase(Party.BLACK)
+    move_white = MoveBase(Party.WHITE)
+    move_neutral = MoveBase(Party.NEUTRAL)
+    assert move_black.party == Party.BLACK
+    assert move_white.party == Party.WHITE
+    assert move_neutral.party == Party.NEUTRAL
 
 
 def test_move_tictactoe_init():
