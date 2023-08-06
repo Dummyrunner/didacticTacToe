@@ -1,4 +1,9 @@
 from game_execution import *
+from game_execution_factories import (
+    createDefaultTicTacToeGameExecutionHumanPlayers,
+    createFiveWinsGameExecutionHumanPlayers,
+    createFourWinsGravityGameExecutionHumanPlayers,
+)
 from Party import Party
 import pytest
 from player_tictactoe import HumanPlayerTicTacToe
@@ -298,5 +303,14 @@ def test_game_execution_factory_fivewins_noerror(monkeypatch):
     monkeypatch.setattr("sys.stdin", fake_kb_input_names)
     try:
         createFiveWinsGameExecutionHumanPlayers()
+    except RuntimeError:
+        pytest.fail("Factory Method leads to exception")
+
+
+def test_game_execution_factory_fourwinsgravity_noerror(monkeypatch):
+    fake_kb_input_names = StringIO("\n\n")
+    monkeypatch.setattr("sys.stdin", fake_kb_input_names)
+    try:
+        createFourWinsGravityGameExecutionHumanPlayers()
     except RuntimeError:
         pytest.fail("Factory Method leads to exception")

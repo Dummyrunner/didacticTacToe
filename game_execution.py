@@ -1,10 +1,9 @@
-from game_dynamics import GameDynamicsTicTacToe, GameDynamicsTicTacToeGravity
+from game_dynamics import GameDynamicsTicTacToe
 from Party import Party
 from game_status import GameStatus
 from enum import Enum
-from player_tictactoe import HumanPlayerTicTacToe, HumanPlayerTicTacToeGravity
+from player_tictactoe import HumanPlayerTicTacToe
 from move import MoveTicTacToe
-from board import BoardRectangular
 import str_utils as su
 
 
@@ -182,36 +181,3 @@ class GameExecution:
                 "other Party argument has to be Party.BLACK or Party.WHITE, but is  "
                 + str(party)
             )
-
-
-def createDefaultTicTacToeGameExecutionHumanPlayers() -> GameExecution:
-    pwhite = HumanPlayerTicTacToe(Party.WHITE)
-    pblack = HumanPlayerTicTacToe(Party.BLACK)
-    pwhite.setNameFromKeyboard()
-    pblack.setNameFromKeyboard()
-    board = BoardRectangular(3, 3)
-    rowsize_to_win = 3
-    dyn = GameDynamicsTicTacToe(board, rowsize_to_win)
-    return GameExecution(dyn, pwhite, pblack)
-
-
-def createFiveWinsGameExecutionHumanPlayers() -> GameExecution:
-    pwhite = HumanPlayerTicTacToe(Party.WHITE)
-    pblack = HumanPlayerTicTacToe(Party.BLACK)
-    pwhite.setNameFromKeyboard()
-    pblack.setNameFromKeyboard()
-    board = BoardRectangular(9, 9)
-    rowsize_to_win = 5
-    dyn = GameDynamicsTicTacToe(board, rowsize_to_win)
-    return GameExecution(dyn, pwhite, pblack)
-
-
-def createFourWinsGravityGameExecutionHumanPlayers() -> GameExecution:
-    pwhite = HumanPlayerTicTacToeGravity(Party.WHITE)
-    pblack = HumanPlayerTicTacToeGravity(Party.BLACK)
-    pwhite.setNameFromKeyboard()
-    pblack.setNameFromKeyboard()
-    board = BoardRectangular(7, 6)
-    rowsize_to_win = 4
-    dyn = GameDynamicsTicTacToeGravity(board, rowsize_to_win)
-    return GameExecution(dyn, pwhite, pblack)

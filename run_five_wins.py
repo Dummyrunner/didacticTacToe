@@ -1,4 +1,4 @@
-from game_execution import createFiveWinsGameExecutionHumanPlayers
+from game_execution_factories import createFiveWinsGameExecutionHumanPlayers
 
 
 def main():

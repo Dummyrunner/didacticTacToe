@@ -1,4 +1,4 @@
-from game_execution import createDefaultTicTacToeGameExecutionHumanPlayers
+from game_execution_factories import createDefaultTicTacToeGameExecutionHumanPlayers
 
 
 def main():
