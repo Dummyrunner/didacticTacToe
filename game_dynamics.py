@@ -1,6 +1,6 @@
 from Party import Party
 from cartpt import CartPt
-from move import MoveTicTacToe
+from move import MoveTicTacToe, MoveTicTacToeGravity
 from axis import Axis
 from board import BoardRectangular
 
@@ -20,7 +20,7 @@ class GameDynamicsBase:
 
     def addmissibleMovesForParty(self, party):
         all_admissible_moves = self.admissibleMoves()
-        return [x for x in all_admissible_moves if x.party == party]
+        return set([x for x in all_admissible_moves if x.party == party])
 
     def _updateAdmissibleMoves(self) -> None:
         raise NotImplementedError
@@ -141,11 +141,11 @@ class GameDynamicsTicTacToeGravity(GameDynamicsBase, WinByCohesiveRow):
         num_of_cols = board.numOfCols()
         self._admissible_moves_set = set()
         for col in range(0, num_of_cols):
-            pass
-            #     if col notFull:
-            # add move for black and white
-            # TODO
-        raise NotImplementedError
+            if not board._columnFull(col):
+                move_to_append_white = MoveTicTacToeGravity(col, Party.WHITE)
+                move_to_append_black = MoveTicTacToeGravity(col, Party.BLACK)
+                self._admissible_moves_set.add(move_to_append_white)
+                self._admissible_moves_set.add(move_to_append_black)
 
     def _doMoveForParty(self, party, move) -> None:
         col = move.column
