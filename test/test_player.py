@@ -5,7 +5,7 @@ from player_tictactoe import (
 )
 from Party import Party
 from cartpt import CartPt
-from move import MoveTicTacToe
+from move import MoveTicTacToe, MoveTicTacToeGravity
 from io import StringIO
 from pytest import raises
 from types import MethodType
@@ -124,3 +124,23 @@ def test_player_set_name_via_keyboard(monkeypatch):
     monkeypatch.setattr("sys.stdin", fake_keyboard_input_first_name)
     hp.setNameFromKeyboard()
     assert hp.name == "Knoedl"
+
+
+def test_input_topology_valid_gravity():
+    pl = HumanPlayerTicTacToeGravity(Party.BLACK)
+    assert pl._inputTopologyValid("0") == True
+    assert pl._inputTopologyValid("1, 2") == False
+    assert pl._inputTopologyValid("Hello") == False
+
+
+def test_parse_keyboard_input_to_move_gravity():
+    pl_black = HumanPlayerTicTacToeGravity(Party.BLACK)
+    pl_white = HumanPlayerTicTacToeGravity(Party.WHITE)
+    actual_move_black = pl_black.parseKeyboardInputToMove("3")
+    actual_move_white = pl_white.parseKeyboardInputToMove("3")
+    expected_move_black = MoveTicTacToeGravity(3, Party.BLACK)
+    expected_move_white = MoveTicTacToeGravity(3, Party.WHITE)
+    assert actual_move_black == expected_move_black
+    assert actual_move_white == expected_move_white
+    with raises(ValueError):
+        pl_black.parseKeyboardInputToMove("Moin")

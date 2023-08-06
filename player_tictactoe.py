@@ -99,4 +99,4 @@ class HumanPlayerTicTacToeGravity(HumanPlayer):
 
     def _inputTopologyValid(self, ip_string: str) -> bool:
         """True, if input string ip_string is an integer"""
-        return ip_string.isdigit() and ip_string.isdigit()
+        return ip_string.isdigit()
