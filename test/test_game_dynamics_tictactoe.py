@@ -214,15 +214,3 @@ def test_is_draw_negative_moves_left():
     board = BoardRectangular.fromString(state_string)
     dynamics = GameDynamicsTicTacToe(board, 3)
     assert dynamics.isDraw() == False
-
-
-def test_game_dynamics_tictactoe_gravity_column__full():
-    line0 = "X__\n"
-    line1 = "O__\n"
-    line2 = "OOX"
-    state_string = line0 + line1 + line2
-    board = BoardRectangular.fromString(state_string)
-    dynamics = GameDynamicsTicTacToeGravity(board, 4)
-    assert dynamics._columnFull(0) == True
-    assert dynamics._columnFull(1) == False
-    assert dynamics._columnFull(2) == False

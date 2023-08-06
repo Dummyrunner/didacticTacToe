@@ -153,10 +153,3 @@ class GameDynamicsTicTacToeGravity(GameDynamicsBase, WinByCohesiveRow):
             self.board.setValueAtCartesian(col, party)
         else:
             raise ValueError("Move " + str(move) + " not admissible")
-
-    def _columnFull(self, col_idx: int) -> bool:
-        if col_idx < 0 or col_idx >= board.numOfCols():
-            raise AttributeError("Column index " + col_idx + " out of range!")
-        board = self.board
-        col_vals = board.colValsAsList(col_idx)
-        return not any([(Party.NEUTRAL == val) for val in col_vals])

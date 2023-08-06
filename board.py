@@ -221,6 +221,12 @@ class BoardRectangular(BoardBase):
             for col_idx in range(0, self.numOfCols())
         ]
 
+    def _columnFull(self, col_idx: int) -> bool:
+        if col_idx < 0 or col_idx >= self.numOfCols():
+            raise AttributeError("Column index " + col_idx + " out of range!")
+        col_vals = self.colValsAsList(col_idx)
+        return not any([(Party.NEUTRAL == val) for val in col_vals])
+
     def _rowToString(self, row_idx):
         if row_idx < 0 or row_idx > self.numOfRows() - 1:
             raise IndexError(
@@ -313,5 +319,4 @@ class BoardRectangular(BoardBase):
             + ": "
             + self.state_markers_dict[Party.BLACK]
         )
-
         return res

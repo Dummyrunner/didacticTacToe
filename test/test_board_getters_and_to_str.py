@@ -133,3 +133,14 @@ def test_row_string_to_formatted_short():
     testline = "XO"
     formatted = BoardRectangular._rowStringToFormatted(testline)
     assert testline == formatted
+
+
+def test_game_dynamics_tictactoe_gravity_column__full():
+    line0 = "X__\n"
+    line1 = "O__\n"
+    line2 = "OOX"
+    state_string = line0 + line1 + line2
+    board = BoardRectangular.fromString(state_string)
+    assert board._columnFull(0) == True
+    assert board._columnFull(1) == False
+    assert board._columnFull(2) == False
