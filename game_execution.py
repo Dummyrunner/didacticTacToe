@@ -1,8 +1,8 @@
-from game_dynamics import GameDynamicsTicTacToe
+from game_dynamics import GameDynamicsTicTacToe, GameDynamicsTicTacToeGravity
 from Party import Party
 from game_status import GameStatus
 from enum import Enum
-from player_tictactoe import HumanPlayerTicTacToe
+from player_tictactoe import HumanPlayerTicTacToe, HumanPlayerTicTacToeGravity
 from move import MoveTicTacToe
 from board import BoardRectangular
 import str_utils as su
@@ -203,4 +203,15 @@ def createFiveWinsGameExecutionHumanPlayers() -> GameExecution:
     board = BoardRectangular(9, 9)
     rowsize_to_win = 5
     dyn = GameDynamicsTicTacToe(board, rowsize_to_win)
+    return GameExecution(dyn, pwhite, pblack)
+
+
+def createFourWinsGravityGameExecutionHumanPlayers() -> GameExecution:
+    pwhite = HumanPlayerTicTacToeGravity(Party.WHITE)
+    pblack = HumanPlayerTicTacToeGravity(Party.BLACK)
+    pwhite.setNameFromKeyboard()
+    pblack.setNameFromKeyboard()
+    board = BoardRectangular(7, 6)
+    rowsize_to_win = 4
+    dyn = GameDynamicsTicTacToeGravity(board, rowsize_to_win)
     return GameExecution(dyn, pwhite, pblack)

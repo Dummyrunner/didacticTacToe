@@ -148,8 +148,13 @@ class GameDynamicsTicTacToeGravity(GameDynamicsBase, WinByCohesiveRow):
                 self._admissible_moves_set.add(move_to_append_black)
 
     def _doMoveForParty(self, party, move) -> None:
-        col = move.column
+        board = self.board
+        col = move.target_column
         if move in self.admissibleMoves():
-            self.board.setValueAtCartesian(col, party)
+            row_range_idx = reversed(range(0, board.numOfRows()))
+            for row_idx in row_range_idx:
+                if board.valueFromCartesian(CartPt(row_idx, col)) == Party.NEUTRAL:
+                    board.setValueAtCartesian(CartPt(row_idx, col), party)
+                    break
         else:
             raise ValueError("Move " + str(move) + " not admissible")
