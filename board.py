@@ -18,14 +18,14 @@ class BoardRectangular(BoardBase):
 
     def __init__(
         self,
-        size_x=3,
-        size_y=3,
+        num_of_rows=3,
+        num_of_cols=3,
         markers_dict={Party.NEUTRAL: "_", Party.BLACK: "O", Party.WHITE: "X"},
     ):
-        self.__SIZE_X = size_x
-        self.__SIZE_Y = size_y
+        self.__NUM_OF_ROWS = num_of_rows
+        self.__NUM_OF_COLS = num_of_cols
         BoardBase.__init__(self, markers_dict)
-        num_of_squares = size_x * size_y
+        num_of_squares = num_of_rows * num_of_cols
         # in __state, states are stored row after row
         self.__state = [Party.NEUTRAL for i in range(0, num_of_squares)]
 
@@ -45,10 +45,10 @@ class BoardRectangular(BoardBase):
         self.__state = input_list
 
     def numOfRows(self) -> int:
-        return self.__SIZE_X
+        return self.__NUM_OF_ROWS
 
     def numOfCols(self) -> int:
-        return self.__SIZE_Y
+        return self.__NUM_OF_COLS
 
     def cartPtOutOfRange(self, cart_pt: CartPt) -> bool:
         max_x = self.numOfRows() - 1
@@ -302,7 +302,7 @@ class BoardRectangular(BoardBase):
                     self.valueFromCartesian(CartPt(irow, icol))
                 ]
                 res += char_to_add
-            if irow < self.numOfCols() - 1:
+            if irow < self.numOfRows() - 1:
                 res += "\n"
         res += 2 * "\n"
         res += (
