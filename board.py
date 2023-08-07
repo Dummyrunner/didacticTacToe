@@ -28,6 +28,7 @@ class BoardRectangular(BoardBase):
         num_of_squares = num_of_rows * num_of_cols
         # in __state, states are stored row after row
         self.__state = [Party.NEUTRAL for i in range(0, num_of_squares)]
+        self.board_display = BoardDisplay(self, self.state_markers_dict)
 
     def setValueAtCartesian(self, cart_pt: CartPt, new_val: Party) -> None:
         self.throwIfOutOfRange(cart_pt)
@@ -264,7 +265,6 @@ class BoardRectangular(BoardBase):
 
     @staticmethod
     def _rowStringToFormatted(rowstring):
-        res = ""
         if len(rowstring) <= 2:
             return rowstring
         first_char = rowstring[0]
@@ -290,19 +290,29 @@ class BoardRectangular(BoardBase):
         return len_max_seq
 
     def __str__(self):
+        return self.board_display._boardToString()
+
+
+class BoardDisplay:
+    def __init__(self, board, state_markers_dict):
+        self.board = board
+        self.state_markers_dict = state_markers_dict
+
+    def _boardToString(self):
+        board = self.board
         res = "Board:\n"
-        row_idx_range = range(0, self.numOfRows())
-        col_idx_range = range(0, self.numOfCols())
+        row_idx_range = range(0, board.numOfRows())
+        col_idx_range = range(0, board.numOfCols())
         col_index_row = 2 * " " + "".join([str(idx) for idx in col_idx_range])
         res += col_index_row + "\n"
         for irow in row_idx_range:
-            res += str(irow) + "|"
+            res += self._rowIndexPrefix(irow)
             for icol in col_idx_range:
                 char_to_add = self.state_markers_dict[
-                    self.valueFromCartesian(CartPt(irow, icol))
+                    board.valueFromCartesian(CartPt(irow, icol))
                 ]
                 res += char_to_add
-            if irow < self.numOfRows() - 1:
+            if irow < board.numOfRows() - 1:
                 res += "\n"
         res += 2 * "\n"
         res += (
@@ -320,3 +330,23 @@ class BoardRectangular(BoardBase):
             + self.state_markers_dict[Party.BLACK]
         )
         return res
+
+    def _rowIndexPrefix(self, row_idx):
+        board = self.board
+        max_digits_index = self._numOfDigits(board.numOfRows() - 1)
+        current_digit = self._numOfDigits(row_idx)
+        empty_digits = max_digits_index - current_digit
+        return empty_digits * " " + str(row_idx) + "|"
+
+    # def _markerLegend(self):
+    #     return 2 * "\n" + (
+    #         "Marker for "
+    #         + Party.WHITE.name
+    #         + ": "
+    #         + self.state_markers_dict[Party.WHITE]
+    #         + ";\t"
+    #     )
+
+    @staticmethod
+    def _numOfDigits(x):
+        return len(str(x))
