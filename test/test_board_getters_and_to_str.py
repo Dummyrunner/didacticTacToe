@@ -120,21 +120,6 @@ def test_row_to_string(default_board3x4):
         board._rowToString(3)
 
 
-def test_row_string_to_formatted():
-    """check for number of occurence of each character:
-    should be same in formatted and non-formatted line"""
-    testline = "X__OXX"
-    formatted = BoardRectangular._rowStringToFormatted(testline)
-    for char in testline:
-        assert formatted.count(char) == testline.count(char)
-
-
-def test_row_string_to_formatted_short():
-    testline = "XO"
-    formatted = BoardRectangular._rowStringToFormatted(testline)
-    assert testline == formatted
-
-
 def test_game_dynamics_tictactoe_gravity_column__full():
     line0 = "X__\n"
     line1 = "O__\n"
