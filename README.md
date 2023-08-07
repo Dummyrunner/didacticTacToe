@@ -16,7 +16,7 @@ python run_standard_tictactoe.py
 ```
 
 ### Gomoku (TicTacToe with 5 in a row to win, larger Board)
-Run TicTacToe game on 9x9 tiles board with a row of 5 to win the game:
+Run TicTacToe game on 15x15 tiles board with a row of 5 to win the game:
 
 **Rules:**
 https://en.wikipedia.org/wiki/Gomoku
@@ -64,5 +64,3 @@ writes report to
 firefox test/cov_report/index.html
 ```
 
-# TODO
-* adjust board printing method to double digit board size

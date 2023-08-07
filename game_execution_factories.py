@@ -21,7 +21,7 @@ def createFiveWinsGameExecutionHumanPlayers() -> GameExecution:
     pblack = HumanPlayerTicTacToe(Party.BLACK)
     pwhite.setNameFromKeyboard()
     pblack.setNameFromKeyboard()
-    board = BoardRectangular(9, 9)
+    board = BoardRectangular(15, 15)
     rowsize_to_win = 5
     dyn = GameDynamicsTicTacToe(board, rowsize_to_win)
     return GameExecution(dyn, pwhite, pblack)
