@@ -23,7 +23,7 @@ def test_board_display_col_index_rows():
     line1 = "             11\n"
     line2 = "   012345678901\n"
     expected_res = line1 + line2
-    actual_res = board.board_display._colIndexRows()
+    actual_res = board.board_display._colIndexRows(board)
     assert actual_res == expected_res
 
 

@@ -27,9 +27,8 @@ class BoardRectangular(BoardBase):
         self.__NUM_OF_COLS = num_of_cols
         BoardBase.__init__(self, markers_dict)
         num_of_squares = num_of_rows * num_of_cols
-        # in __state, states are stored row after row
         self.__state = [Party.NEUTRAL for i in range(0, num_of_squares)]
-        self.board_display = BoardDisplay(self, self.state_markers_dict)
+        self.board_display = BoardDisplay()
 
     def setValueAtCartesian(self, cart_pt: CartPt, new_val: Party) -> None:
         self.throwIfOutOfRange(cart_pt)
@@ -279,70 +278,64 @@ class BoardRectangular(BoardBase):
         return len_max_seq
 
     def __str__(self):
-        return self.board_display._boardToString()
+        return self.board_display._boardToString(self)
 
 
 class BoardDisplay:
-    def __init__(self, board, state_markers_dict):
-        self.board = board
-        self.state_markers_dict = state_markers_dict
-
-    def _boardToString(self):
-        board = self.board
+    def _boardToString(self, board):
         res = "Board:\n"
         row_idx_range = range(0, board.numOfRows())
         col_idx_range = range(0, board.numOfCols())
-        # col_index_row = 2 * " " + "".join([str(idx) for idx in col_idx_range])
-        col_index_rows = self._colIndexRows()
+        col_index_rows = self._colIndexRows(board)
         res += col_index_rows
         for irow in row_idx_range:
-            res += self._rowIndexPrefix(irow)
+            res += self._rowIndexPrefix(irow, board)
             for icol in col_idx_range:
-                char_to_add = self.state_markers_dict[
+                char_to_add = board.state_markers_dict[
                     board.valueFromCartesian(CartPt(irow, icol))
                 ]
                 res += char_to_add
             if irow < board.numOfRows() - 1:
                 res += "\n"
         res += 2 * "\n"
-        res += self._markerLegend()
+        res += self._markerLegend(board)
         return res
 
-    def _rowIndexPrefix(self, row_idx):
-        board = self.board
-        max_digits_index = self._numOfDigits(board.numOfRows() - 1)
-        current_digit = self._numOfDigits(row_idx)
+    def _rowIndexPrefix(self, row_idx, board):
+        max_digits_index = BoardDisplay._numOfDigits(board.numOfRows() - 1)
+        current_digit = BoardDisplay._numOfDigits(row_idx)
         empty_digits = max_digits_index - current_digit
         return empty_digits * " " + str(row_idx) + "|"
 
-    def _colIndexRows(self):
+    def _colIndexRows(self, board):
         res = ""
-        board = self.board
         num_of_cols = board.numOfCols()
         max_digits_index = self._numOfDigits(num_of_cols - 1)
-        col_idx_intendation = (self._numOfDigits(board.numOfCols() - 1) + 1) * " "
+        col_idx_intendation = (
+            BoardDisplay._numOfDigits(board.numOfCols() - 1) + 1
+        ) * " "
         for digit in reversed(range(max_digits_index)):
             res += col_idx_intendation
             for col_idx in range(num_of_cols):
-                if self._numOfDigits(col_idx) > digit:
-                    res += str(self._nthDigit(col_idx, digit))
+                if BoardDisplay._numOfDigits(col_idx) > digit:
+                    res += str(BoardDisplay._nthDigit(col_idx, digit))
                 else:
                     res += " "
             res += "\n"
         return res
 
-    def _markerLegend(self):
+    def _markerLegend(self, board):
         return (
             "\n"
             + "Marker for "
             + Party.WHITE.name
             + ": "
-            + self.state_markers_dict[Party.WHITE]
+            + board.state_markers_dict[Party.WHITE]
             + ";\t"
             + "Marker for "
             + Party.BLACK.name
             + ": "
-            + self.state_markers_dict[Party.BLACK]
+            + board.state_markers_dict[Party.BLACK]
         )
 
     @staticmethod
