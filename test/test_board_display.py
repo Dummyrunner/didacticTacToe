@@ -1,5 +1,6 @@
 from board import BoardRectangular, BoardDisplay
 import pytest
+from board_display import BoardDisplay
 
 
 def test_board_display_num_of_digits():
