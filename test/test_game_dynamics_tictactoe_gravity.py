@@ -2,7 +2,7 @@ from board import BoardRectangular
 from cartpt import CartPt
 from Party import Party
 from move import MoveTicTacToeGravity
-
+import pytest
 from game_dynamics import GameDynamicsTicTacToeGravity
 
 
@@ -67,3 +67,18 @@ def test_update_admissible_moves_party_gravity():
     assert len(actual_admissible_moves_black) == len(expected_admissible_moves_black)
     assert actual_admissible_moves_white == set(expected_admissible_moves_white)
     assert actual_admissible_moves_black == set(expected_admissible_moves_black)
+
+
+def test_dynamics_gravity_do_move_for_party():
+    board = BoardRectangular(1, 2)
+    dynamics = GameDynamicsTicTacToeGravity(board, 55)
+    col_idx = 1
+    col_idx_invalid = 2
+    move = MoveTicTacToeGravity(col_idx, Party.BLACK)
+    move_invalid = MoveTicTacToeGravity(col_idx_invalid, Party.BLACK)
+    dynamics._doMoveForParty(Party.BLACK, move)
+    floor_row_idx = board.numOfRows() - 1
+    assert board.valueFromCartesian(CartPt(floor_row_idx, col_idx)) == Party.BLACK
+    assert board.valueFromCartesian(CartPt(floor_row_idx, 0)) == Party.NEUTRAL
+    with pytest.raises(ValueError):
+        dynamics._doMoveForParty(Party.BLACK, move_invalid)

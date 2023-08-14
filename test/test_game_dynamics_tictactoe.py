@@ -5,7 +5,7 @@ from Party import Party
 from move import MoveTicTacToe
 
 from axis import Axis
-from game_dynamics import GameDynamicsTicTacToe, GameDynamicsTicTacToeGravity
+from game_dynamics import GameDynamicsTicTacToe, GameDynamicsBase
 import itertools
 from player_tictactoe import HumanPlayerTicTacToe
 
@@ -214,3 +214,8 @@ def test_is_draw_negative_moves_left():
     board = BoardRectangular.fromString(state_string)
     dynamics = GameDynamicsTicTacToe(board, 3)
     assert dynamics.isDraw() == False
+
+
+def test_game_dynamics_base_nonimplemented():
+    with pytest.raises(NotImplementedError):
+        g = GameDynamicsBase()
