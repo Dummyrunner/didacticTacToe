@@ -84,7 +84,7 @@ class MoveTicTacToeGravity(MoveBase):
         return self.__target_column
 
     def __str__(self):
-        string = "(move: " + str(self.target_columnr) + " " + self._partyStr() + " )"
+        string = "(move: " + str(self.target_column) + " " + self._partyStr() + " )"
         return string
 
     def __hash__(self):
