@@ -26,10 +26,22 @@ def test_tree_init():
 def test_tree_bfs_travesal_minimal():
     rootnode = Node(1)
     t = Tree(rootnode)
-    assert len(t.BFSTraversal(t.root)) == 1
-    assert [node.data for node in t.BFSTraversal(t.root)] == [1]
+    assert len(t.bfsTraversal(t.root)) == 1
+    assert [node.data for node in t.bfsTraversal(t.root)] == [1]
 
 
-def test_tree_bfs_traversal(four_node_tree):
+def test_tree_bfs_traversal(four_node_tree: Tree):
     t = four_node_tree
-    assert [node.data for node in t.BFSTraversal(t.root)] == [1, 2, 3, 4]
+    assert [node.data for node in t.bfsTraversal(t.root)] == [1, 2, 3, 4]
+
+
+def test_tree_dfs_travesal_minimal():
+    rootnode = Node(1)
+    t = Tree(rootnode)
+    assert len(t.dfsTraversal(t.root)) == 1
+    assert [node.data for node in t.dfsTraversal(t.root)] == [1]
+
+
+def test_tree_dfs_traversal(four_node_tree: Tree):
+    t = four_node_tree
+    assert [node.data for node in t.dfsTraversal(t.root)] == [1, 2, 4, 3]
