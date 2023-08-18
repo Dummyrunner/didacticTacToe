@@ -8,5 +8,12 @@ class Tree:
             raise AttributeError("Error creating tree: root has to be of Node type")
         self.root = root
 
-    def BFSTraversal(self, root):
-        pass
+    def BFSTraversal(self, start_node: Node):
+        result_list = []
+        queue = Queue()
+        queue.put(start_node)
+        while not queue.empty():
+            next_node = queue.get()
+            result_list.append(next_node)
+            [queue.put(childnode) for childnode in next_node.children]
+        return result_list
