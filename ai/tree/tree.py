@@ -25,5 +25,5 @@ class Tree:
         while not queue.empty():
             next_node = queue.get()
             result_list.append(next_node)
-            [queue.put(childnode) for childnode in next_node.children]
+            [queue.put(childnode) for childnode in reversed(next_node.children)]
         return result_list
