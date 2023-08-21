@@ -16,3 +16,15 @@ class Node:
             self.children.append(child)
         else:
             raise AttributeError("Wrong type. Children of nodes have to be nodes")
+
+    def _toString(self, depth=0):
+        res = ""
+        res += "#" * depth
+        res += str(self.data)
+        if not self.children:
+            return res + ".\n"
+        else:
+            res += "\n"
+            for child in self.children:
+                res += child._toString(depth + 1)
+        return res

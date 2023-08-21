@@ -27,3 +27,6 @@ class Tree:
             result_list.append(next_node)
             [queue.put(childnode) for childnode in reversed(next_node.children)]
         return result_list
+
+    def __str__(self):
+        return self.root._toString()
