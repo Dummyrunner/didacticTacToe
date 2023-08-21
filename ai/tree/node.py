@@ -17,7 +17,7 @@ class Node:
         else:
             raise AttributeError("Wrong type. Children of nodes have to be nodes")
 
-    def _toString(self, depth=0):
+    def _toString(self, depth=0) -> str:
         res = ""
         res += "#" * depth
         res += str(self.data)

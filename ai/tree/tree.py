@@ -8,7 +8,7 @@ class Tree:
             raise AttributeError("Error creating tree: root has to be of Node type")
         self.root = root
 
-    def bfsTraversal(self, start_node: Node):
+    def bfsTraversal(self, start_node: Node) -> list:
         result_list = []
         queue = Queue()
         queue.put(start_node)
@@ -18,7 +18,7 @@ class Tree:
             [queue.put(childnode) for childnode in next_node.children]
         return result_list
 
-    def dfsTraversal(self, start_node: Node):
+    def dfsTraversal(self, start_node: Node) -> list:
         result_list = []
         queue = LifoQueue()
         queue.put(start_node)
