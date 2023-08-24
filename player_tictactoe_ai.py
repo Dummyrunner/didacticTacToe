@@ -5,6 +5,7 @@ from player_tictactoe import BasePlayer
 from .ai.tree.node import Node
 from .ai.tree.tree import Tree
 from game_dynamics import GameDynamicsBase
+import copy as cp
 
 
 class AiPlayerTicTacToe(BasePlayer):
@@ -17,7 +18,7 @@ class AiPlayerTicTacToe(BasePlayer):
 
 
 class AiBase:
-    def __init__(self, dynamics):
+    def __init__(self, dynamics: GameDynamicsBase):
         self._game_dynamics = dynamics
         self._whos_turn = 0
 
@@ -41,7 +42,10 @@ class AiBase:
     def _buildDecisionTree(self, board, whos_turn):
         game_state = {"board_state": board, "whos_turn": whos_turn}
         current_state_node = Node(game_state)
-        admissible_moves = self.dynamics.admissibleMoves()
+        local_board = cp.deepcopy(board)
+        admissible_moves = self.dynamics.admissibleMovesForParty(
+            game_state["whos_turn"]
+        )
         for move in admissible_moves:
             # TODO
             # resulting_game_state = ...
