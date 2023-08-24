@@ -216,6 +216,30 @@ def test_is_draw_negative_moves_left():
     assert dynamics.isDraw() == False
 
 
+def test_win_by_cohesive_row_is_termina():
+    line0 = "XOX\n"
+    line1 = "O_O\n"
+    line2 = "OXO"
+    state_string = line0 + line1 + line2
+    board = BoardRectangular.fromString(state_string)
+    dynamics = GameDynamicsTicTacToe(board, 3)
+    assert dynamics.isTerminalState() == False
+    line0 = "OOX\n"
+    line1 = "O_O\n"
+    line2 = "OXO"
+    state_string = line0 + line1 + line2
+    board = BoardRectangular.fromString(state_string)
+    dynamics = GameDynamicsTicTacToe(board, 3)
+    assert dynamics.isTerminalState() == True
+    line0 = "OOX\n"
+    line1 = "O_X\n"
+    line2 = "OXX"
+    state_string = line0 + line1 + line2
+    board = BoardRectangular.fromString(state_string)
+    dynamics = GameDynamicsTicTacToe(board, 3)
+    assert dynamics.isTerminalState() == True
+
+
 def test_game_dynamics_base_nonimplemented():
     with pytest.raises(NotImplementedError):
         g = GameDynamicsBase()

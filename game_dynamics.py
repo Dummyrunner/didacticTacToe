@@ -99,6 +99,13 @@ class WinByCohesiveRow:
         someone_won = self.hasPartyWon(Party.BLACK) or self.hasPartyWon(Party.WHITE)
         return not someone_won and len(self.admissibleMoves()) == 0
 
+    def isTerminalState(self):
+        return (
+            self.isDraw()
+            or self.hasPartyWon(Party.WHITE)
+            or self.hasPartyWon(Party.BLACK)
+        )
+
 
 class GameDynamicsTicTacToe(GameDynamicsBase, WinByCohesiveRow):
     def __init__(self, board, rowsize_to_win):
