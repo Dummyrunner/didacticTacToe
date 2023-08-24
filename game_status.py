@@ -2,9 +2,9 @@ from enum import Enum
 
 
 class GameStatus(Enum):
-    PREPARE = 0
-    RUNNING = 1
-    WHITE_WINS = 2
-    BLACK_WINS = 3
-    DRAW = 4
-    FAILURE = 5
+    PREPARE = 2
+    RUNNING = 3
+    WHITE_WINS = +1
+    BLACK_WINS = -1
+    DRAW = 0
+    FAILURE = 4
