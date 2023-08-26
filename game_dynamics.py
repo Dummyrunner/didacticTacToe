@@ -12,7 +12,7 @@ class GameDynamicsBase:
 
     def doMoveOnBoard(self, player, move) -> None:
         party = player.party
-        self._doMoveForParty(party, move)
+        self.doMoveForParty(party, move)
 
     def admissibleMoves(self):
         self._updateAdmissibleMoves()
@@ -129,7 +129,7 @@ class GameDynamicsTicTacToe(GameDynamicsBase, WinByCohesiveRow):
                     self._admissible_moves_set.add(move_to_add_white)
                     self._admissible_moves_set.add(move_to_add_black)
 
-    def _doMoveForParty(self, party, move) -> None:
+    def doMoveForParty(self, party, move) -> None:
         pt = move.cartpt_to_fill
         if move in self.admissibleMoves():
             self.board.setValueAtCartesian(pt, party)
@@ -154,7 +154,7 @@ class GameDynamicsTicTacToeGravity(GameDynamicsBase, WinByCohesiveRow):
                 self._admissible_moves_set.add(move_to_append_white)
                 self._admissible_moves_set.add(move_to_append_black)
 
-    def _doMoveForParty(self, party, move) -> None:
+    def doMoveForParty(self, party, move) -> None:
         board = self.board
         col = move.target_column
         if move in self.admissibleMoves():

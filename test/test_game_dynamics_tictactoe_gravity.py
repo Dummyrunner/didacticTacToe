@@ -76,9 +76,9 @@ def test_dynamics_gravity_do_move_for_party():
     col_idx_invalid = 2
     move = MoveTicTacToeGravity(col_idx, Party.BLACK)
     move_invalid = MoveTicTacToeGravity(col_idx_invalid, Party.BLACK)
-    dynamics._doMoveForParty(Party.BLACK, move)
+    dynamics.doMoveForParty(Party.BLACK, move)
     floor_row_idx = board.numOfRows() - 1
     assert board.valueFromCartesian(CartPt(floor_row_idx, col_idx)) == Party.BLACK
     assert board.valueFromCartesian(CartPt(floor_row_idx, 0)) == Party.NEUTRAL
     with pytest.raises(ValueError):
-        dynamics._doMoveForParty(Party.BLACK, move_invalid)
+        dynamics.doMoveForParty(Party.BLACK, move_invalid)
