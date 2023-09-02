@@ -4,7 +4,7 @@ from cartpt import CartPt
 from player_tictactoe import BasePlayer
 from .ai.tree.node import Node
 from .ai.tree.tree import Tree
-from game_dynamics import GameDynamicsBase
+from game_dynamics import GameDynamicsBase, GameDynamicsTicTacToe
 import copy as cp
 
 
@@ -36,10 +36,14 @@ class AiBase:
     def chooseMove(self, board, whos_turn: Party, party: Party):
         return self._calculateBestMove(self)
 
+    def _admissibleMoves(self, board, whos_turn):
+        raise NotImplementedError
+
     def _calculateBestMove(self):
         raise NotImplementedError
 
     def _buildDecisionTree(self, board, whos_turn):
+        other_party = {Party.WHITE: Party.BLACK, Party.BLACK: Party.WHITE}
         game_state = {"board_state": board, "whos_turn": whos_turn}
         current_state_node = Node(game_state)
         local_board = cp.deepcopy(board)
@@ -48,6 +52,11 @@ class AiBase:
         )
         for move in admissible_moves:
             # TODO
+            resulting_dynamics = cp.deepcopy(
+                self.dynamics.doMoveForParty(game_state["whos_turn"], move)
+            )
+            resulting_whos_turn = other_party[game_state["whos_turn"]]
+
             # resulting_game_state = ...
             # current_state_node.addChild(resulting_game_state)
             break
@@ -59,3 +68,15 @@ class AiBase:
     @staticmethod
     def boardAndWhosTurnToDict(board, whos_turn):
         return {"board_state": board, "whos_turn": whos_turn}
+
+
+class GameDynamicsTicTacToeWrapper:
+    def _admissibleMoves(self, board, whos_turn: Party):
+        dynamics = GameDynamicsTicTacToe(board, 3)
+        return dynamics.addmissibleMovesForParty(whos_turn)
+
+    def _resultingDynamics(self, board, move: MoveTicTacToe):
+        dynamics = GameDynamicsTicTacToe(board, 3)
+        party = move.party
+        dynamics.doMoveForParty(party, move)
+        return cp.deepcopy(dynamics)
