@@ -21,6 +21,7 @@ class AiBase:
     def __init__(self, dynamics: GameDynamicsBase):
         self._game_dynamics = dynamics
         self._whos_turn = 0
+        self.gamestate_analysis = None
 
     @property
     def dynamics(self):
@@ -47,14 +48,10 @@ class AiBase:
         game_state = {"board_state": board, "whos_turn": whos_turn}
         current_state_node = Node(game_state)
         local_board = cp.deepcopy(board)
-        admissible_moves = self.dynamics.admissibleMovesForParty(
-            game_state["whos_turn"]
-        )
+        admissible_moves = self.gamestate_analysis._admissibleMoves()
         for move in admissible_moves:
             # TODO
-            resulting_dynamics = cp.deepcopy(
-                self.dynamics.doMoveForParty(game_state["whos_turn"], move)
-            )
+            resulting_dynamics = self.gamestate_analysis._resultingDynamics()
             resulting_whos_turn = other_party[game_state["whos_turn"]]
 
             # resulting_game_state = ...
@@ -70,7 +67,21 @@ class AiBase:
         return {"board_state": board, "whos_turn": whos_turn}
 
 
-class GameDynamicsTicTacToeWrapper:
+class AiTicTacToeMinimax(AiBase):
+    def __init__(self, dynamics):
+        super().__init__(dynamics)
+        self.gamestate_analysis = GameDynamicsTicTacToeWrapper()
+
+
+class GameDynamicsWrapper:
+    def _admissibleMoves(self, board, whos_turn: Party):
+        raise NotImplementedError
+
+    def _resultingDynamics(self, board, move: MoveTicTacToe):
+        raise NotImplementedError
+
+
+class GameDynamicsTicTacToeWrapper(GameDynamicsWrapper):
     def _admissibleMoves(self, board, whos_turn: Party):
         dynamics = GameDynamicsTicTacToe(board, 3)
         return dynamics.addmissibleMovesForParty(whos_turn)
