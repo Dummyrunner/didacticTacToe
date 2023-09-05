@@ -2,8 +2,8 @@ from Party import Party
 from move import MoveTicTacToe, MoveTicTacToeGravity
 from cartpt import CartPt
 from player_tictactoe import BasePlayer
-from .ai.tree.node import Node
-from .ai.tree.tree import Tree
+from ai.tree.node import Node
+from ai.tree.tree import Tree
 from game_dynamics import GameDynamicsBase, GameDynamicsTicTacToe
 import copy as cp
 
