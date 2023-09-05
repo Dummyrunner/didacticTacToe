@@ -48,19 +48,35 @@ class AiBase:
         game_state = {"board_state": board, "whos_turn": whos_turn}
         current_state_node = Node(game_state)
         local_board = cp.deepcopy(board)
-        admissible_moves = self.gamestate_analysis._admissibleMoves()
+        admissible_moves = self.gamestate_analysis._admissibleMoves(board, whos_turn)
+        print("ADMISSIBLE MOVES:")
+        print([(str(move.cartpt_to_fill), move.party) for move in admissible_moves])
+        # TODO check for terminal state instead of empty admissible moves!
+        if len(admissible_moves) == 0:
+            return current_state_node
         for move in admissible_moves:
+            print("MOINI")
             # TODO
-            resulting_dynamics = self.gamestate_analysis._resultingDynamics()
-            resulting_whos_turn = other_party[game_state["whos_turn"]]
+            resulting_dynamics = self.gamestate_analysis._resultingDynamics(board, move)
+            resulting_whos_turn = other_party[move.party]
+            resulting_board = resulting_dynamics.board
+            print("RESULTING_BOARD")
+            print(resulting_board)
+            resulting_game_state = {
+                "board_state": resulting_board,
+                "whos_turn": resulting_whos_turn,
+            }
+            current_state_node.addChild(
+                self._buildDecisionTree(resulting_board, resulting_whos_turn)
+            )
+            t = Tree(current_state_node)
+            print("TREE")
+            print(t)
 
-            # resulting_game_state = ...
-            # current_state_node.addChild(resulting_game_state)
-            break
         # get admissible moves
         # for each admissible move, calculate new state
         # build subtrees recursively
-        raise NotImplementedError
+        # raise NotImplementedError
 
     @staticmethod
     def boardAndWhosTurnToDict(board, whos_turn):
@@ -80,6 +96,12 @@ class GameDynamicsWrapper:
     def _resultingDynamics(self, board, move: MoveTicTacToe):
         raise NotImplementedError
 
+    def _isTerminalState(self, board):
+        raise NotImplementedError
+
+    def _isTerminalStatePartyWins(party: Party):
+        raise NotImplementedError
+
 
 class GameDynamicsTicTacToeWrapper(GameDynamicsWrapper):
     def _admissibleMoves(self, board, whos_turn: Party):
@@ -91,3 +113,11 @@ class GameDynamicsTicTacToeWrapper(GameDynamicsWrapper):
         party = move.party
         dynamics.doMoveForParty(party, move)
         return cp.deepcopy(dynamics)
+
+    def _isTerminalState(self, board):
+        # TODO
+        raise NotImplementedError
+
+    def _isTerminalStatePartyWins(party: Party):
+        # TODO
+        raise NotImplementedError

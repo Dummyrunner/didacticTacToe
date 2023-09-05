@@ -9,5 +9,8 @@ def test_ai_build_decision_tree():
     dynamics = GameDynamicsTicTacToe(board, 2)
     ai = AiTicTacToeMinimax(dynamics)
     actual_built_tree = ai._buildDecisionTree(board, Party.WHITE)
-    num_of_nodes = len(actual_built_tree.bfsTraversal())
-    assert num_of_nodes == 1
+    print("ACTUAL BUILD TREE:")
+    print(actual_built_tree)
+    # num_of_nodes = len(actual_built_tree.bfsTraversal())
+    # assert num_of_nodes == 1
+    assert 1 == 0
